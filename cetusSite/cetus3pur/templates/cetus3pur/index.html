@@ -1,0 +1,11 @@
+<h1>CETUS 3rd Parties</h1>
+
+{% if latest_3p_list %}
+<ul>
+    {% for tp in latest_3p_list %}
+    <li><a href="/cetus3pur/{{ tp.id }}/">{{ tp.legal_entity_name  }}</a></li>
+    {% endfor %}
+</ul>
+{% else %}
+<p>No 3rd parties are in the cetus database.</p>
+{% endif %}

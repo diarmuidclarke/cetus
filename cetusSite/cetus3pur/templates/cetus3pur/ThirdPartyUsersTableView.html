@@ -1,0 +1,14 @@
+<h1>CETUS 3rd Party User View</h1>
+
+{% if userlist %}
+<ul>
+
+    {% for user in userlist %} {% for key, value in user.items %}
+    <li>{{key}} : {{value}} </li>{% endfor %} {% endfor %}
+
+
+</ul>
+
+{% else %}
+<p>No 3sers found in that 3rd party in the CETUS Db.</p>
+{% endif %}
