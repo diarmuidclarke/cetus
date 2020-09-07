@@ -10,45 +10,45 @@
 </head>
 
 <body>
-    <section class="hero">
+    <section class="hero is-dark">
         <div class="hero-body">
             <div class="container">
                 <h1 class="title">CETUS 3rd Party Users View</h1>
                 <h2 class="subtitle">
                     {{useremp}}
                 </h2>
-
-
-                {% if userlist %}
-                <ul>
-
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>CETUS User ref</th>
-                                <th>1st Name</th>
-                                <th>Family Name</th>
-                                <th>Employee ID</th>
-                                <th>User a/c</th>
-                                <th>User a/c expiry</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-
-                            {% for user in userlist %}
-                            <tr>{% for key, value in user.items %}
-                                <td> {{value}} </td>{% endfor %}</tr> {% endfor %}
-
-                        </tbody>
-
-
-                </ul>
-
-                {% else %}
-                <p>No 3rd party users found in the CETUS Database.</p>
-                {% endif %}
             </div>
         </div>
         </div>
     </section>
+
+
+    {% if userlist %}
+    <ul>
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>CETUS User ref</th>
+                    <th>1st Name</th>
+                    <th>Family Name</th>
+                    <th>Employee ID</th>
+                    <th>User a/c</th>
+                    <th>User a/c expiry</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                {% for user in userlist %}
+                <tr>{% for key, value in user.items %}
+                    <td> {{value}} </td>{% endfor %}</tr> {% endfor %}
+
+            </tbody>
+
+
+    </ul>
+
+    {% else %}
+    <p>No 3rd party users found in the CETUS Database.</p>
+    {% endif %}
 </body>
