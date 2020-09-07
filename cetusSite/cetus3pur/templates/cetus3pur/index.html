@@ -1,11 +1,32 @@
-<h1>CETUS 3rd Parties</h1>
+<!DOCTYPE html>
+<html>
 
-{% if latest_3p_list %}
-<ul>
-    {% for tp in latest_3p_list %}
-    <li><a href="/cetus3pur/{{ tp.id }}/">{{ tp.legal_entity_name  }}</a></li>
-    {% endfor %}
-</ul>
-{% else %}
-<p>No 3rd parties are in the cetus database.</p>
-{% endif %}
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Rolls-Royce Control Systems - CETUS</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+</head>
+
+<body>
+    <section class="hero">
+        <div class="hero-body">
+            <div class="container">
+                <h1 class="title">CETUS 3rd Parties View</h1>
+                <h2 class="subtitle">
+                </h2>
+
+                {% if latest_3p_list %}
+                <ul>
+                    {% for tp in latest_3p_list %}
+                    <li><a href="/cetus3pur/{{ tp.id }}/">{{ tp.legal_entity_name }} - {{ tp.location }}</a> </li>
+                    {% endfor %}
+                </ul>
+                {% else %}
+                <p>No 3rd parties are in the cetus database.</p>
+                {% endif %}
+            </div>
+        </div>
+    </section>
+</body>

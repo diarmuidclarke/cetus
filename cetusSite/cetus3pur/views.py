@@ -15,16 +15,22 @@ def index(request):
 
 
 def ThirdPartyUsersTableView(request, thirdparty_id):
-    userlist = []
     user_employer = ThirdParty.objects.get(pk = thirdparty_id)
 
+    userlist = []
     for user in ThirdPartyUser.objects.filter(employer = user_employer).values():
+        # user.pop('id')
+        user.pop('employer_id')
         userlist.append(user)
 
-    context = {'userlist': userlist}
+    context = {'userlist': userlist, 'useremp' : user_employer }
     return render(request, 'cetus3pur/ThirdPartyUsersTableView.html', context)
 
 
+def ThirdPartyUserViewEdit(request, thirdpartyuser_id):
+    user = ThirdPartyUser.objects.get(pk = thirdpartyuser_id)
+    context = {'user': user }
+    return render(request, 'cetus3pur/userviewedit.html', context)
 
 
 
