@@ -1,62 +1,34 @@
-<!DOCTYPE html>
-<html>
+{% extends "base.html" %} {% block content %}
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Rolls-Royce Control Systems - CETUS</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">
-    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
-</head>
-
-<body>
-    <section class="hero is-info">
-        <div class="hero-body">
-            <div class="container">
-                <h1 class="title">CETUS R-R Managers</h1>
-                <h2 class="subtitle">
-                    These users can submit requests to IT for user accounts
-                </h2>
-            </div>
+<section>
+    <div class="container">
+        {% if rrm %}
+        <div class="content">
+            <br>
+            <h1>Rolls-Royce Managers</h1>
         </div>
-        <nav class="breadcrumb is-large has-arrow-separator" aria-label="breadcrumbs">
-            <ul>
-                <li><a href="..">Home</a></li>
-                <li class="is-active"><a href="#" aria-current="page">R-R Managers</a></li>
-            </ul>
-        </nav>
-    </section>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>CETUS User ref</th>
+                    <th>1st Name</th>
+                    <th>Family Name</th>
+                    <th>Employee ID</th>
+                    <th>User a/c</th>
+                </tr>
+            </thead>
+            <tbody>
 
-    <section>
-        <div class="container">
-            {% if rrm %}
-            <ul>
+                {% for user in rrm %}
+                <tr>{% for key, value in user.items %}
+                    <td> {{value}} </td>{% endfor %}</tr> {% endfor %}
 
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>CETUS User ref</th>
-                            <th>1st Name</th>
-                            <th>Family Name</th>
-                            <th>Employee ID</th>
-                            <th>User a/c</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+            </tbody>
+        </table>
 
-                        {% for user in rrm %}
-                        <tr>{% for key, value in user.items %}
-                            <td> {{value}} </td>{% endfor %}</tr> {% endfor %}
-
-                    </tbody>
-
-
-            </ul>
-
-            {% else %}
-            <p>No R-R managers found in the CETUS Database.</p>
-            {% endif %}
-        </div>
-    </section>
-
-</body>
+        {% else %}
+        <p>No R-R managers found in the CETUS Database.</p>
+        {% endif %}
+    </div>
+</section>
+{% endblock %}
