@@ -49,31 +49,5 @@
         </div>
     </nav>
 
-    <div class="container">
-        <div class="content">
-            <br>
-            <h1>A system to manage 3rd party user accounts</h1>
-        </div>
-    </div>
-    <!-- MAIN CONTENT -->
-    <!--
-    <div class="container">
-        {% if latest_3p_list %}
-        <div class="content">
-            <br>
-            <h1>List of 3rd Parties</h1>
-        </div>
-        <div class="tile is-ancestor">
-            {% for tp in latest_3p_list %}
-            <div class="tile is-parent">
-                <article class="tile is-child box">
-                    <p class="title">
-                        <a href="/cetus3pur/user/{{ tp.id }}/"> {{ tp.legal_entity_name }} - {{ tp.location }}</a></p>
-                </article>
-            </div>
-            {% endfor %} {% else %}
-            <p>No 3rd parties are in the cetus database.</p>
-            {% endif %}
-        </div>
-        -->
+    {% block content %} {% endblock %}
 </body>

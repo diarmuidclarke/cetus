@@ -32,7 +32,8 @@ class RRResponsibleManager(models.Model):
     firstname = models.CharField(max_length=50)
     familyname = models.CharField(max_length=50)
     employee_id = models.CharField(max_length=20)
-
+    user_ac =  models.CharField(max_length=10, default='<null>')
+    
     def __str__(self):
             return self.firstname + ' @ R-R'
 

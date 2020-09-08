@@ -6,12 +6,16 @@ from .models import ThirdParty
 from .models import RRResponsibleManager
 
 
-# front page - third parties
+# front page - third parties by default
 def index(request):
+    return render(request, 'cetus3pur/index.html', )
+
+
+
+def ThirdPartiesView(request):
     latest_3rdparty_list = ThirdParty.objects.order_by('legal_entity_name')
     context = {'latest_3p_list': latest_3rdparty_list}
-    return render(request, 'cetus3pur/index.html', context)
-
+    return render(request, 'cetus3pur/ThirdPartiesView.html', context)
 
 
 # users for a 3rd party
@@ -36,3 +40,8 @@ def ThirdPartyUserViewEdit(request, thirdpartyuser_id):
     return render(request, 'cetus3pur/userviewedit.html', context)
 
 
+# responsible managers
+def RRRManagersView(request):
+    rrm = RRResponsibleManager.objects.values()
+    context = {'rrm': rrm }
+    return render(request, 'cetus3pur/rrrmanager.html', context)
