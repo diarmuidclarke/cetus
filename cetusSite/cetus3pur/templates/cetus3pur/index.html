@@ -1,3 +1,6 @@
+{% extends "base.html" %} {% block content %}
+
+<!--
 <!DOCTYPE html>
 <html>
 
@@ -10,7 +13,6 @@
 </head>
 
 <body>
-    <!-- MAIN TITLE -->
     <section class="hero is-info">
         <div class="hero-body">
             <div class="container">
@@ -29,34 +31,35 @@
     </section>
 
 
-    <!-- NAVBAR -->
-    <nav class="navbar is-link" role="navigation" aria-label="main navigation">
+<nav class="navbar is-link" role="navigation" aria-label="main navigation">
 
-        <div id="navbarBasicExample" class="navbar-menu">
-            <div class="navbar-start">
-                <a class="navbar-item" href="/cetus3pur/">
+    <div id="navbarBasicExample" class="navbar-menu">
+        <div class="navbar-start">
+            <a class="navbar-item" href="/cetus3pur/">
                   Home                  
                 </a>
 
-                <a class="navbar-item" href="/cetus3pur/tpv/">
+            <a class="navbar-item" href="/cetus3pur/tpv/">
                   3rd Parties
                 </a>
 
-                <a class="navbar-item" href="/cetus3pur/rrm/">
+            <a class="navbar-item" href="/cetus3pur/rrm/">
                     R-R Managers                    
                 </a>
-            </div>
-        </div>
-    </nav>
-
-    <div class="container">
-        <div class="content">
-            <br>
-            <h1>A system to manage 3rd party user accounts</h1>
         </div>
     </div>
-    <!-- MAIN CONTENT -->
-    <!--
+</nav>
+-->
+
+
+<div class="container">
+    <div class="content">
+        <br>
+        <h1>A system to manage 3rd party user accounts</h1>
+    </div>
+</div>
+<!-- MAIN CONTENT -->
+<!--
     <div class="container">
         {% if latest_3p_list %}
         <div class="content">
@@ -76,4 +79,4 @@
             {% endif %}
         </div>
         -->
-</body>
+{% endblock %}
