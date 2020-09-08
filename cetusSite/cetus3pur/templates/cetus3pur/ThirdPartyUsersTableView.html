@@ -10,7 +10,7 @@
 </head>
 
 <body>
-    <section class="hero is-dark">
+    <section class="hero is-info">
         <div class="hero-body">
             <div class="container">
                 <h1 class="title">CETUS 3rd Party Users View</h1>
@@ -19,36 +19,45 @@
                 </h2>
             </div>
         </div>
+        <nav class="breadcrumb is-large has-arrow-separator" aria-label="breadcrumbs">
+            <ul>
+                <li><a href="..">Home</a></li>
+                <li class="is-active"><a href="#" aria-current="page">3rd party users</a></li>
+            </ul>
+        </nav>
+    </section>
+
+    <section>
+        <div class="container">
+            {% if userlist %}
+            <ul>
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>CETUS User ref</th>
+                            <th>1st Name</th>
+                            <th>Family Name</th>
+                            <th>Employee ID</th>
+                            <th>User a/c</th>
+                            <th>User a/c expiry</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+                        {% for user in userlist %}
+                        <tr>{% for key, value in user.items %}
+                            <td> {{value}} </td>{% endfor %}</tr> {% endfor %}
+
+                    </tbody>
+
+
+            </ul>
+
+            {% else %}
+            <p>No 3rd party users found in the CETUS Database.</p>
+            {% endif %}
         </div>
     </section>
 
-
-    {% if userlist %}
-    <ul>
-
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>CETUS User ref</th>
-                    <th>1st Name</th>
-                    <th>Family Name</th>
-                    <th>Employee ID</th>
-                    <th>User a/c</th>
-                    <th>User a/c expiry</th>
-                </tr>
-            </thead>
-            <tbody>
-
-                {% for user in userlist %}
-                <tr>{% for key, value in user.items %}
-                    <td> {{value}} </td>{% endfor %}</tr> {% endfor %}
-
-            </tbody>
-
-
-    </ul>
-
-    {% else %}
-    <p>No 3rd party users found in the CETUS Database.</p>
-    {% endif %}
 </body>

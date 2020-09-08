@@ -10,7 +10,7 @@
 </head>
 
 <body>
-    <section class="hero is-dark">
+    <section class="hero is-info">
         <div class="hero-body">
             <div class="container">
                 <h1 class="title">CETUS 3rd Parties View</h1>
@@ -18,18 +18,25 @@
                 </h2>
             </div>
         </div>
+        <nav class="breadcrumb is-large has-arrow-separator" aria-label="breadcrumbs">
+            <ul>
+                <li class="is-active"><a href="#">Home</a></li>
+            </ul>
+        </nav>
     </section>
 
-    {% if latest_3p_list %}
-    <div class="tile is-ancestor">
-        {% for tp in latest_3p_list %}
-        <div class="tile is-parent">
-            <article class="tile is-child box">
-                <p class="title">
-                    <a href="/cetus3pur/{{ tp.id }}/"> {{ tp.legal_entity_name }} - {{ tp.location }}</a></p>
-            </article>
+    <div class="container">
+        {% if latest_3p_list %}
+        <div class="tile is-ancestor">
+            {% for tp in latest_3p_list %}
+            <div class="tile is-parent">
+                <article class="tile is-child box">
+                    <p class="title">
+                        <a href="/cetus3pur/{{ tp.id }}/"> {{ tp.legal_entity_name }} - {{ tp.location }}</a></p>
+                </article>
+            </div>
+            {% endfor %} {% else %}
+            <p>No 3rd parties are in the cetus database.</p>
+            {% endif %}
         </div>
-        {% endfor %} {% else %}
-        <p>No 3rd parties are in the cetus database.</p>
-        {% endif %}
 </body>

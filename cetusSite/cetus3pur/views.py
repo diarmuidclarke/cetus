@@ -6,7 +6,7 @@ from .models import ThirdParty
 from .models import RRResponsibleManager
 
 
-
+# front page - third parties
 def index(request):
     latest_3rdparty_list = ThirdParty.objects.order_by('legal_entity_name')
     context = {'latest_3p_list': latest_3rdparty_list}
@@ -14,6 +14,7 @@ def index(request):
 
 
 
+# users for a 3rd party
 def ThirdPartyUsersTableView(request, thirdparty_id):
     user_employer = ThirdParty.objects.get(pk = thirdparty_id)
 
@@ -27,21 +28,11 @@ def ThirdPartyUsersTableView(request, thirdparty_id):
     return render(request, 'cetus3pur/ThirdPartyUsersTableView.html', context)
 
 
+
+# the edit page for one user
 def ThirdPartyUserViewEdit(request, thirdpartyuser_id):
     user = ThirdPartyUser.objects.get(pk = thirdpartyuser_id)
     context = {'user': user }
     return render(request, 'cetus3pur/userviewedit.html', context)
-
-
-
-
-#
-# def index(request):
-#    return HttpResponse("Hello, world. Cetus 3rd Party User Register")
-
-
-def ThirdPartiesTableView(request, question_id):
-    response = "3rd party table"
-    return HttpResponse(response % question_id)
 
 
