@@ -11,7 +11,7 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th>CETUS User ref</th>
+                    <th>CETUS User ID</th>
                     <th>1st Name</th>
                     <th>Family Name</th>
                     <th>Employee ID</th>
@@ -22,8 +22,23 @@
             <tbody>
 
                 {% for user in userlist %}
+
+                <tr>
+                    <td>
+                        <a href="/cetus3pur/user/{{ user.id }}/"> {{user.id}}</a>
+                    </td>
+                    <td>{{ user.firstname }}</td>
+                    <td>{{ user.familyname }}</td>
+                    <td>{{ user.employee_id }}</td>
+                    <td>{{ user.userac_name }}</td>
+                    <td>{{ user.userac_expirydate }}</td>
+                </tr>
+
+                <!--
                 <tr>{% for key, value in user.items %}
-                    <td> {{value}} </td>{% endfor %}</tr> {% endfor %}
+                #    <td> {{value}} </td>{% endfor %}</tr> 
+                -->
+                {% endfor %}
 
             </tbody>
         </table>

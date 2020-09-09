@@ -1,6 +1,7 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import loader
+from django import forms
 from .models import ThirdPartyUser
 from .models import ThirdParty
 from .models import RRResponsibleManager
@@ -18,6 +19,8 @@ def ThirdPartiesView(request):
     return render(request, 'cetus3pur/ThirdPartiesView.html', context)
 
 
+
+
 # users for a 3rd party
 def ThirdPartyUsersTableView(request, thirdparty_id):
     user_employer = ThirdParty.objects.get(pk = thirdparty_id)
@@ -33,15 +36,28 @@ def ThirdPartyUsersTableView(request, thirdparty_id):
 
 
 
+
+
+#creating our forms
+class TPUserForm(forms.Form):
+    # formfield_userac_expirydate = forms.DateField()
+    mystring = "<h1>form</h1>"
+
+
+
 # the edit page for one user
-def ThirdPartyUserViewEdit(request, thirdpartyuser_id):
-    user = ThirdPartyUser.objects.get(pk = thirdpartyuser_id)
-    context = {'user': user }
-    return render(request, 'cetus3pur/userviewedit.html', context)
+def ThirdPartyUserViewEdit(request, user_id):
+    user = ThirdPartyUser.objects.get(pk = user_id)
+    context = {'user_id': user_id, 'user': user }
+    form = TPUserForm()
+    return render(request, 'cetus3pur/userviewedit.html', {'form' : form} )
 
 
-# responsible managers
+
+
+# RR  managers
 def RRRManagersView(request):
     rrm = RRResponsibleManager.objects.values()
     context = {'rrm': rrm }
     return render(request, 'cetus3pur/rrrmanager.html', context)
+

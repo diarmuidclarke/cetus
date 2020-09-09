@@ -1,55 +1,6 @@
 {% extends "base.html" %} {% block content %}
 
-<!--
-<!DOCTYPE html>
-<html>
 
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Rolls-Royce Control Systems - CETUS</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">
-    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
-</head>
-
-<body>
-    <section class="hero is-info">
-        <div class="hero-body">
-            <div class="container">
-                <h1 class="title">CETUS</h1>
-                <h2 class="subtitle">
-                </h2>
-            </div>
-        </div>
-
-
-        <nav class="breadcrumb is-large has-arrow-separator" aria-label="breadcrumbs">
-            <ul>
-                <li class="is-active"><a href="#">Home</a></li>
-            </ul>
-        </nav>
-    </section>
-
-
-<nav class="navbar is-link" role="navigation" aria-label="main navigation">
-
-    <div id="navbarBasicExample" class="navbar-menu">
-        <div class="navbar-start">
-            <a class="navbar-item" href="/cetus3pur/">
-                  Home                  
-                </a>
-
-            <a class="navbar-item" href="/cetus3pur/tpv/">
-                  3rd Parties
-                </a>
-
-            <a class="navbar-item" href="/cetus3pur/rrm/">
-                    R-R Managers                    
-                </a>
-        </div>
-    </div>
-</nav>
--->
 
 
 <div class="container">
@@ -58,25 +9,5 @@
         <h1>A system to manage 3rd party user accounts</h1>
     </div>
 </div>
-<!-- MAIN CONTENT -->
-<!--
-    <div class="container">
-        {% if latest_3p_list %}
-        <div class="content">
-            <br>
-            <h1>List of 3rd Parties</h1>
-        </div>
-        <div class="tile is-ancestor">
-            {% for tp in latest_3p_list %}
-            <div class="tile is-parent">
-                <article class="tile is-child box">
-                    <p class="title">
-                        <a href="/cetus3pur/user/{{ tp.id }}/"> {{ tp.legal_entity_name }} - {{ tp.location }}</a></p>
-                </article>
-            </div>
-            {% endfor %} {% else %}
-            <p>No 3rd parties are in the cetus database.</p>
-            {% endif %}
-        </div>
-        -->
+
 {% endblock %}

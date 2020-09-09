@@ -1,53 +1,31 @@
-<!DOCTYPE html>
-<html>
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Rolls-Royce Control Systems - CETUS</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css">
-    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
-</head>
-
-<body>
-    <section class="hero is-dark">
-        <div class="hero-body">
-            <div class="container">
-                <h1 class="title">CETUS 3rd Party User View/EDIT</h1>
-                <h2 class="subtitle">
-                    {{useremp}}
-                </h2>
+{% extends "base.html" %} {% block content %} {% if form %}
 
 
-                {% if userlist %}
-                <ul>
+<table class="table">
+    <thead>
+        <tr>
+            <th>CETUS User ID</th>
+            <th>1st Name</th>
+            <th>Family Name</th>
+            <th>Employee ID</th>
+            <th>User a/c</th>
+            <th>User a/c expiry</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>{{user.id}}</td>
+            <td>{{ user.firstname }}</td>
+            <td>{{ user.familyname }}</td>
+            <td>{{ user.employee_id }}</td>
+            <td>{{ user.userac_name }}</td>
+            <td>{{ user.userac_expirydate }}</td>
+        </tr>
+    </tbody>
 
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>1st Name</th>
-                                <th>Family Name</th>
-                                <th>Employee ID</th>
-                                <th>User a/c</th>
-                                <th>User a/c expiry</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-
-                            {% for user in userlist %}
-                            <tr>{% for key, value in user.items %}
-                                <td> {{value}} </td>{% endfor %}</tr> {% endfor %}
-
-                        </tbody>
 
 
-                </ul>
 
-                {% else %}
-                <p>No 3rd party users found in the CETUS Database.</p>
-                {% endif %}
-            </div>
-        </div>
-        </div>
-    </section>
-</body>
+    {% else %}
+    <p>No 3rd party users found in the CETUS Database.</p>
+    {% endif %} {% endblock %}
