@@ -50,7 +50,7 @@ def ThirdPartyUserViewEdit(request, user_id):
     user = ThirdPartyUser.objects.get(pk = user_id)
     context = {'user_id': user_id, 'user': user }
     form = TPUserForm()
-    return render(request, 'cetus3pur/userviewedit.html', {'form' : form} )
+    return render(request, 'cetus3pur/userviewedit.html', {'form' : form, 'user': user} )
 
 
 

@@ -1,31 +1,35 @@
-{% extends "base.html" %} {% block content %} {% if form %}
+{% extends "base.html" %} {% block content %} {% if user %}
 
-
-<table class="table">
-    <thead>
-        <tr>
-            <th>CETUS User ID</th>
-            <th>1st Name</th>
-            <th>Family Name</th>
-            <th>Employee ID</th>
-            <th>User a/c</th>
-            <th>User a/c expiry</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td>{{user.id}}</td>
-            <td>{{ user.firstname }}</td>
-            <td>{{ user.familyname }}</td>
-            <td>{{ user.employee_id }}</td>
-            <td>{{ user.userac_name }}</td>
-            <td>{{ user.userac_expirydate }}</td>
-        </tr>
-    </tbody>
-
-
-
-
-    {% else %}
-    <p>No 3rd party users found in the CETUS Database.</p>
-    {% endif %} {% endblock %}
+<section>
+    <div class="container">
+        <div class="content">
+            <br>
+            <h1>Edit Third Party User</h1>
+        </div>
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>CETUS User ID</th>
+                    <th>1st Name</th>
+                    <th>Family Name</th>
+                    <th>Employee ID</th>
+                    <th>User a/c</th>
+                    <th>User a/c expiry</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ user.id }}</td>
+                    <td>{{ user.firstname }}</td>
+                    <td>{{ user.familyname }}</td>
+                    <td>{{ user.employee_id }}</td>
+                    <td>{{ user.userac_name }}</td>
+                    <td>{{ user.userac_expirydate }}</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</section>
+{% else %}
+<p>No 3rd party users found in the CETUS Database.</p>
+{% endif %} {% endblock %}
