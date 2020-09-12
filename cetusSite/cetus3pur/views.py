@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from django.template import loader
 from django import forms
+from django.views.decorators.csrf import csrf_exempt
 from .models import ThirdPartyUser
 from .models import ThirdParty
 from .models import RRResponsibleManager
@@ -27,7 +28,6 @@ def ThirdPartyUsersTableView(request, thirdparty_id):
 
     userlist = []
     for user in ThirdPartyUser.objects.filter(employer = user_employer).values():
-        # user.pop('id')
         user.pop('employer_id')
         userlist.append(user)
 
@@ -37,20 +37,24 @@ def ThirdPartyUsersTableView(request, thirdparty_id):
 
 
 
-
-#creating our forms
-class TPUserForm(forms.Form):
-    # formfield_userac_expirydate = forms.DateField()
-    mystring = "<h1>form</h1>"
-
-
-
 # the edit page for one user
+@csrf_exempt
 def ThirdPartyUserViewEdit(request, user_id):
-    user = ThirdPartyUser.objects.get(pk = user_id)
-    context = {'user_id': user_id, 'user': user }
-    form = TPUserForm()
-    return render(request, 'cetus3pur/userviewedit.html', {'form' : form, 'user': user} )
+
+    if request.method == 'POST':
+        name = request.POST.get('user_acname')
+        
+        user = ThirdPartyUser.objects.get(pk = user_id)
+        user.userac_name = name
+        user.save()
+
+
+        context = {'user_id': user_id, 'user': user }
+        return render(request, 'cetus3pur/userviewedit.html', { 'user': user} )
+    else:
+        user = ThirdPartyUser.objects.get(pk = user_id)
+        context = {'user_id': user_id, 'user': user }
+        return render(request, 'cetus3pur/userviewedit.html', {'user': user} )
 
 
 
