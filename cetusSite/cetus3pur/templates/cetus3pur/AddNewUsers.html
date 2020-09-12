@@ -1,0 +1,29 @@
+{% extends "base.html" %} {% block content %}
+
+<section>
+    <div class="container">
+        <div class="content">
+            <br>
+            <h1>Add Third Party Users</h1>
+        </div>
+    </div>
+</section>
+<section>
+
+    <div class="container">
+        <div class="content">
+            <form action="" method="post">
+
+                <div class="field">
+                    <label class="label">List of new 3rd party users</label>
+                    <textarea class="textarea" placeholder="e.g. John Smith, BE0011, jon101, 31/12/2025"></textarea>
+                </div>
+
+                <div class="control">
+                    <button class="button is-primary is-rounded">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+{% endblock %}

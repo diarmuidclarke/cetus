@@ -34,14 +34,17 @@
                     <td>{{ user.userac_expirydate }}</td>
                 </tr>
 
-                <!--
-                <tr>{% for key, value in user.items %}
-                #    <td> {{value}} </td>{% endfor %}</tr> 
-                -->
                 {% endfor %}
+
 
             </tbody>
         </table>
+
+        <form action="/cetus3pur/addusers/1">
+            <div class="control">
+                <button class="button is-primary is-rounded">Add new users</button>
+            </div>
+        </form>
 
 
 

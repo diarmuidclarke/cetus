@@ -17,9 +17,14 @@ urlpatterns = [
         # ex: /cetus3pur/user/1
     path('user/<int:user_id>/', views.ThirdPartyUserViewEdit, name='userviewedit'),
 
+        # add new third party users
+        # ex: /cetus3pur/AddNewUsers/1
+    path('addusers/<int:thirdparty_id>', views.ThirdPartyUsersAdd, name='AddNewUsers'),
+
         # view RR managers
         # ex: /cetus3pur/rrm
     path('rrm/', views.RRRManagersView, name='RRRManagersView'),
+
 
 
 ]

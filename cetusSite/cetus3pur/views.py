@@ -42,19 +42,51 @@ def ThirdPartyUsersTableView(request, thirdparty_id):
 def ThirdPartyUserViewEdit(request, user_id):
 
     if request.method == 'POST':
-        name = request.POST.get('user_acname')
-        
+        # get form data
+        form_firstname = request.POST.get('user_firstname')
+        form_familyname = request.POST.get('user_familyname')
+        form_employee_id = request.POST.get('user_employee_id')
+        form_userac_name = request.POST.get('user_acname')
+        form_userac_expiry = request.POST.get('user_acexpiry')
+
+        ## todo - clean/validate data
+
+        # store in model and save
         user = ThirdPartyUser.objects.get(pk = user_id)
-        user.userac_name = name
+        user.firstname = form_firstname
+        user.familyname = form_familyname
+        user.employee_id = form_employee_id
+        user.userac_name = form_userac_name
+        user.userac_expirydate = form_userac_expiry
         user.save()
 
-
+        # erm...not sure why i need a page refresh
         context = {'user_id': user_id, 'user': user }
         return render(request, 'cetus3pur/userviewedit.html', { 'user': user} )
+
     else:
         user = ThirdPartyUser.objects.get(pk = user_id)
+        date_time_obj = datetime.datetime.strptime(user.userac_expirydate, '%b %d %Y %I:%M%p')
+        user.userac_expirydate="2020-09-15"
+        user.save()
         context = {'user_id': user_id, 'user': user }
         return render(request, 'cetus3pur/userviewedit.html', {'user': user} )
+
+
+# the add new users page
+@csrf_exempt
+def ThirdPartyUsersAdd(request, thirdparty_id):
+    if request.method == 'POST':
+        test_string = "Billy Alby, BE5001, bill999, 10/01/2021\nBilly Bender, BE5002, bill901, 20/1/2022"
+
+        #django.core.exceptions.ValidationError: ['“20/3/2023” value has an invalid date format. It must be in YYYY-MM-DD format.']
+        tpu = ThirdPartyUser(firstname="Billy", familyname="Testme", employee_id="BE5005", userac_name="bill9009", userac_expirydate="20/3/2023" )
+        tpu.save()
+        tpu = ThirdPartyUser(firstname="Billy", familyname="Testme2", employee_id="BE5006", userac_name="bill9010", userac_expirydate="20/3/2024" )
+        tpu.save()
+        return render(request, 'cetus3pur/ThirdPartyUsersTableView.html', {'thirdparty_id': thirdparty_id} )
+    else:
+        return render(request, 'cetus3pur/AddNewUsers.html', {'thirdparty_id': thirdparty_id} )
 
 
 
