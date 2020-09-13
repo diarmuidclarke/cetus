@@ -106,26 +106,49 @@ def ThirdPartyUsersAdd(request, thirdparty_id):
             list_tokens = new_list_tokens
 
             # right number of tokens?
-            if(len(list_tokens) != 5):
+            if(len(list_tokens) != 5 and len(list_tokens) != 2):
                 error_text += "line " + str(line_num) + " has wrong number of tokens --> " + line + "\r\n"
                 continue
 
+            # new user
+            if(len(list_tokens) == 5):
+                # check for duplicates (this vs db) by employee ID number
+                users  = ThirdPartyUser.objects.filter(employee_id = list_tokens[2])
+                if(len(users)>0):
+                    error_text += "line " + str(line_num) + " is duplicate of entry in database for employee ID " + list_tokens[2] + " --> " + line + "\r\n"
+                    continue
 
-            # check for duplicates (this vs db) by employee ID number
-            users  = ThirdPartyUser.objects.filter(employee_id = list_tokens[2])
-            if(len(users)>0):
-                error_text += "line " + str(line_num) + " is duplicate of entry in database for employee ID " + list_tokens[2] + " --> " + line + "\r\n"
-                continue
+                # create the new user in the model and save to Database
+                date_obj = parser.parse(list_tokens[4], dayfirst = True)
+                tpu = ThirdPartyUser.create(list_tokens[0], list_tokens[1], list_tokens[2], list_tokens[3] , date_obj, thirdparty_id)
+                tpu.save()
 
-            # create the new user in the model and save to Database
-            date_obj = parser.parse(list_tokens[4], dayfirst = True)
-            tpu = ThirdPartyUser.create(list_tokens[0], list_tokens[1], list_tokens[2], list_tokens[3] , date_obj, thirdparty_id)
-            tpu.save()
-
-            # update status
-            lines_processed_ok += 1
-            error_text += "line " + str(line_num) + " OK\n"
+                # update status
+                lines_processed_ok += 1
+                error_text += "line " + str(line_num) + " OK\r\n"
             
+
+            # update expiry date
+            if(len(list_tokens) == 2):
+                # check for duplicates (this vs db) by employee ID number
+                users  = ThirdPartyUser.objects.filter(userac_name = list_tokens[0])
+                if(len(users)!=1):
+                    error_text += "line " + str(line_num) + " for update of " + list_tokens[0] + "'s expiry date, no record found of this user --> " + line + "\r\n"
+                    continue
+
+                # create the new user in the model and save to Database
+                user = users[0]
+                date_obj = parser.parse(list_tokens[1], dayfirst = True) # parse text that might be one of many possible representations of a date
+                date_as_yyyy_mm_dd = str(date_obj).split(' ')[0]
+                date_time_obj = datetime.datetime.strptime(date_as_yyyy_mm_dd, '%Y-%m-%d')     # convert text back to a datetime object from bulma datefield string
+                user.userac_expirydate = date_time_obj
+                user.save()
+
+                # update status
+                lines_processed_ok += 1
+                error_text += "line " + str(line_num) + " OK -- user " + list_tokens[0] + " expiry date updated to " + str(date_obj) + "\r\n"
+
+
         error_text += "Lines Processed Succesfully : " + str(lines_processed_ok) + "\n"
         error_text += "Done."
 
