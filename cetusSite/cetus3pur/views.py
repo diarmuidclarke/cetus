@@ -23,7 +23,12 @@ def index(request):
 
 def ThirdPartiesView(request):
     latest_3rdparty_list = ThirdParty.objects.order_by('legal_entity_name')
-    context = {'latest_3p_list': latest_3rdparty_list}
+    dict3p = {}
+    for tp in latest_3rdparty_list:        
+        dict3p[tp.legal_entity_name] = str(len(ThirdPartyUser.objects.filter(employer = tp)))
+
+
+    context = {'latest_3p_list': latest_3rdparty_list, 'dict3p':dict3p}
     return render(request, 'cetus3pur/ThirdPartiesView.html', context)
 
 
