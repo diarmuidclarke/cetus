@@ -6,6 +6,7 @@ from django.views.decorators.csrf import csrf_exempt
 from .models import ThirdPartyUser
 from .models import ThirdParty
 from .models import RRResponsibleManager
+import datetime
 
 
 # front page - third parties by default
@@ -57,20 +58,21 @@ def ThirdPartyUserViewEdit(request, user_id):
         user.familyname = form_familyname
         user.employee_id = form_employee_id
         user.userac_name = form_userac_name
-        user.userac_expirydate = form_userac_expiry
+        date_time_obj =datetime.datetime.strptime(form_userac_expiry, '%Y-%m-%d')     # convert text back to a datetime object from bulma datefield string
+        user.userac_expirydate = date_time_obj
         user.save()
 
-        # erm...not sure why i need a page refresh
-        context = {'user_id': user_id, 'user': user }
-        return render(request, 'cetus3pur/userviewedit.html', { 'user': user} )
+        bulma_friendly_date = user.userac_expirydate.strftime("%Y-%m-%d") 
+
+        return render(request, 'cetus3pur/userviewedit.html', {'user': user, 'bulma_date': bulma_friendly_date}  )
 
     else:
         user = ThirdPartyUser.objects.get(pk = user_id)
-        date_time_obj = datetime.datetime.strptime(user.userac_expirydate, '%b %d %Y %I:%M%p')
-        user.userac_expirydate="2020-09-15"
-        user.save()
-        context = {'user_id': user_id, 'user': user }
-        return render(request, 'cetus3pur/userviewedit.html', {'user': user} )
+        
+        # bulma datefields seem to need this exact format
+        bulma_friendly_date = user.userac_expirydate.strftime("%Y-%m-%d") 
+
+        return render(request, 'cetus3pur/userviewedit.html', {'user': user, 'bulma_date': bulma_friendly_date} )
 
 
 # the add new users page
@@ -78,8 +80,10 @@ def ThirdPartyUserViewEdit(request, user_id):
 def ThirdPartyUsersAdd(request, thirdparty_id):
     if request.method == 'POST':
         test_string = "Billy Alby, BE5001, bill999, 10/01/2021\nBilly Bender, BE5002, bill901, 20/1/2022"
-
+        test_date = "10/1/2021"
         #django.core.exceptions.ValidationError: ['“20/3/2023” value has an invalid date format. It must be in YYYY-MM-DD format.']
+        date_time_obj = datetime.datetime.strptime(test_date, '%b %d %Y %I:%M%p')
+
         tpu = ThirdPartyUser(firstname="Billy", familyname="Testme", employee_id="BE5005", userac_name="bill9009", userac_expirydate="20/3/2023" )
         tpu.save()
         tpu = ThirdPartyUser(firstname="Billy", familyname="Testme2", employee_id="BE5006", userac_name="bill9010", userac_expirydate="20/3/2024" )
