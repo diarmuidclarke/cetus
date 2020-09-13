@@ -4,7 +4,7 @@
     <div class="container">
         <div class="content">
             <br>
-            <h1>Add Third Party Users</h1>
+            <h1>Add Third Party Users for {{employer}}</h1>
         </div>
     </div>
 </section>
@@ -15,14 +15,21 @@
             <form action="" method="post">
 
                 <div class="field">
-                    <label class="label">List of new 3rd party users</label>
-                    <textarea class="textarea" placeholder="e.g. John Smith, BE0011, jon101, 31/12/2025"></textarea>
+                    <label class="label">List of new 3rd party users <br>e.g. John, Smith, BE0011, jon101, 31/12/2025</label>
+                    <textarea class="textarea" rows=12 name="new_user_specs" placeholder="e.g. John, Smith, BE0011, jon101, 31/12/2025"></textarea>
                 </div>
 
                 <div class="control">
                     <button class="button is-primary is-rounded">Submit</button>
                 </div>
             </form>
+            <br>
+            <div class="field">
+                <label class="label">Status</label>
+                <textarea class="textarea" placeholder="">{{error_text}}</textarea>
+                <br>
+                <br>
+            </div>
         </div>
     </div>
 </section>

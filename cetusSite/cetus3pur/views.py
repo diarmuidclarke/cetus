@@ -7,6 +7,12 @@ from .models import ThirdPartyUser
 from .models import ThirdParty
 from .models import RRResponsibleManager
 import datetime
+import dateutil.parser as parser
+
+
+
+
+
 
 
 # front page - third parties by default
@@ -32,7 +38,7 @@ def ThirdPartyUsersTableView(request, thirdparty_id):
         user.pop('employer_id')
         userlist.append(user)
 
-    context = {'userlist': userlist, 'useremp' : user_employer }
+    context = {'userlist': userlist, 'useremp' : user_employer, 'thirdparty_id' : thirdparty_id }
     return render(request, 'cetus3pur/ThirdPartyUsersTableView.html', context)
 
 
@@ -75,22 +81,62 @@ def ThirdPartyUserViewEdit(request, user_id):
         return render(request, 'cetus3pur/userviewedit.html', {'user': user, 'bulma_date': bulma_friendly_date} )
 
 
+
+
 # the add new users page
 @csrf_exempt
 def ThirdPartyUsersAdd(request, thirdparty_id):
     if request.method == 'POST':
-        test_string = "Billy Alby, BE5001, bill999, 10/01/2021\nBilly Bender, BE5002, bill901, 20/1/2022"
-        test_date = "10/1/2021"
-        #django.core.exceptions.ValidationError: ['“20/3/2023” value has an invalid date format. It must be in YYYY-MM-DD format.']
-        date_time_obj = datetime.datetime.strptime(test_date, '%b %d %Y %I:%M%p')
+        error_text = ""
 
-        tpu = ThirdPartyUser(firstname="Billy", familyname="Testme", employee_id="BE5005", userac_name="bill9009", userac_expirydate="20/3/2023" )
-        tpu.save()
-        tpu = ThirdPartyUser(firstname="Billy", familyname="Testme2", employee_id="BE5006", userac_name="bill9010", userac_expirydate="20/3/2024" )
-        tpu.save()
-        return render(request, 'cetus3pur/ThirdPartyUsersTableView.html', {'thirdparty_id': thirdparty_id} )
+        line = request.POST.get('new_user_specs')
+        line_num = 0
+        lines_processed_ok = 0
+
+        line_list = line.split('\r\n')
+
+        for line in line_list:
+            line_num += 1            
+            list_tokens = line.split(',')
+
+            # trim leading/trailing whitespace
+            new_list_tokens = []
+            for token in list_tokens:
+                new_list_tokens.append(token.strip())
+            list_tokens = new_list_tokens
+
+            # right number of tokens?
+            if(len(list_tokens) != 5):
+                error_text += "line " + str(line_num) + " has wrong number of tokens --> " + line + "\r\n"
+                continue
+
+
+            # check for duplicates (this vs db) by employee ID number
+            users  = ThirdPartyUser.objects.filter(employee_id = list_tokens[2])
+            if(len(users)>0):
+                error_text += "line " + str(line_num) + " is duplicate of entry in database for employee ID " + list_tokens[2] + " --> " + line + "\r\n"
+                continue
+
+            # create the new user in the model and save to Database
+            date_obj = parser.parse(list_tokens[4], dayfirst = True)
+            tpu = ThirdPartyUser.create(list_tokens[0], list_tokens[1], list_tokens[2], list_tokens[3] , date_obj, thirdparty_id)
+            tpu.save()
+
+            # update status
+            lines_processed_ok += 1
+            error_text += "line " + str(line_num) + " OK\n"
+            
+        error_text += "Lines Processed Succesfully : " + str(lines_processed_ok) + "\n"
+        error_text += "Done."
+
+        # display status
+        user_employer = ThirdParty.objects.get(pk = thirdparty_id)
+        return render(request, 'cetus3pur/AddNewUsers.html', {'thirdparty_id': thirdparty_id, 'employer': user_employer, 'error_text': error_text} )
+
     else:
-        return render(request, 'cetus3pur/AddNewUsers.html', {'thirdparty_id': thirdparty_id} )
+        error_text =""
+        user_employer = ThirdParty.objects.get(pk = thirdparty_id)
+        return render(request, 'cetus3pur/AddNewUsers.html', {'thirdparty_id': thirdparty_id, 'employer': user_employer, 'error_text' : error_text} )
 
 
 

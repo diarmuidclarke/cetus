@@ -21,8 +21,13 @@ class ThirdPartyUser(models.Model):
     userac_name = models.CharField(max_length=10)
     userac_expirydate = models.DateField('Expiry date')
 
+    @classmethod
+    def create(cls, nfirstname, nfamilyname, nemployee_id, nuserac, nuseracexp , nemployer_id):
+        tpu = cls(firstname=nfirstname, familyname = nfamilyname, employee_id = nemployee_id, userac_name = nuserac, userac_expirydate = nuseracexp, employer =  ThirdParty.objects.get(pk = nemployer_id))
+        return tpu
+
     def __str__(self):
-            return (self.firstname + ' @ ' + self.employer.legal_entity_name)
+            return (self.firstname + ' @ ' + self.employer.legal_entity_name + " at location " + self.employer.location)
 
 
 

@@ -2,11 +2,11 @@
 
 <section>
     <div class="container">
-        {% if userlist %}
         <div class="content">
             <br>
             <h1>List of users in {{useremp}} </h1>
         </div>
+
 
         <table class="table">
             <thead>
@@ -21,7 +21,7 @@
             </thead>
             <tbody>
 
-                {% for user in userlist %}
+                {% if userlist %} {% for user in userlist %}
 
                 <tr>
                     <td>
@@ -34,23 +34,26 @@
                     <td>{{ user.userac_expirydate }}</td>
                 </tr>
 
-                {% endfor %}
-
+                {% endfor %} {% else %}
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                {% endif %}
 
             </tbody>
         </table>
 
-        <form action="/cetus3pur/addusers/1">
+        <form action="/cetus3pur/addusers/{{ thirdparty_id }}">
             <div class="control">
                 <button class="button is-primary is-rounded">Add new users</button>
             </div>
         </form>
 
-
-
-        {% else %}
-        <p>No 3rd party users found in the CETUS Database.</p>
-        {% endif %}
     </div>
 </section>
 
