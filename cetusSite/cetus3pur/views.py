@@ -8,19 +8,52 @@ from .models import ThirdParty
 from .models import RRResponsibleManager
 import datetime
 import dateutil.parser as parser
-
-
+from django.contrib import auth
+from django.contrib.auth import get_user_model
+from django.contrib.auth import logout
 
 
 
 
 
 # front page - third parties by default
+@csrf_exempt
 def index(request):
-    return render(request, 'cetus3pur/index.html', )
+    if request.method == 'POST':
+        # user = request.user
+        logout(request)
+        return render(request, 'cetus3pur/index.html', )
+    else:
+        return render(request, 'cetus3pur/index.html', )
 
 
 
+
+# let user see details about their CETUS user account
+def userprofile(request):
+    permissions = set()
+    tmp_superuser = get_user_model()(
+      is_active=True,
+      is_superuser=True
+    )
+
+    # We go over each AUTHENTICATION_BACKEND and try to fetch
+    # a list of permissions
+    for backend in auth.get_backends():
+      if hasattr(backend, "get_all_permissions"):
+        permissions.update(backend.get_all_permissions(tmp_superuser))
+
+    # Make an unique list of permissions sorted by permission name.
+    sorted_list_of_permissions = sorted(list(permissions))
+    perm_as_str = ""
+    for perm in sorted_list_of_permissions:
+        perm_as_str += (perm + "<br>")
+
+    return render(request, 'cetus3pur/CetusUser_Profile.html', { 'permies' : sorted_list_of_permissions} )
+
+
+
+# view 3rd party businesses
 def ThirdPartiesView(request):
     latest_3rdparty_list = ThirdParty.objects.order_by('legal_entity_name')
     dict3p = {}
@@ -34,7 +67,7 @@ def ThirdPartiesView(request):
 
 
 
-# users for a 3rd party
+# view all users for a 3rd party
 def ThirdPartyUsersTableView(request, thirdparty_id):
     user_employer = ThirdParty.objects.get(pk = thirdparty_id)
 
@@ -49,7 +82,7 @@ def ThirdPartyUsersTableView(request, thirdparty_id):
 
 
 
-# the edit page for one user
+# the edit page for one 3rd party user
 @csrf_exempt
 def ThirdPartyUserViewEdit(request, user_id):
 

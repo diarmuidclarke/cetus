@@ -1,0 +1,35 @@
+{% extends "base.html" %} {% block content %}
+<div class="section">
+    <div class="container">
+        <h3 class="title">User Details:</h3>
+        username : {{ user.username}}
+        <br>email : {{ user.email}}
+    </div>
+</div>
+
+<div class="section">
+    <div class="container">
+        <h3 class="title">Your Permissions are:</h3>
+        {% if perms.cextus3pur %} CETUS 3rd party User app {%endif%}
+        <br> {% if perms.cetus3pur.add_thirdpartyuser %} ADD 3p user {%endif%}
+        <br> {% if perms.cetus3pur.change_thirdpartyuser %} CHANGE 3p user {%endif%}
+        <br> {% if perms.cetus3pur.delete_thirdpartyuser %} DELETE 3p user {%endif%}
+        <br> {% if perms.cetus3pur.add_thirdparty %} ADD 3p business {%endif%}
+        <br> {% if perms.cetus3pur.change_thirdparty %} CHANGE 3p business {%endif%}
+        <br> {% if perms.cetus3pur.delete_thirdparty %} DELETE 3p business {%endif%}
+        <br> {% if perms.cetus3pur.add_rrresponsiblemanager %} ADD R-R Manager {%endif%}
+        <br> {% if perms.cetus3pur.change_rrresponsiblemanager %} CHANGE R-R Manager {%endif%}
+        <br> {% if perms.cetus3pur.delete_rrresponsiblemanager %} DELETE R-R Manager {%endif%}
+    </div>
+</div>
+
+<div class="section">
+    <div class="container">
+        <h3 class="title">Available CETUS Permissions:</h3>
+        <div class="content">
+            {% for perm in permies%} {{perm}} <br> {% endfor %}
+        </div>
+    </div>
+</div>
+
+{% endblock %}

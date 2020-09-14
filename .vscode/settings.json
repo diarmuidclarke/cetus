@@ -1,4 +1,6 @@
 {
     "git.ignoreLimitWarning": true,
-    "python.pythonPath": "venv_cetus\\Scripts\\python.exe"
+    "python.pythonPath": "venv_cetus\\Scripts\\python.exe",
+    "html.format.enable": false,
+    "html.format.endWithNewline": true
 }
