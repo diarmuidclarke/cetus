@@ -47,18 +47,18 @@
                 <div class="navbar-item">
                     {% if user.is_authenticated %}
 
-
                     <a class="button is-primary" href="/cetus3pur/userprofile/">
                         <i class="fas fa-user-alt"></i>
                         <strong>&nbsp;{{ user }} </strong>
                     </a>
 
-                    <form action="/cetus3pur/index/" method="post">
-                        <a class="button is-light" href="/cetus3pur/">
+                    <form action="/cetus3pur/logout/">
+                        <a class="button is-light">
                             <strong>Log out</strong>
                         </a>
                     </form>
-                    </span> {% else %}
+
+                    {% else %}
                     <div class="buttons">
                         <a class="button is-primary" href="/cetus3pur/userprofile/">
                             <strong>Log in</strong>

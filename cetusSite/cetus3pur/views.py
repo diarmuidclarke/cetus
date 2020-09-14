@@ -17,14 +17,8 @@ from django.contrib.auth import logout
 
 
 # front page - third parties by default
-@csrf_exempt
 def index(request):
-    if request.method == 'POST':
-        # user = request.user
-        logout(request)
-        return render(request, 'cetus3pur/index.html', )
-    else:
-        return render(request, 'cetus3pur/index.html', )
+    return render(request, 'cetus3pur/index.html', )
 
 
 
@@ -50,6 +44,16 @@ def userprofile(request):
         perm_as_str += (perm + "<br>")
 
     return render(request, 'cetus3pur/CetusUser_Profile.html', { 'permies' : sorted_list_of_permissions} )
+
+
+# logout
+@csrf_exempt
+def CETUSUser_Logout(request):
+    if request.method == 'POST':
+        logout(request)
+        return render(request, 'cetus3pur/CETUSUser_Logout.html', )
+    else:
+        return render(request, 'cetus3pur/CETUSUser_Logout.html', )
 
 
 
