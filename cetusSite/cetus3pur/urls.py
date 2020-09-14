@@ -4,6 +4,7 @@ from . import views
 urlpatterns = [
         # ex: /cetus3pur/
     path('', views.index, name='index'),
+    path('index/', views.index, name='index'),
 
         # ex: /cetus3pur/userprofile/
     path('userprofile/', views.userprofile, name='CetusUser_Profile'),

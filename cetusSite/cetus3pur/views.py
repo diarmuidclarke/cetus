@@ -108,7 +108,7 @@ def ThirdPartyUserViewEdit(request, user_id):
 
         bulma_friendly_date = user.userac_expirydate.strftime("%Y-%m-%d") 
 
-        return render(request, 'cetus3pur/userviewedit.html', {'user': user, 'bulma_date': bulma_friendly_date}  )
+        return render(request, 'cetus3pur/userviewedit.html', {'tp_user': user, 'bulma_date': bulma_friendly_date}  )
 
     else:
         user = ThirdPartyUser.objects.get(pk = user_id)
@@ -116,7 +116,7 @@ def ThirdPartyUserViewEdit(request, user_id):
         # bulma datefields seem to need this exact format
         bulma_friendly_date = user.userac_expirydate.strftime("%Y-%m-%d") 
 
-        return render(request, 'cetus3pur/userviewedit.html', {'user': user, 'bulma_date': bulma_friendly_date} )
+        return render(request, 'cetus3pur/userviewedit.html', {'tp_user': user, 'bulma_date': bulma_friendly_date} )
 
 
 

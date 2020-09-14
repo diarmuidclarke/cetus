@@ -1,4 +1,4 @@
-{% extends "base.html" %} {% block content %} {% if user %}
+{% extends "base.html" %} {% block content %} {% if tp_user %}
 
 <section>
     <div class="container">
@@ -17,7 +17,7 @@
                     <fieldset disabled>
                         <label class="label">CETUS ID</label>
                         <div class="control">
-                            <input class="input" name="user_id" type="text" placeholder="Text input" value={{ user.id }}>
+                            <input class="input" name="user_id" type="text" placeholder="Text input" value={{ tp_user.id }}>
                         </div>
                     </fieldset>
                 </div>
@@ -25,28 +25,28 @@
                 <div class="field">
                     <label class="label">First Name</label>
                     <div class="control">
-                        <input class="input" name="user_firstname" type="text" placeholder="Text input" value={{ user.firstname }}>
+                        <input class="input" name="user_firstname" type="text" placeholder="Text input" value={{ tp_user.firstname }}>
                     </div>
                 </div>
 
                 <div class="field">
                     <label class="label">Family Name</label>
                     <div class="control">
-                        <input class="input" name="user_familyname" type="text" placeholder="Text input" value={{ user.familyname }}>
+                        <input class="input" name="user_familyname" type="text" placeholder="Text input" value={{ tp_user.familyname }}>
                     </div>
                 </div>
 
                 <div class="field">
                     <label class="label">Employee ID</label>
                     <div class="control">
-                        <input class="input" name="user_employee_id" type="text" placeholder="Text input" value={{ user.employee_id }}>
+                        <input class="input" name="user_employee_id" type="text" placeholder="Text input" value={{ tp_user.employee_id }}>
                     </div>
                 </div>
 
                 <div class="field">
                     <label class="label">User account name</label>
                     <div class="control">
-                        <input class="input" name="user_acname" type="text" placeholder="Text input" value={{ user.userac_name }}>
+                        <input class="input" name="user_acname" type="text" placeholder="Text input" value={{ tp_user.userac_name }}>
                     </div>
                 </div>
 
@@ -56,9 +56,6 @@
                         <input class="input" name="user_acexpiry" type="date" placeholder="Text input" value={{ bulma_date }}>
                     </div>
                 </div>
-
-                # todo
-                <p>tried to set value using {{ user.userac_expirydate }} </p>
 
                 <div class="control">
                     <button class="button is-primary is-rounded">Submit</button>
