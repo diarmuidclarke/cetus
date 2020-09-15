@@ -9,10 +9,6 @@ urlpatterns = [
         # ex: /cetus3pur/userprofile/
     path('userprofile/', views.userprofile, name='CetusUser_Profile'),
 
-        # logout
-        # ex: /cetus3pur/logout
-    path('logout/', views.CETUSUser_Logout, name='CETUSUser_Logout'),
-
         # view all 3rd parties
         # ex: /cetus3pur/tpv
     path('tpv/', views.ThirdPartiesView, name='ThirdPartiesView'),

@@ -11,7 +11,7 @@ import dateutil.parser as parser
 from django.contrib import auth
 from django.contrib.auth import get_user_model
 from django.contrib.auth import logout
-
+from django.contrib.auth.views import LoginView
 
 
 
@@ -46,11 +46,26 @@ def userprofile(request):
     return render(request, 'cetus3pur/CetusUser_Profile.html', { 'permies' : sorted_list_of_permissions} )
 
 
+
+
+# login
+@csrf_exempt
+class CETUSUserLogin(LoginView):
+    template_name = 'LoginView_form.html'
+
+
+
 # logout
 @csrf_exempt
 def CETUSUser_Logout(request):
-    if request.method == 'POST':
-        logout(request)
+    if request.method == 'GET':
+        logout(request) 
+        if request.user.is_authenticated:
+            print('+++++++still logged in')
+        else:
+            print('+++++now logged out')
+
+
         return render(request, 'cetus3pur/CETUSUser_Logout.html', )
     else:
         return render(request, 'cetus3pur/CETUSUser_Logout.html', )

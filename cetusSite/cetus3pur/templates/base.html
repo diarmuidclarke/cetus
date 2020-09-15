@@ -29,6 +29,8 @@
     <nav class="navbar is-link" role="navigation" aria-label="main navigation">
 
         <div id="cetus3pur_navbar" class="navbar-menu">
+
+            <!--  the important views -->
             <div class="navbar-start">
                 <a class="navbar-item" href="/cetus3pur/">
                   Home                  
@@ -43,6 +45,8 @@
                 </a>
             </div>
 
+
+            <!--  user profile, login / log out -->
             <div class="navbar-end">
                 <div class="navbar-item">
                     {% if user.is_authenticated %}
@@ -52,15 +56,16 @@
                         <strong>&nbsp;{{ user }} </strong>
                     </a>
 
-                    <form action="/cetus3pur/logout/">
+                    <form action="/logout/">
                         <a class="button is-light">
                             <strong>Log out</strong>
+                            <input type="Submit">
                         </a>
                     </form>
 
                     {% else %}
                     <div class="buttons">
-                        <a class="button is-primary" href="/cetus3pur/userprofile/">
+                        <a class="button is-primary" href="/login/">
                             <strong>Log in</strong>
                         </a>
                     </div>

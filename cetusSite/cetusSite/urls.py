@@ -15,8 +15,15 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
+from django.conf.urls import url
+from django.contrib.auth import views as auth_views
+from django.contrib.auth.views import LoginView
+from django.contrib.auth.views import LogoutView
 
 urlpatterns = [
+    url(r'^login/$', auth_views.LoginView.as_view(), name='login'),
+    url(r'^logout/$', auth_views.LogoutView.as_view(), {'next_page': '/'}, name='logout'),
     path('cetus3pur/', include('cetus3pur.urls')),
+    path('', include('cetus3pur.urls')),
     path('admin/', admin.site.urls),
 ]
