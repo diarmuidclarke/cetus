@@ -1,0 +1,76 @@
+{% extends "base.html" %} {% block content %}
+
+<section>
+    <div class="container">
+        <div class="content">
+            <br>
+            <h1>Review an EAB Request</h1>
+        </div>
+    </div>
+</section>
+
+
+
+<section>
+    <div class="container">
+        <div class="content">
+
+
+            <h2>TODO : some work to allow sellection of pending EAB requests </h2>
+
+            <!-- what the approver fills in -->
+            <form action="" method="post">
+
+                <div class="field">
+                    <label class="label">Date of approval</label>
+                    <div class="control">
+                        <input class="input" name="eabrev_date" type="date" placeholder="Text input" value={{ bulma_date }}>
+                    </div>
+                </div>
+
+
+                <div class="field">
+                    <label class="label">Approver User ID</label>
+                    <div class="control">
+                        <input class="input" name="eabrev_approver_user_id" type="text" placeholder="Text input">
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label class="label">Decision</label>
+                    <div class="control">
+                        <input class="input" name="eabrev_decision" type="text" placeholder="Text input">
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label class="label">ECM Comment</label>
+                    <div class="control">
+                        <input class="input" name="eabrev_ecm_comment" type="text" placeholder="Text input">
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label class="label">IP Manager Comment</label>
+                    <div class="control">
+                        <input class="input" name="eabrev_IPM_comment" type="text" placeholder="Text input">
+                    </div>
+                </div>
+
+
+                <div class="field">
+                    <label class="label">IT Comment</label>
+                    <div class="control">
+                        <input class="input" name="eabrev_IT_comment" type="text" placeholder="Text input">
+                    </div>
+                </div>
+
+                <div class="control">
+                    <button class="button is-primary is-rounded">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

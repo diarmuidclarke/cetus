@@ -84,6 +84,22 @@ def ThirdPartiesView(request):
     return render(request, 'cetus3pur/ThirdPartiesView.html', context)
 
 
+# EAB Request
+def EAB_Request(request):
+    context = {}
+    return render(request, 'cetus3pur/EAB_Request.html', context)
+
+
+# EAB Approvals - do an approval
+def EAB_ReviewApprove(request):
+    context = {}
+    return render(request, 'cetus3pur/EAB_ReviewApprove.html', context)
+
+
+# EAB Records - show all past approval decisions
+def EAB_Records(request):
+    context = {}
+    return render(request, 'cetus3pur/EAB_Records.html', context)
 
 
 # view all users for a 3rd party

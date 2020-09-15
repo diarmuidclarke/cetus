@@ -1,0 +1,61 @@
+{% extends "base.html" %} {% block content %}
+
+<section>
+    <div class="container">
+        <div class="content">
+            <br>
+            <h1>EAB Approvals </h1>
+        </div>
+
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>EAB Request</th>
+                    <th>Date of Review</th>
+                    <th>Approver</th>
+                    <th>Decision</th>
+                    <th>ECM Comment</th>
+                    <th>IPM Comment</th>
+                    <th>IT Comment</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                {% if userlist %} {% for user in userlist %}
+
+                <tr>
+                    <td>
+                        <a href="/cetus3pur/user/{{ user.id }}/"> {{user.id}}</a>
+                    </td>
+                    <td>{{ user.firstname }}</td>
+                    <td>{{ user.familyname }}</td>
+                    <td>{{ user.employee_id }}</td>
+                    <td>{{ user.userac_name }}</td>
+                    <td>{{ user.userac_expirydate }}</td>
+                </tr>
+
+                {% endfor %} {% else %}
+                <tr>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                {% endif %}
+
+            </tbody>
+        </table>
+
+        <form action="/cetus3pur/addusers/{{ thirdparty_id }}">
+            <div class="control">
+                <button class="button is-primary is-rounded">Add new users</button>
+            </div>
+        </form>
+
+    </div>
+</section>
+
+{% endblock %}

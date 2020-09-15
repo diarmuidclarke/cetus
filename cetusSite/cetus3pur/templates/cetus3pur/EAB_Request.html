@@ -1,0 +1,79 @@
+{% extends "base.html" %} {% block content %}
+
+<section>
+    <div class="container">
+        <div class="content">
+            <br>
+            <h1>Prepare an EAB Request</h1>
+        </div>
+    </div>
+</section>
+
+
+
+<section>
+    <div class="container">
+        <div class="content">
+            <form action="" method="post">
+
+                <div class="field">
+                    <label class="label">Date of request</label>
+                    <div class="control">
+                        <input class="input" name="eabreq_date" type="date" placeholder="Text input" value={{ bulma_date }}>
+                    </div>
+                </div>
+
+
+                <div class="field">
+                    <label class="label">Requester User ID</label>
+                    <div class="control">
+                        <input class="input" name="eabreq_user_id" type="text" placeholder="Text input">
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label class="label">Third Party</label>
+                    <div class="control">
+                        <input class="input" name="eabreq_tp" type="text" placeholder="Text input">
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label class="label">Data Store</label>
+                    <div class="control">
+                        <input class="input" name="eabreq_datastore" type="text" placeholder="Text input">
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label class="label">Data owner user ID</label>
+                    <div class="control">
+                        <input class="input" name="eabreq_dataowner_user_id" type="text" placeholder="Text input">
+                    </div>
+                </div>
+
+
+                <div class="field">
+                    <label class="label">Data store export/IP claim</label>
+                    <div class="control">
+                        <input class="input" name="eabreq_datastore_exportclaim" type="text" placeholder="Text input">
+                    </div>
+                </div>
+
+                <div class="field">
+                    <label class="label">IPECR</label>
+                    <div class="control">
+                        <input class="input" name="eabreq_ipecr" type="text" placeholder="Text input">
+                    </div>
+                </div>
+
+
+                <div class="control">
+                    <button class="button is-primary is-rounded">Submit</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</section>
+
+{% endblock %}
