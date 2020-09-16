@@ -12,7 +12,7 @@ from django.contrib import auth
 from django.contrib.auth import get_user_model
 from django.contrib.auth import logout
 from django.contrib.auth.views import LoginView
-
+from datetime import date
 
 
 
@@ -86,7 +86,14 @@ def ThirdPartiesView(request):
 
 # EAB Request
 def EAB_Request(request):
-    context = {}
+    #date
+    datetoday = date.today()
+    bulma_friendly_date = datetoday.strftime("%Y-%m-%d") 
+
+    # third party list
+    tplist = ThirdParty.objects.filter().values()
+    
+    context = { 'bulma_date_now' : bulma_friendly_date, 'user_id_requester' : request.user, 'tplist' : tplist}
     return render(request, 'cetus3pur/EAB_Request.html', context)
 
 
