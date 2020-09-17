@@ -18,44 +18,30 @@
         <div class="content">
             <form action="" method="post">
 
-                <fieldset disabled>
-                    <div class="field">
-                        <label class="label">Date of request</label>
-                        <div class="control">
-                            <input class="input" name="eabreq_date" type="date" placeholder="Text input" value={{ bulma_date_now }}>
-                        </div>
-                    </div>
-
-
-                    <div class="field">
-                        <label class="label">Requester User ID</label>
-                        <div class="control">
-                            <input class="input" name="eabreq_user_id" type="text" placeholder="Text input" value={{user_id_requester}}>
-                        </div>
-                    </div>
-                </fieldset>
-
-                <label class="label">Third Party</label>
-
-                <div class="dropdown is-active">
-                    <div class="dropdown-trigger">
-                        <button class="button" aria-haspopup="true" aria-controls="dropdown-menu3">
-                          <span>Dropdown button</span>
-                          <span class="icon is-small">
-                            <i class="fas fa-angle-down" aria-hidden="true"></i>
-                          </span>
-                        </button>
-                    </div>
-                    <div class="dropdown-menu" id="dropdown-menu3" role="menu">
-                        <div class="dropdown-content">
-                            {% for tp in tplist %}
-                            <a href="#" class="dropdown-item">
-                            {{ tp.legal_entity_name }}  {{tp.location}}
-                          </a> {% endfor %}
-                        </div>
+                <div class="field">
+                    <label class="label">Date of request</label>
+                    <div class="control">
+                        <input class="input" name="eabreq_date" type="date" placeholder="Text input" value={{ bulma_date_now }}>
                     </div>
                 </div>
 
+
+                <div class="field">
+                    <label class="label">Requester User ID</label>
+                    <div class="control">
+                        <input class="input" name="eabreq_user_id" type="text" placeholder="Text input" value={{user_id_requester}}>
+                    </div>
+                </div>
+
+                <label class="label">Third Party</label>
+
+                <div class="select is-focused">
+                    <select name="eabreq_tp_selector">
+                        {% for tp in tplist %}
+                        <option>[{{tp.id}}] - {{ tp.legal_entity_name }} {{tp.location}}</option>
+                        {% endfor %}
+                    </select>
+                </div>
 
                 <div class="field">
                     <label class="label">Data Store</label>
@@ -102,15 +88,35 @@
         // For each dropdown, add event handler to open on click.
         dropdowns.forEach(function(el) {
             el.addEventListener('click', function(e) {
-                e.stopPropagation();
+                // e.stopPropagation();
                 el.classList.toggle('is-active');
             });
         });
 
         // If user clicks outside dropdown, close it.
         document.addEventListener('click', function(e) {
+            sattr = el.getAttribute('select2-selection');
+            console.log('debug text dropbox:', sattr);
+            alert('click');
             closeDropdowns();
         });
     }
+
+    /*
+     * Close dropdowns by removing `is-active` class.
+     */
+    function closeDropdowns() {
+        dropdowns.forEach(function(el) {
+            el.classList.remove('is-active');
+        });
+    }
+
+    // Close dropdowns if ESC pressed
+    document.addEventListener('keydown', function(event) {
+        let e = event || window.event;
+        if (e.key === 'Esc' || e.key === 'Escape') {
+            closeDropdowns();
+        }
+    });
 </script>
 {% endblock %}

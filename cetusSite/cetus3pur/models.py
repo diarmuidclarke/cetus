@@ -65,6 +65,18 @@ class EAB_Request(models.Model):
     data_owner_userid =  models.CharField( 'Data Owner User ID', max_length=10)
     data_store_export_claim = models.CharField('Export status of Data Store', max_length=512 )
     ipecr = models.IntegerField('IPECR #')
+
+    @classmethod
+    def create(cls, ndate, nrqsteruid, ntpid, ndatastore, ndataowneruid , nclaim, nipecr):
+        er = cls(
+                    date=ndate,
+                    reqstr_userid = nrqsteruid,
+                    tp =  ThirdParty.objects.get(pk = ntpid),
+                    data_store =ndatastore,
+                    data_owner_userid = ndataowneruid,
+                    data_store_export_claim =  nclaim,
+                    ipecr = nipecr)
+        return er
     
     class Meta:
         verbose_name = "EAB Request"

@@ -29,7 +29,7 @@ urlpatterns = [
         # ex: /cetus3pur/rrm
     path('rrm/', views.RRRManagersView, name='RRRManagersView'),
 
-    path('eabreq/',views.EAB_Request, name='EAB_Request'),
+    path('eabreq/',views.EAB_RequestCreate, name='EAB_RequestCreate'),
 
     path('eabreviewapprove/',views.EAB_ReviewApprove, name='EAB_ReviewApprove'),
 

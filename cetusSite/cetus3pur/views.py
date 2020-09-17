@@ -6,8 +6,10 @@ from django.views.decorators.csrf import csrf_exempt
 from .models import ThirdPartyUser
 from .models import ThirdParty
 from .models import RRResponsibleManager
+from .models import EAB_Request
 import datetime
 import dateutil.parser as parser
+import re
 from django.contrib import auth
 from django.contrib.auth import get_user_model
 from django.contrib.auth import logout
@@ -84,29 +86,7 @@ def ThirdPartiesView(request):
     return render(request, 'cetus3pur/ThirdPartiesView.html', context)
 
 
-# EAB Request
-def EAB_Request(request):
-    #date
-    datetoday = date.today()
-    bulma_friendly_date = datetoday.strftime("%Y-%m-%d") 
 
-    # third party list
-    tplist = ThirdParty.objects.filter().values()
-    
-    context = { 'bulma_date_now' : bulma_friendly_date, 'user_id_requester' : request.user, 'tplist' : tplist}
-    return render(request, 'cetus3pur/EAB_Request.html', context)
-
-
-# EAB Approvals - do an approval
-def EAB_ReviewApprove(request):
-    context = {}
-    return render(request, 'cetus3pur/EAB_ReviewApprove.html', context)
-
-
-# EAB Records - show all past approval decisions
-def EAB_Records(request):
-    context = {}
-    return render(request, 'cetus3pur/EAB_Records.html', context)
 
 
 # view all users for a 3rd party
@@ -250,3 +230,46 @@ def RRRManagersView(request):
     context = {'rrm': rrm }
     return render(request, 'cetus3pur/rrrmanager.html', context)
 
+
+# EAB Request
+def EAB_RequestCreate(request):
+    if request.method == 'POST':
+        # get form data
+        datereq = request.POST.get('eabreq_date')
+        reqstr_user_id = request.POST.get('eabreq_user_id')
+        tpsel = request.POST.get('eabreq_tp_selector')
+        datastore = request.POST.get('eabreq_datastore')
+        dataowner_user_id = request.POST.get('eabreq_dataowner_user_id')
+        export_claim = request.POST.get('eabreq_datastore_exportclaim')
+        ipecr = request.POST.get('eabreq_ipecr')
+
+        date_obj = parser.parse(datereq, dayfirst = True)
+        tpid =   int(re.search(r"\[([A-Za-z0-9_]+)\]", tpsel).group(1))
+        req = EAB_Request.create(date_obj, reqstr_user_id, tpid, datastore,dataowner_user_id, export_claim, ipecr)
+        req.save()
+
+        context = { 'req_id' : req.id}
+        return render(request, 'cetus3pur/EAB_RequestSubmitted.html', context)
+
+    else:
+        #date
+        datetoday = date.today()
+        bulma_friendly_date = datetoday.strftime("%Y-%m-%d") 
+
+        # third party list
+        tplist = ThirdParty.objects.filter().values()
+        
+        context = { 'bulma_date_now' : bulma_friendly_date, 'user_id_requester' : request.user, 'tplist' : tplist}
+        return render(request, 'cetus3pur/EAB_RequestCreate.html', context)
+
+
+# EAB Approvals - do an approval
+def EAB_ReviewApprove(request):
+    context = {}
+    return render(request, 'cetus3pur/EAB_ReviewApprove.html', context)
+
+
+# EAB Records - show all past approval decisions
+def EAB_Records(request):
+    context = {}
+    return render(request, 'cetus3pur/EAB_Records.html', context)
