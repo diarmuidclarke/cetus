@@ -22,38 +22,21 @@
             </thead>
             <tbody>
 
-                {% if userlist %} {% for user in userlist %}
+                {% for appr in approvals %}
 
                 <tr>
-                    <td>
-                        <a href="/cetus3pur/user/{{ user.id }}/"> {{user.id}}</a>
-                    </td>
-                    <td>{{ user.firstname }}</td>
-                    <td>{{ user.familyname }}</td>
-                    <td>{{ user.employee_id }}</td>
-                    <td>{{ user.userac_name }}</td>
-                    <td>{{ user.userac_expirydate }}</td>
+                    <td>{{ appr.date }}</td>
+                    <td>{{ appr.approver_userid }}</td>
+                    <td>{{ appr.decision }}</td>
+                    <td>{{ appr.ecm_comment }}</td>
+                    <td>{{ appr.ipm_comment }}</td>
+                    <td>{{ appr.IT_comment }}</td>
                 </tr>
 
-                {% endfor %} {% else %}
-                <tr>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                    <td></td>
-                </tr>
-                {% endif %}
-
+                {% endfor %}
             </tbody>
         </table>
 
-        <form action="/cetus3pur/addusers/{{ thirdparty_id }}">
-            <div class="control">
-                <button class="button is-primary is-rounded">Add new users</button>
-            </div>
-        </form>
 
     </div>
 </section>

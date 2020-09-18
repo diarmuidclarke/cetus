@@ -7,6 +7,7 @@ from .models import ThirdPartyUser
 from .models import ThirdParty
 from .models import RRResponsibleManager
 from .models import EAB_Request
+from .models import EAB_Approval
 import datetime
 import dateutil.parser as parser
 import re
@@ -286,5 +287,7 @@ def EAB_ReviewApprove(request, reqid):
 
 # EAB Records - show all past approval decisions
 def EAB_Records(request):
-    context = {}
+    approvals = EAB_Approval.objects.filter().values()
+
+    context = { 'approvals':approvals}
     return render(request, 'cetus3pur/EAB_Records.html', context)
