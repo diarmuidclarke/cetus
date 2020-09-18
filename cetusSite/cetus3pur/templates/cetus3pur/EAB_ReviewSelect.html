@@ -1,0 +1,47 @@
+{% extends "base.html" %} {% block content %}
+
+<section>
+    <div class="container">
+        <div class="content">
+            <br>
+            <h1>EAB Requests - Ready for Review </h1>
+        </div>
+
+
+        <table class="table">
+            <thead>
+                <tr>
+                    <th>EAB Request ID</th>
+                    <th>Date of Request</th>
+                    <th>Requestor</th>
+                    <th>3rd Party</th>
+                    <th>Data Store</th>
+                    <th>Export Claim</th>
+                    <th>IPECR</th>
+                </tr>
+            </thead>
+            <tbody>
+
+                {% for req in reqlist %}
+
+                <tr>
+                    <td>
+                        <a href="/cetus3pur/eabreviewapprove/{{ req.id }}"> {{req.id}}</a>
+                    </td>
+                    <td>{{ req.date }}</td>
+                    <td>{{ req.reqstr_userid }}</td>
+                    <td>{{ req.tp }}</td>
+                    <td>{{ req.data_store }}</td>
+                    <td>{{ req.data_store_export_claim }}</td>
+                    <td>{{ req.ipecr }}</td>
+                </tr>
+
+                {% endfor %}
+
+
+            </tbody>
+        </table>
+    </div>
+</section>
+
+{% endblock %}

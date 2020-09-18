@@ -31,6 +31,9 @@ urlpatterns = [
 
     path('eabreq/',views.EAB_RequestCreate, name='EAB_RequestCreate'),
 
+    path('eabreq_for_approval/',views.EAB_ReviewSelect, name='EAB_ReviewSelect'),
+
+    path('eabreviewapprove/<int:reqid>',views.EAB_ReviewApprove, name='EAB_ReviewApprove'),
     path('eabreviewapprove/',views.EAB_ReviewApprove, name='EAB_ReviewApprove'),
 
     path('eabrecords/',views.EAB_Records, name='EAB_Records'),

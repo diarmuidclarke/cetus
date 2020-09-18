@@ -231,7 +231,7 @@ def RRRManagersView(request):
     return render(request, 'cetus3pur/rrrmanager.html', context)
 
 
-# EAB Request
+# EAB Request Creation
 def EAB_RequestCreate(request):
     if request.method == 'POST':
         # get form data
@@ -263,9 +263,24 @@ def EAB_RequestCreate(request):
         return render(request, 'cetus3pur/EAB_RequestCreate.html', context)
 
 
+
+# select an EAB request from a list
+def EAB_ReviewSelect(request):
+
+    reqlist = EAB_Request.objects.filter().values()
+    context = { 'reqlist': reqlist}
+    return render(request, 'cetus3pur/EAB_ReviewSelect.html', context)
+
+
+
 # EAB Approvals - do an approval
-def EAB_ReviewApprove(request):
-    context = {}
+def EAB_ReviewApprove(request, reqid):
+    req = EAB_Request.objects.get(pk=reqid)
+    datetoday = date.today()
+    bulma_friendly_date = datetoday.strftime("%Y-%m-%d") 
+
+    context = { 'reqid' : reqid, 'req':req , 'bulma_date':bulma_friendly_date, 'user':request.user}
+
     return render(request, 'cetus3pur/EAB_ReviewApprove.html', context)
 
 

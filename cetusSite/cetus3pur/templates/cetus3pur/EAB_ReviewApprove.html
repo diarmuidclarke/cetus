@@ -15,14 +15,39 @@
     <div class="container">
         <div class="content">
 
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>Date of Request</th>
+                        <th>Requestor</th>
+                        <th>3rd Party</th>
+                        <th>Data Store</th>
+                        <th>Export Claim</th>
+                        <th>IPECR</th>
+                    </tr>
+                </thead>
+                <tbody>
 
-            <h2>TODO : some work to allow sellection of pending EAB requests </h2>
+
+                    <tr>
+                        <td>{{ req.date }}</td>
+                        <td>{{ req.reqstr_userid }}</td>
+                        <td>{{ req.tp }}</td>
+                        <td>{{ req.data_store }}</td>
+                        <td>{{ req.data_store_export_claim }}</td>
+                        <td>{{ req.ipecr }}</td>
+                    </tr>
+
+
+
+                </tbody>
+            </table>
 
             <!-- what the approver fills in -->
             <form action="" method="post">
 
                 <div class="field">
-                    <label class="label">Date of approval</label>
+                    <label class="label">Date of review</label>
                     <div class="control">
                         <input class="input" name="eabrev_date" type="date" placeholder="Text input" value={{ bulma_date }}>
                     </div>
@@ -32,36 +57,37 @@
                 <div class="field">
                     <label class="label">Approver User ID</label>
                     <div class="control">
-                        <input class="input" name="eabrev_approver_user_id" type="text" placeholder="Text input">
+                        <input class="input" name="eabrev_approver_user_id" type="text" placeholder="Text input" value={{user}}>
                     </div>
                 </div>
 
                 <div class="field">
                     <label class="label">Decision</label>
-                    <div class="control">
-                        <input class="input" name="eabrev_decision" type="text" placeholder="Text input">
+                    <div class="select is-focused">
+                        <select name="eabreview_decision_selector">
+                        <option>Not Yet Reviewed</option>
+                        <option>Approved</option>
+                        <option>Rejected</option>
+                        <option>Pending</option>
+                    </select>
                     </div>
                 </div>
 
                 <div class="field">
                     <label class="label">ECM Comment</label>
-                    <div class="control">
-                        <input class="input" name="eabrev_ecm_comment" type="text" placeholder="Text input">
-                    </div>
+                    <textarea class="textarea" rows=6 name="eabrev_ecm_comment" placeholder=""></textarea>
                 </div>
 
                 <div class="field">
                     <label class="label">IP Manager Comment</label>
-                    <div class="control">
-                        <input class="input" name="eabrev_IPM_comment" type="text" placeholder="Text input">
-                    </div>
+                    <textarea class="textarea" rows=6 name="eabrev_IPM_comment" placeholder=""></textarea>
                 </div>
 
 
                 <div class="field">
                     <label class="label">IT Comment</label>
                     <div class="control">
-                        <input class="input" name="eabrev_IT_comment" type="text" placeholder="Text input">
+                        <textarea class="textarea" rows=6 name="eabrev_IT_comment" placeholder=""></textarea>
                     </div>
                 </div>
 
