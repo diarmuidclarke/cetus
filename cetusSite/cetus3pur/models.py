@@ -96,6 +96,20 @@ class EAB_Approval(models.Model):
     ipm_comment = models.CharField('IP Manager comment', max_length=512) # IP manager
     IT_comment = models.CharField('IT Comment', max_length=512) # IT comment
 
+    @classmethod
+    def create(cls, nreq, ndate, napprover, ndecision, necm_comment , nipm_comment, nIT_comment):
+        aprv = cls(
+                    request = EAB_Request.objects.get(pk = nreq),
+                    date = ndate,
+                    approver_userid = napprover,
+                    decision =  ndecision,
+                    ecm_comment = necm_comment,
+                    ipm_comment = nipm_comment,
+                    IT_comment =  nIT_comment
+                    )
+        return aprv
+
+
     class Meta:
         verbose_name = "EAB Approval"
         verbose_name_plural = "EAB Approvals"

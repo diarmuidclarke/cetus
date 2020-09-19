@@ -11,6 +11,7 @@
         <table class="table">
             <thead>
                 <tr>
+                    <th>EAB Approval</th>
                     <th>EAB Request</th>
                     <th>Date of Review</th>
                     <th>Approver</th>
@@ -25,6 +26,10 @@
                 {% for appr in approvals %}
 
                 <tr>
+                    <td>
+                        <a href="/cetus3pur/eabreviewapprove/{{ appr.id }}"> {{appr.id }} </a>
+                    </td>
+                    <td>{{ appr.request }}</td>
                     <td>{{ appr.date }}</td>
                     <td>{{ appr.approver_userid }}</td>
                     <td>{{ appr.decision }}</td>

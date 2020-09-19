@@ -265,7 +265,7 @@ def EAB_RequestCreate(request):
 
 
 
-# select an EAB request from a list
+# select an EAB request from a list, to approve or go back into edit
 def EAB_ReviewSelect(request):
 
     reqlist = EAB_Request.objects.filter().values()
@@ -276,13 +276,34 @@ def EAB_ReviewSelect(request):
 
 # EAB Approvals - do an approval
 def EAB_ReviewApprove(request, reqid):
-    req = EAB_Request.objects.get(pk=reqid)
-    datetoday = date.today()
-    bulma_friendly_date = datetoday.strftime("%Y-%m-%d") 
+    if request.method == 'POST':
+        # get form data
+        date_approval = request.POST.get('eabrev_date')
+        aaprv_id = request.POST.get('eabrev_approver_user_id')
+        decision = request.POST.get('eabreview_decision_selector')
+        ecm_comment = request.POST.get('eabrev_ecm_comment')
+        ipm_comment = request.POST.get('eabrev_IPM_comment')
+        IT_comment = request.POST.get('eabrev_IT_comment')
 
-    context = { 'reqid' : reqid, 'req':req , 'bulma_date':bulma_friendly_date, 'user':request.user}
+        date_obj = parser.parse(date_approval, dayfirst = True)
 
-    return render(request, 'cetus3pur/EAB_ReviewApprove.html', context)
+        review = EAB_Approval.create(reqid, date_obj, aaprv_id, decision, ecm_comment, ipm_comment, IT_comment)
+        review.save()
+
+        context = {}
+        return render(request, 'cetus3pur/EAB_Records.html', context)
+
+    else:
+        req = EAB_Request.objects.get(pk=reqid)
+        datetoday = date.today()
+        bulma_friendly_date = datetoday.strftime("%Y-%m-%d") 
+        context = { 'reqid' : reqid, 'req':req , 'bulma_date':bulma_friendly_date, 'user':request.user}
+
+        return render(request, 'cetus3pur/EAB_ReviewApprove.html', context)
+
+
+
+
 
 
 # EAB Records - show all past approval decisions
