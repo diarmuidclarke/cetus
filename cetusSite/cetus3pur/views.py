@@ -294,10 +294,19 @@ def EAB_ReviewApprove(request, reqid):
         return render(request, 'cetus3pur/EAB_Records.html', context)
 
     else:
+        # find the request we're trying to approve
         req = EAB_Request.objects.get(pk=reqid)
+
+        # find any approvals in progress from previous review of a request
+        approval = EAB_Approval.objects.get(request = reqid)
+
         datetoday = date.today()
         bulma_friendly_date = datetoday.strftime("%Y-%m-%d") 
-        context = { 'reqid' : reqid, 'req':req , 'bulma_date':bulma_friendly_date, 'user':request.user}
+        context = { 'reqid' : reqid,
+                    'req':req , 
+                    'approval':approval,
+                    'bulma_date':bulma_friendly_date, 
+                    'user':request.user}
 
         return render(request, 'cetus3pur/EAB_ReviewApprove.html', context)
 
@@ -310,5 +319,6 @@ def EAB_ReviewApprove(request, reqid):
 def EAB_Records(request):
     approvals = EAB_Approval.objects.filter().values()
 
-    context = { 'approvals':approvals}
+
+    context = { 'approvals':approvals, }
     return render(request, 'cetus3pur/EAB_Records.html', context)

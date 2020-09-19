@@ -4,7 +4,7 @@
     <div class="container">
         <div class="content">
             <br>
-            <h1>Review an EAB Request for Approval</h1>
+            <h1>Approve an EAB Request</h1>
         </div>
     </div>
 </section>
@@ -82,25 +82,28 @@
 
                 <div class="field">
                     <label class="label">ECM Comment</label>
-                    <textarea class="textarea" rows=6 name="eabrev_ecm_comment" placeholder=""></textarea>
+                    <textarea class="textarea" name="eabrev_ecm_comment" placeholder="">{{ approval.ecm_comment}}</textarea>
                 </div>
 
                 <div class="field">
                     <label class="label">IP Manager Comment</label>
-                    <textarea class="textarea" rows=6 name="eabrev_IPM_comment" placeholder=""></textarea>
+                    <textarea class="textarea" name="eabrev_IPM_comment" placeholder="">{{ approval.ipm_comment}}</textarea>
                 </div>
 
 
                 <div class="field">
                     <label class="label">IT Comment</label>
                     <div class="control">
-                        <textarea class="textarea" rows=6 name="eabrev_IT_comment" placeholder=""></textarea>
+                        <textarea class="textarea" name="eabrev_IT_comment" placeholder="">{{ approval.IT_comment}}</textarea>
                     </div>
                 </div>
 
+                <hr>
                 <div class="control">
                     <button class="button is-primary is-rounded">Submit</button>
                 </div>
+
+                <hr>
             </form>
         </div>
     </div>

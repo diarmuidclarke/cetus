@@ -91,7 +91,7 @@ class EAB_Approval(models.Model):
     request = models.ForeignKey(EAB_Request, on_delete=models.CASCADE, default = None)
     date = models.DateField('Date of Review.')
     approver_userid = models.CharField('Approver User ID',max_length=10)
-    decision =  models.CharField('Decision', max_length=3, choices = [ ('APP','Approved'),('REJ','Rejected'),('PEN','Pending')])
+    decision =  models.CharField('Decision', max_length=3, choices = [ ('NYR','Not Yet Reviewed'),('APP','Approved'),('REJ','Rejected'),('PEN','Pending')])
     ecm_comment = models.CharField('ECM comment' , max_length=512) # Export Control Manager
     ipm_comment = models.CharField('IP Manager comment', max_length=512) # IP manager
     IT_comment = models.CharField('IT Comment', max_length=512) # IT comment
