@@ -282,13 +282,17 @@ def EAB_RequestCreate(request):
 def EAB_ReviewSelect(request):
 
     reqlist = EAB_Request.objects.filter().values()
-    context = { 'reqlist': reqlist}
+    approvalslist = EAB_Approval.objects.filter().values()
+
+    context = { 'reqlist': reqlist, 'approvalslist': approvalslist}
+
     return render(request, 'cetus3pur/EAB_ReviewSelect.html', context)
 
 
 
 # EAB Approvals - do an approval
 def EAB_ReviewApprove(request, approval_id):
+
     if request.method == 'POST':
         # get form data
         date_approval = request.POST.get('eabrev_date')

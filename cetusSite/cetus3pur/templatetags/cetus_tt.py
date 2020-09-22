@@ -7,5 +7,5 @@ def hash(h, key):
     return h[key]
 
 @register.filter
-def fkderef(o, prop):
+def req2appr(o, prop):
     return o.prop
