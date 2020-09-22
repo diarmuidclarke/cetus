@@ -244,13 +244,26 @@ def EAB_RequestCreate(request):
         export_claim = request.POST.get('eabreq_datastore_exportclaim')
         ipecr = request.POST.get('eabreq_ipecr')
 
+        # make a request
         date_obj = parser.parse(datereq, dayfirst = True)
         tpid =   int(re.search(r"\[([A-Za-z0-9_]+)\]", tpsel).group(1))
         req = EAB_Request.create(date_obj, reqstr_user_id, tpid, datastore,dataowner_user_id, export_claim, ipecr)
         req.save()
+        
+        # make a blank approval for the request
+        appr_blank = EAB_Approval.create(nreq=req.id, ndate=date_obj, napprover='todo', ndecision='NYR', necm_comment='not yet reviewed', 
+        nipm_comment='not yet reviewed', nIT_comment='not yet reviewed')
+        appr_blank.request = req
+        appr_blank.save()
+        
 
-        context = { 'req_id' : req.id}
-        return render(request, 'cetus3pur/EAB_RequestSubmitted.html', context)
+
+        # context = { 'req_id' : req.id }
+        # return render(request, 'cetus3pur/EAB_RequestSubmitted.html', context)
+
+        reqlist = EAB_Request.objects.filter().values()
+        context = { 'reqlist': reqlist}
+        return render(request, 'cetus3pur/EAB_ReviewSelect.html', context)
 
     else:
         #date
