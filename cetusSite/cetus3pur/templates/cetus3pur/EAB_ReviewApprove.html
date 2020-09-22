@@ -35,7 +35,7 @@
                     <tr>
                         <td>{{ req.date }}</td>
                         <td>{{ req.reqstr_userid }}</td>
-                        <td>{{ req.tp }}</td>
+                        <td>{{ req.tp.legal_entity_name }} </td>
                         <td>{{ req.data_store }}</td>
                         <td>{{ req.data_store_export_claim }}</td>
                         <td>{{ req.ipecr }}</td>
@@ -64,7 +64,7 @@
                 <div class="field">
                     <label class="label">Approver User ID</label>
                     <div class="control">
-                        <input class="input" name="eabrev_approver_user_id" type="text" placeholder="Text input" value={{user}}>
+                        <input class="input" name="eabrev_approver_user_id" type="text" placeholder="Text input" value={{approval.approver_userid}}>
                     </div>
                 </div>
 

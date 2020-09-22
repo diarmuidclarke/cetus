@@ -275,7 +275,7 @@ def EAB_ReviewSelect(request):
 
 
 # EAB Approvals - do an approval
-def EAB_ReviewApprove(request, reqid):
+def EAB_ReviewApprove(request, approval_id):
     if request.method == 'POST':
         # get form data
         date_approval = request.POST.get('eabrev_date')
@@ -294,19 +294,21 @@ def EAB_ReviewApprove(request, reqid):
         return render(request, 'cetus3pur/EAB_Records.html', context)
 
     else:
-        # find the request we're trying to approve
-        req = EAB_Request.objects.get(pk=reqid)
-
         # find any approvals in progress from previous review of a request
-        approval = EAB_Approval.objects.get(request = reqid)
+        approval = EAB_Approval.objects.get(pk = approval_id)
 
-        datetoday = date.today()
-        bulma_friendly_date = datetoday.strftime("%Y-%m-%d") 
-        context = { 'reqid' : reqid,
-                    'req':req , 
+        # find the request we're trying to approve
+        req = approval.request
+
+
+        # datetoday = date.today()
+        bulma_friendly_date = approval.date.strftime("%Y-%m-%d") 
+        context = { 'reqid' : req.id,
+                    'req':req,
                     'approval':approval,
                     'bulma_date':bulma_friendly_date, 
-                    'user':request.user}
+                    'user':request.user
+                }
 
         return render(request, 'cetus3pur/EAB_ReviewApprove.html', context)
 
@@ -320,5 +322,5 @@ def EAB_Records(request):
     approvals = EAB_Approval.objects.filter().values()
 
 
-    context = { 'approvals':approvals, }
+    context = { 'approvals':approvals }
     return render(request, 'cetus3pur/EAB_Records.html', context)
