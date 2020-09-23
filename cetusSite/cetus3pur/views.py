@@ -281,7 +281,7 @@ def EAB_RequestCreate(request):
 # select an EAB request from a list, to approve or go back into edit
 def EAB_ReviewSelect(request):
 
-    reqlist = EAB_Request.objects.all()
+    reqlist = EAB_Request.objects.select_related('tp').all()
     approvalslist = EAB_Approval.objects.all()
 
     # for req in reqlist:

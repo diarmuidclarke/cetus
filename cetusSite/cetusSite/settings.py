@@ -97,8 +97,12 @@ WSGI_APPLICATION = 'cetusSite.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql_psycopg2',
+        'NAME': 'dcknnchtrkvo9p',
+        'USER': 'guokbgckvmafvx',
+        'PASSWORD': '9554fb2dfd7147940860b358af853a6a5f255d49372f018eeb81d640136fedad',
+        'HOST': 'ec2-54-75-199-252.eu-west-1.compute.amazonaws.com',
+        'PORT': '5432',
     }
 }
 
