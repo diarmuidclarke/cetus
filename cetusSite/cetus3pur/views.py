@@ -307,8 +307,16 @@ def EAB_ReviewApprove(request, approval_id):
 
         date_obj = parser.parse(date_approval, dayfirst = True)
 
-        review = EAB_Approval.create(reqid, date_obj, aaprv_id, decision, ecm_comment, ipm_comment, IT_comment)
-        review.save()
+        apprv = EAB_Approval.objects.get(pk=approval_id)
+        apprv.date = date_obj
+        apprv.approver_userid = aaprv_id
+        apprv.decision = 'APP'
+        apprv.ecm_comment = ecm_comment
+        apprv.ipm_comment = ipm_comment
+        apprv.IT_comment = IT_comment
+        apprv.save()
+        # review = EAB_Approval.create(reqid, date_obj, aaprv_id, decision, ecm_comment, ipm_comment, IT_comment)
+        # review.save()
 
         context = {}
         return render(request, 'cetus3pur/EAB_Records.html', context)
@@ -339,8 +347,15 @@ def EAB_ReviewApprove(request, approval_id):
 
 # EAB Records - show all past approval decisions
 def EAB_Records(request):
-    approvals = EAB_Approval.objects.filter().values()
+    approvals = EAB_Approval.objects.select_related('request').all()
+    requests = EAB_Request.objects.select_related('tp').all()
 
-
-    context = { 'approvals':approvals }
+    context = { 'approvals':approvals, 'requests':requests  }
     return render(request, 'cetus3pur/EAB_Records.html', context)
+
+    
+
+# Audit
+def Audit(request):
+    context = { }
+    return render(request, 'cetus3pur/Audit.html', context)

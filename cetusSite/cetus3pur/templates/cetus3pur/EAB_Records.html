@@ -11,7 +11,6 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th>EAB Approval</th>
                     <th>EAB Request</th>
                     <th>Date of Review</th>
                     <th>Approver</th>
@@ -26,10 +25,8 @@
                 {% for appr in approvals %}
 
                 <tr>
-                    <td>
-                        <a href="/cetus3pur/eabreviewapprove/{{ appr.id }}"> {{appr.id }} </a>
-                    </td>
-                    <td>{{ appr.request }}</td>
+                    <td>{{ appr.request.reqstr_userid }} requested {{ appr.request.tp.legal_entity_name }} ( {{ appr.request.tp.location }} ) access to {{ appr.request.data_store }} <br>Claimed export contents : {{ appr.request.data_store_export_claim }}
+                        <br>IPECR: {{ appr.request.ipecr }} </td>
                     <td>{{ appr.date }}</td>
                     <td>{{ appr.approver_userid }}</td>
                     <td>{{ appr.decision }}</td>

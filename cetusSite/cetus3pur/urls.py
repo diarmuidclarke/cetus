@@ -37,4 +37,5 @@ urlpatterns = [
     path('eabreviewapprove/',views.EAB_ReviewApprove, name='EAB_ReviewApprove'),
 
     path('eabrecords/',views.EAB_Records, name='EAB_Records'),
+    path('audit/',views.Audit, name='Audit'),
 ]
