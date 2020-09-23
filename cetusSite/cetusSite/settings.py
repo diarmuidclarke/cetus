@@ -42,7 +42,7 @@ SECRET_KEY = 'mm6ssb=#$-*de5#zgd$iictq8m35y&txs&26nz!&gu8lq$9t+0'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['cetus-demo.herokuapp.com', 'localhost']
+ALLOWED_HOSTS = ['*']
 LOGIN_REDIRECT_URL = 'index' # url redirecting after a successful authentication
 LOGOUT_REDIRECT_URL = 'index'
 
