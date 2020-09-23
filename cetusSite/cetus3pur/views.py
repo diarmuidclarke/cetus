@@ -16,7 +16,7 @@ from django.contrib.auth import get_user_model
 from django.contrib.auth import logout
 from django.contrib.auth.views import LoginView
 from datetime import date
-
+from pprint import pprint
 
 
 # front page - third parties by default
@@ -281,8 +281,11 @@ def EAB_RequestCreate(request):
 # select an EAB request from a list, to approve or go back into edit
 def EAB_ReviewSelect(request):
 
-    reqlist = EAB_Request.objects.filter().values()
-    approvalslist = EAB_Approval.objects.filter().values()
+    reqlist = EAB_Request.objects.all().select_related('ThirdParty')
+    approvalslist = EAB_Approval.objects.all()
+
+    # for req in reqlist:
+    #     pprint(req.tq.select_related('tq'))
 
     context = { 'reqlist': reqlist, 'approvalslist': approvalslist}
 

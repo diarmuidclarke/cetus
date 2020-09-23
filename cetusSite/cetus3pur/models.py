@@ -60,7 +60,7 @@ class RRResponsibleManager(models.Model):
 class EAB_Request(models.Model):
     date = models.DateField('Date of Req.')
     reqstr_userid = models.CharField('Requester User ID', max_length=10)
-    tp = models.ForeignKey( ThirdParty, on_delete=models.CASCADE)
+    tp = models.ForeignKey( ThirdParty,  related_name='third_party', on_delete=models.CASCADE)
     data_store = models.CharField( 'Date Store', max_length=256)
     data_owner_userid =  models.CharField( 'Data Owner User ID', max_length=10)
     data_store_export_claim = models.CharField('Export status of Data Store', max_length=512 )

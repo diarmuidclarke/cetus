@@ -29,12 +29,14 @@
                     <td><a href="/cetus3pur/eabreq/{{req.id}}"> {{req.id}}</a></td>
                     <td>
                         <!--   <a href="/cetus3pur/eabreviewapprove/{% for approval in approvalslist %}{% if approval.request.id == req.id %}{{ approval.id}}{% endif %}{% endfor %}">-->
-                        xzz {% for approval in approvalslist %}{% if approval.request.id == req.id %}{{ approval.id}}{% endif %}{% endfor %}
+                        {% for approval in approvalslist %}
+                        {% if approval.request.id == req.id %}{{ approval.id}}{% endif %}
+                        {% endfor %}
                         <!-- </a> -->
                     </td>
                     <td>{{ req.date }}</td>
                     <td>{{ req.reqstr_userid }}</td>
-                    <td>{{ req.tp }}</td>
+                    <td>{{ req.tp.legal_entity_name }}</td>
                     <td>{{ req.data_store }}</td>
                     <td>{{ req.data_store_export_claim }}</td>
                     <td>{{ req.ipecr }}</td>

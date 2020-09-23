@@ -19,6 +19,9 @@ from django.conf.urls import url
 from django.contrib.auth import views as auth_views
 from django.contrib.auth.views import LoginView
 from django.contrib.auth.views import LogoutView
+import debug_toolbar
+from django.conf import settings
+
 
 urlpatterns = [
     url(r'^login/$', auth_views.LoginView.as_view(), name='login'),
@@ -27,3 +30,9 @@ urlpatterns = [
     path('', include('cetus3pur.urls')),
     path('admin/', admin.site.urls),
 ]
+
+if settings.DEBUG:
+    import debug_toolbar
+    urlpatterns = [
+        path('__debug__/', include(debug_toolbar.urls)),
+    ] + urlpatterns
