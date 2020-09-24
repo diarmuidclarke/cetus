@@ -11,8 +11,8 @@
         <table class="table">
             <thead>
                 <tr>
-                    <th>EAB Request ID</th>
-                    <th>EAB Approval ID</th>
+                    <th>EAB Request</th>
+                    <th>EAB Approval</th>
                     <th>Date of Request</th>
                     <th>Requestor</th>
                     <th>3rd Party</th>
@@ -26,7 +26,7 @@
                 {% for req in reqlist %}
 
                 <tr>
-                    <td><a href="/cetus3pur/eabreq/{{req.id}}"> {{req.id}}</a></td>
+                    <td><a class="button is-link is-small" href="/cetus3pur/eabreq/{{req.id}}">Edit Request</a></td>
                     <td>
                         <a class="button is-link is-small" href="/cetus3pur/eabreviewapprove/{% for approval in approvalslist %}{% if approval.request.id == req.id %}{{ approval.id}}{% endif %}{% endfor %}">
                             Approve...
@@ -39,7 +39,7 @@
                     </td>
                     <td>{{ req.date }}</td>
                     <td>{{ req.reqstr_userid }}</td>
-                    <td>{{ req.tp.legal_entity_name }}</td>
+                    <td>{{ req.tp.legal_entity_name }} ({{req.tp.location}})</td>
                     <td>{{ req.data_store }}</td>
                     <td>{{ req.data_store_export_claim }}</td>
                     <td>{{ req.ipecr }}</td>

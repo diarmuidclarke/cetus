@@ -30,6 +30,7 @@ urlpatterns = [
     path('rrm/', views.RRRManagersView, name='RRRManagersView'),
 
     path('eabreq/',views.EAB_RequestCreate, name='EAB_RequestCreate'),
+    path('eabreq/<int:reqid>',views.EAB_RequestEdit, name='EAB_RequestCreate'),
 
     path('eabreq_for_approval/',views.EAB_ReviewSelect, name='EAB_ReviewSelect'),
 

@@ -278,6 +278,50 @@ def EAB_RequestCreate(request):
 
 
 
+# EAB Request edit
+def EAB_RequestEdit(request, reqid):
+    if request.method == 'POST':
+        # get form data
+        datereq = request.POST.get('eabreq_date')
+        reqstr_user_id = request.POST.get('eabreq_user_id')
+        tpsel = request.POST.get('eabreq_tp_selector')
+        datastore = request.POST.get('eabreq_datastore')
+        dataowner_user_id = request.POST.get('eabreq_dataowner_user_id')
+        export_claim = request.POST.get('eabreq_datastore_exportclaim')
+        ipecr = request.POST.get('eabreq_ipecr')
+
+        date_obj = parser.parse(datereq, dayfirst = True)
+        tpid =   int(re.search(r"\[([A-Za-z0-9_]+)\]", tpsel).group(1))
+        tp = ThirdParty.objects.get(pk=tpid)
+
+        # update the request
+        req = EAB_Request.objects.get(pk=reqid)
+        req.data = date_obj
+        req.reqstr_userid = reqstr_user_id
+        req.tp = tp
+        req.datastore = datastore
+        req.data_owner_userid = dataowner_user_id
+        req.data_store_export_claim = export_claim
+        req.ipecr = ipecr        
+        req.save()
+        
+        reqlist = EAB_Request.objects.filter().values()
+        context = { 'reqlist': reqlist}
+        return render(request, 'cetus3pur/EAB_ReviewSelect.html', context)
+
+    else:
+        #date
+        datetoday = date.today()
+        bulma_friendly_date = datetoday.strftime("%Y-%m-%d") 
+
+        # third party list
+        tplist = ThirdParty.objects.filter().values()
+        
+        context = { 'bulma_date_now' : bulma_friendly_date, 'user_id_requester' : request.user, 'tplist' : tplist}
+        return render(request, 'cetus3pur/EAB_RequestCreate.html', context)
+
+
+
 # select an EAB request from a list, to approve or go back into edit
 def EAB_ReviewSelect(request):
 
