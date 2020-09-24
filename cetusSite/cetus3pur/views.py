@@ -397,7 +397,11 @@ def EAB_Records(request):
     context = { 'approvals':approvals, 'requests':requests  }
     return render(request, 'cetus3pur/EAB_Records.html', context)
 
-    
+# IT Action Log
+def IT_ActionLog(request):
+	context = {}
+	return render(request, 'cetus3pur/IT_actionlog.html',context)
+
 
 # Audit
 def Audit(request):
