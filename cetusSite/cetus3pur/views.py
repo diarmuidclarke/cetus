@@ -362,9 +362,6 @@ def EAB_ReviewApprove(request, approval_id):
         # review = EAB_Approval.create(reqid, date_obj, aaprv_id, decision, ecm_comment, ipm_comment, IT_comment)
         # review.save()
 
-		print('request form deubg')
-		print(request.form)
-
         context = {}
         return render(request, 'cetus3pur/EAB_Records.html', context)
 
