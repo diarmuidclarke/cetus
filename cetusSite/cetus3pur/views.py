@@ -354,7 +354,7 @@ def EAB_ReviewApprove(request, approval_id):
         apprv = EAB_Approval.objects.get(pk=approval_id)
         apprv.date = date_obj
         apprv.approver_userid = aaprv_id
-        apprv.decision = 'APP'
+        apprv.decision =  'APP'  # hack, 
         apprv.ecm_comment = ecm_comment
         apprv.ipm_comment = ipm_comment
         apprv.IT_comment = IT_comment
