@@ -39,4 +39,6 @@ urlpatterns = [
 
     path('eabrecords/',views.EAB_Records, name='EAB_Records'),
     path('audit/',views.Audit, name='Audit'),
+	path('IT_actionlog/',views.IT_ActionLog, name='IT_actionlog'),
 ]
+
