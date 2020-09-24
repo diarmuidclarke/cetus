@@ -364,7 +364,7 @@ def EAB_ReviewApprove(request, approval_id):
 
 		print('request form deubg')
 		print(request.form)
-		
+
         context = {}
         return render(request, 'cetus3pur/EAB_Records.html', context)
 
