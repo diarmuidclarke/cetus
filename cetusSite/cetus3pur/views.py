@@ -361,8 +361,12 @@ def EAB_ReviewApprove(request, approval_id):
         apprv.save()
         # review = EAB_Approval.create(reqid, date_obj, aaprv_id, decision, ecm_comment, ipm_comment, IT_comment)
         # review.save()
-
-        context = {}
+        
+        
+        approvals = EAB_Approval.objects.select_related('request').all()
+        requests = EAB_Request.objects.select_related('tp').all()
+        context = { 'approvals':approvals, 'requests':requests  }
+    
         return render(request, 'cetus3pur/EAB_Records.html', context)
 
     else:
