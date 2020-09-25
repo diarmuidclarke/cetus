@@ -38,7 +38,12 @@ urlpatterns = [
     path('eabreviewapprove/',views.EAB_ReviewApprove, name='EAB_ReviewApprove'),
 
     path('eabrecords/',views.EAB_Records, name='EAB_Records'),
+    
+    # for debugging first Class based view
+    path('eabrecords_cbv/',views.EAB_Records_cbv, name='EAB_Records_cbv'),
+    
     path('audit/',views.Audit, name='Audit'),
-	path('IT_actionlog/',views.IT_ActionLog, name='IT_actionlog'),
+	
+    path('IT_actionlog/',views.IT_ActionLog, name='IT_actionlog'),
 ]
 

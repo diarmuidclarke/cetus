@@ -401,6 +401,20 @@ def EAB_Records(request):
     context = { 'approvals':approvals, 'requests':requests  }
     return render(request, 'cetus3pur/EAB_Records.html', context)
 
+
+    
+    
+# EAB Records - show all past approval decisions
+def EAB_Records_cbv(request):
+    approvals = EAB_Approval.objects.select_related('request').all()
+    requests = EAB_Request.objects.select_related('tp').all()
+
+    context = { 'approvals':approvals, 'requests':requests  }
+    return render(request, 'cetus3pur/EAB_Records_cbv.html', context)
+
+
+
+    
 # IT Action Log
 def IT_ActionLog(request):
 	context = {}
