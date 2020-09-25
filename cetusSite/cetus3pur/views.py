@@ -17,7 +17,7 @@ from django.contrib.auth import logout
 from django.contrib.auth.views import LoginView
 from datetime import date
 from pprint import pprint
-
+from django.views.generic import ListView
 
 # front page - third parties by default
 def index(request):
@@ -353,13 +353,19 @@ def EAB_ReviewApprove(request, approval_id):
         apprv = EAB_Approval.objects.get(pk=approval_id)
         apprv.date = date_obj
         apprv.approver_userid = aaprv_id
-        apprv.decision = decision
+        apprv.decision =  decision
         apprv.ecm_comment = ecm_comment
         apprv.ipm_comment = ipm_comment
         apprv.IT_comment = IT_comment
         apprv.save()
-
-        context = {}
+        # review = EAB_Approval.create(reqid, date_obj, aaprv_id, decision, ecm_comment, ipm_comment, IT_comment)
+        # review.save()
+        
+        
+        approvals = EAB_Approval.objects.select_related('request').all()
+        requests = EAB_Request.objects.select_related('tp').all()
+        context = { 'approvals':approvals, 'requests':requests  }
+    
         return render(request, 'cetus3pur/EAB_Records.html', context)
 
     else:
@@ -394,6 +400,20 @@ def EAB_Records(request):
     context = { 'approvals':approvals, 'requests':requests  }
     return render(request, 'cetus3pur/EAB_Records.html', context)
 
+
+    
+    
+# EAB Records - show all past approval decisions
+class EAB_Records_cbv(ListView):
+    model = EAB_Approval
+    #approvals = EAB_Approval.objects.select_related('request').all()
+    #requests = EAB_Request.objects.select_related('tp').all()
+    #context = { 'approvals':approvals, 'requests':requests  }
+    #return render(request, 'cetus3pur/EAB_Records_cbv.html', context)
+
+
+
+    
 # IT Action Log
 def IT_ActionLog(request):
 	context = {}
