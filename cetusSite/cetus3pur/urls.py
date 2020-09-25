@@ -40,7 +40,7 @@ urlpatterns = [
     path('eabrecords/',views.EAB_Records, name='EAB_Records'),
     
     # for debugging first Class based view
-    path('eabrecords_cbv/',views.EAB_Records_cbv.as_view(), name='EAB_Records_cbv'),
+    path('eabrecords_cbv/',views.EAB_Records_cbv.as_view(template_name='EAB_Records_cbv.html'), name='EAB_Records_cbv'),
     
     path('audit/',views.Audit, name='Audit'),
 	
