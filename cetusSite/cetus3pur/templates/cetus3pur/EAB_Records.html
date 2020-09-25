@@ -30,11 +30,20 @@
                     <td>{{ appr.date }}</td>
                     <td>{{ appr.approver_userid }}</td>
                     <td>
-                        {% if decision == 'APP'%}
+                        {% if {{appr.decision}} == 'APP' %}
                             <p style="color:green">
+                                Approved
+                        {% elif {{appr.decision}} == 'REJ'%}
+                            <p style="color:red">
+                                Rejected
+                        {% elif {{appr.decision}} == 'PEN'%}
+                            <p>Pending
+                        {% elif {{appr.decision}} == 'NYR'%}
+                            <p>Not yet reviewed
+                        {% else %}
+                            <p>{{appr.decision}}
                         {%endif%}	
-                        {{ appr.decision }}
-                        </p>
+                    </p>
                     </td>
                     <td>{{ appr.ecm_comment }}</td>
                     <td>{{ appr.ipm_comment }}</td>
