@@ -29,7 +29,13 @@
                         <br>IPECR: {{ appr.request.ipecr }} </td>
                     <td>{{ appr.date }}</td>
                     <td>{{ appr.approver_userid }}</td>
-                    <td>{{ appr.decision }}</td>
+                    <td>
+                        {% if decision == 'APP'%}
+                            <p style="color:green">
+                        {%endif%}	
+                        {{ appr.decision }}
+                        </p>
+                    </td>
                     <td>{{ appr.ecm_comment }}</td>
                     <td>{{ appr.ipm_comment }}</td>
                     <td>{{ appr.IT_comment }}</td>
