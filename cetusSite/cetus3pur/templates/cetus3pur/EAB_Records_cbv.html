@@ -22,7 +22,7 @@
             </thead>
             <tbody>
 
-                {% for appr in approvals %}
+                {% for appr in object_list %}
 
                 <tr>
                     <td>{{ appr.request.reqstr_userid }} requested {{ appr.request.tp.legal_entity_name }} ( {{ appr.request.tp.location }} ) access to {{ appr.request.data_store }} <br>Claimed export contents : {{ appr.request.data_store_export_claim }}
