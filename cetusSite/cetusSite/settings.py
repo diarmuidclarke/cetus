@@ -61,10 +61,9 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',
+#    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-#    'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -97,6 +96,10 @@ WSGI_APPLICATION = 'cetusSite.wsgi.application'
 
 DATABASES = {
     'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': str(BASE_DIR / 'db.sqlite3'),
+    },
+    'postgres': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'dcknnchtrkvo9p',
         'USER': 'guokbgckvmafvx',
@@ -104,6 +107,7 @@ DATABASES = {
         'HOST': 'ec2-54-75-199-252.eu-west-1.compute.amazonaws.com',
         'PORT': '5432',
     }
+
 }
 
 

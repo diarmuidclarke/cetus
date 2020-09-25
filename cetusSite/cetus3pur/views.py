@@ -257,7 +257,6 @@ def EAB_RequestCreate(request):
         appr_blank.save()
         
 
-
         # context = { 'req_id' : req.id }
         # return render(request, 'cetus3pur/EAB_RequestSubmitted.html', context)
 
@@ -354,13 +353,11 @@ def EAB_ReviewApprove(request, approval_id):
         apprv = EAB_Approval.objects.get(pk=approval_id)
         apprv.date = date_obj
         apprv.approver_userid = aaprv_id
-        apprv.decision =  'APP'  # hack, 
+        apprv.decision = decision
         apprv.ecm_comment = ecm_comment
         apprv.ipm_comment = ipm_comment
         apprv.IT_comment = IT_comment
         apprv.save()
-        # review = EAB_Approval.create(reqid, date_obj, aaprv_id, decision, ecm_comment, ipm_comment, IT_comment)
-        # review.save()
 
         context = {}
         return render(request, 'cetus3pur/EAB_Records.html', context)
