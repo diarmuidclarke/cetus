@@ -7,6 +7,7 @@ from .models import ThirdPartyUser
 from .models import ThirdParty
 from .models import RRResponsibleManager
 from .models import EAB_Request
+from .models import EAB_DataStoreSystem
 from .models import EAB_Approval
 import datetime
 import dateutil.parser as parser
@@ -239,6 +240,7 @@ def EAB_RequestCreate(request):
         datereq = request.POST.get('eabreq_date')
         reqstr_user_id = request.POST.get('eabreq_user_id')
         tpsel = request.POST.get('eabreq_tp_selector')
+        datastoresystem = request.POST.get('eabreq_dss_selector')
         datastore = request.POST.get('eabreq_datastore')
         dataowner_user_id = request.POST.get('eabreq_dataowner_user_id')
         export_claim = request.POST.get('eabreq_datastore_exportclaim')
@@ -271,8 +273,9 @@ def EAB_RequestCreate(request):
 
         # third party list
         tplist = ThirdParty.objects.filter().values()
-        
-        context = { 'bulma_date_now' : bulma_friendly_date, 'user_id_requester' : request.user, 'tplist' : tplist}
+        syslist = EAB_DataStoreSystem.objects.filter().values()
+
+        context = { 'bulma_date_now' : bulma_friendly_date, 'user_id_requester' : request.user, 'tplist' : tplist, 'syslist':syslist}
         return render(request, 'cetus3pur/EAB_RequestCreate.html', context)
 
 

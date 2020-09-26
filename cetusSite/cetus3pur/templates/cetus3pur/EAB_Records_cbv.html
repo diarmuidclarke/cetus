@@ -25,7 +25,7 @@
                 {% for appr in object_list %}
 
                 <tr>
-                    <td>{{ appr.request.reqstr_userid }} requested {{ appr.request.tp.legal_entity_name }} ( {{ appr.request.tp.location }} ) access to {{ appr.request.data_store }} <br>Claimed export contents : {{ appr.request.data_store_export_claim }}
+                    <td>{{ appr.request.reqstr_userid }} requested {{ appr.request.tp.legal_entity_name }} ( {{ appr.request.tp.location }} ) access to {{ appr.request.data_store_system }} [{{ appr.request.data_store }}] <br>Claimed export contents : {{ appr.request.data_store_export_claim }}
                         <br>IPECR: {{ appr.request.ipecr }} </td>
                     <td>{{ appr.date }}</td>
                     <td>{{ appr.approver_userid }}</td>

@@ -43,6 +43,16 @@
                     </select>
                 </div>
 
+                <label class="label">Data Store System</label>
+
+                <div class="select is-focused">
+                    <select name="eabreq_dss_selector">
+                        {% for sys in syslist %}
+                        <option>{{sys.datastoresystem}} - {{ sys.data_store_system_other_specify }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
                 <div class="field">
                     <label class="label">Data Store</label>
                     <div class="control">
