@@ -19,6 +19,12 @@ from django.contrib.auth.views import LoginView
 from datetime import date
 from pprint import pprint
 from django.views.generic import ListView
+from django_tables2 import SingleTableView, SingleTableMixin
+from django_filters.views import FilterView
+from .tables import EAB_RecordsTable
+from .filters import EAB_RecordFilter
+
+
 
 # front page - third parties by default
 def index(request):
@@ -407,8 +413,11 @@ def EAB_Records(request):
     
     
 # EAB Records - show all past approval decisions
-class EAB_Records_cbv(ListView):
+class EAB_Records_cbv(SingleTableMixin, FilterView):
     model = EAB_Approval
+    table_class = EAB_RecordsTable
+    template_name = "cetus3pur/EAB_Records_cbv.html"
+    filterset_class = EAB_RecordFilter
     #approvals = EAB_Approval.objects.select_related('request').all()
     #requests = EAB_Request.objects.select_related('tp').all()
     #context = { 'approvals':approvals, 'requests':requests  }
@@ -427,3 +436,4 @@ def IT_ActionLog(request):
 def Audit(request):
     context = { }
     return render(request, 'cetus3pur/Audit.html', context)
+

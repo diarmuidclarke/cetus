@@ -5,7 +5,8 @@ from django.db import models
 class ThirdParty(models.Model):
     legal_entity_name = models.CharField(max_length=50)
     location = models.CharField(max_length=50)
-
+    ad_group_name = models.CharField('AD Group Name', max_length=50, default='AD group todo')
+    
     class Meta:
         verbose_name = "3P Business"
         verbose_name_plural = "3P Businesses"
@@ -97,7 +98,7 @@ class EAB_DataStoreSystem(models.Model):
 class EAB_Request(models.Model):
     date = models.DateField('Date of Request')
     reqstr_userid = models.CharField('Requester User ID', max_length=10)
-    tp = models.ForeignKey(ThirdParty,  related_name='third_party', on_delete=models.CASCADE)
+    tp = models.ForeignKey(ThirdParty,  related_name='third_party', on_delete=models.CASCADE, verbose_name = 'Third Party')
 
     # e.g. integrity, artisan, nas drive
     data_store_system = models.ForeignKey( EAB_DataStoreSystem,  related_name='data_store_system', on_delete=models.CASCADE, null=True)  # todo : check this use of related_name

@@ -1,61 +1,23 @@
 {% extends "base.html" %} {% block content %}
 
-<section>
+
+
+{% load render_table from django_tables2 %}
+{% load bulma_tags %}
+<section class="section">
     <div class="container">
-        <div class="content">
-            <br>
-            <h1>EAB Records cbv</h1>
-        </div>
-
-
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>EAB Request</th>
-                    <th>Date of Review</th>
-                    <th>Approver</th>
-                    <th>Decision</th>
-                    <th>ECM Comment</th>
-                    <th>IPM Comment</th>
-                    <th>IT Comment</th>
-                </tr>
-            </thead>
-            <tbody>
-
-                {% for appr in object_list %}
-
-                <tr>
-                    <td>{{ appr.request.reqstr_userid }} requested {{ appr.request.tp.legal_entity_name }} ( {{ appr.request.tp.location }} ) access to {{ appr.request.data_store_system }} [{{ appr.request.data_store }}] <br>Claimed export contents : {{ appr.request.data_store_export_claim }}
-                        <br>IPECR: {{ appr.request.ipecr }} </td>
-                    <td>{{ appr.date }}</td>
-                    <td>{{ appr.approver_userid }}</td>
-                    <td>
-                        {% if appr.decision == 'APP' %}
-                            <p style="color:green">
-                                Approved
-                        {% elif appr.decision == 'REJ' %}
-                            <p style="color:red">
-                                Rejected
-                        {% elif appr.decision == 'PEN' %}
-                            <p>Pending
-                        {% elif appr.decision == 'NYR' %}
-                            <p>Not yet reviewed
-                        {% else %}
-                            <p>appr.decision
-                        {%endif%}	
-                    </p>
-                    </td>
-                    <td>{{ appr.ecm_comment }}</td>
-                    <td>{{ appr.ipm_comment }}</td>
-                    <td>{{ appr.IT_comment }}</td>
-                </tr>
-
-                {% endfor %}
-            </tbody>
-        </table>
-
-
+        {% if filter %}
+            <form action="" method="get">
+                {{ filter.form | bulma }}
+                <input type="submit">
+            </form>
+        {% endif %}
+        <br>
+    </div>
+    <div class="container">
+        {%  render_table table %}
     </div>
 </section>
+
 
 {% endblock %}

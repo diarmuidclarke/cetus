@@ -57,6 +57,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'debug_toolbar',
+    'django_tables2',
+    'bulma',
+    'django_filters',
 ]
 
 MIDDLEWARE = [
