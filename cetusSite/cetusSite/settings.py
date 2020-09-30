@@ -157,3 +157,7 @@ INTERNAL_IPS = [
     '127.0.0.1',
     # ...
 ]
+
+
+DATE_INPUT_FORMATS = ('%d-%m-%Y', '%d/%m/%Y', '%d-%m-%y', '%d-%m-%y')
+SHORT_DATE_FORMAT = 'd-m-Y'

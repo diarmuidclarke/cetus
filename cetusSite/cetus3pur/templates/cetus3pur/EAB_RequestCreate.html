@@ -1,12 +1,14 @@
+<!-- CBV variant -->
 {% extends "base.html" %} {% block content %}
 
+{% load bulma_tags %}
 
 
 <section>
     <div class="container">
         <div class="content">
             <br>
-            <h1>Prepare an EAB Request</h1>
+            <h1>Prepare an EAB Request cbv</h1>
         </div>
     </div>
 </section>
@@ -15,118 +17,107 @@
 
 <section>
     <div class="container">
-        <div class="content">
-            <form action="" method="post">
+        <form action="" method="post">
 
-                <div class="field">
-                    <label class="label">Date of request</label>
-                    <div class="control">
-                        <input class="input" name="eabreq_date" type="date" placeholder="Text input" value={{ bulma_date_now }}>
+          {% if form.errors %}
+                {% for field in form %}
+                    {% for error in field.errors %}
+                        <div class="notification is-danger">
+                            <strong>{{ error|escape }}</strong>
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+                {% for error in form.non_field_errors %}
+                    <div class="notification is-warning">
+                        <strong>{{ error|escape }}</strong>
                     </div>
-                </div>
+                {% endfor %}
+            {% endif %}
+
+  
 
 
-                <div class="field">
-                    <label class="label">Requester User ID</label>
-                    <div class="control">
-                        <input class="input" name="eabreq_user_id" type="text" placeholder="Text input" value={{user_id_requester}}>
-                    </div>
-                </div>
+            <div class="box">
+                <h1 class="title">EAB Request</h1>
+                {{ form.date | bulma }}
+                {{ form.reqstr_userid | bulma }}
+                {{ form.tp | bulma }}
+                {{ form.data_store_system | bulma }}
+                {{ form.data_store | bulma }}
+                {{ form.data_owner_userid | bulma }}
+                {{ form.data_store_export_claim | bulma }}
+                {{ form.ipecr | bulma }}                
+            </div>
 
-                <label class="label">Third Party</label>
-
-                <div class="select is-focused">
-                    <select name="eabreq_tp_selector">
-                        {% for tp in tplist %}
-                        <option>[{{tp.id}}] - {{ tp.legal_entity_name }} {{tp.location}}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-
-                <label class="label">Data Store System</label>
-
-                <div class="select is-focused">
-                    <select name="eabreq_dss_selector">
-                        {% for sys in syslist %}
-                        <option>{{sys.datastoresystem}} - {{ sys.data_store_system_other_specify }}</option>
-                        {% endfor %}
-                    </select>
-                </div>
-
-                <div class="field">
-                    <label class="label">Data Store</label>
-                    <div class="control">
-                        <input class="input" name="eabreq_datastore" type="text" placeholder="Text input">
-                    </div>
-                </div>
-
-                <div class="field">
-                    <label class="label">Data owner user ID</label>
-                    <div class="control">
-                        <input class="input" name="eabreq_dataowner_user_id" type="text" placeholder="Text input">
-                    </div>
-                </div>
-
-
-                <div class="field">
-                    <label class="label">Data store export/IP claim</label>
-                    <div class="control">
-                        <input class="input" name="eabreq_datastore_exportclaim" type="text" placeholder="Text input">
-                    </div>
-                </div>
-
-                <div class="field">
-                    <label class="label">IPECR</label>
-                    <div class="control">
-                        <input class="input" name="eabreq_ipecr" type="text" placeholder="Text input">
-                    </div>
-                </div>
-
-
+            <!--
+            <div class="field">
+                <label class="label">Date of request</label>
                 <div class="control">
-                    <button class="button is-primary is-rounded">Submit</button>
+                    <input class="input" name="eabreq_date" type="date" placeholder="Text input" value={{ bulma_date_now }}>
                 </div>
-            </form>
-        </div>
+            </div>
+            <div class="field">
+                <label class="label">Requester User ID</label>
+                <div class="control">
+                    <input class="input" name="eabreq_user_id" type="text" placeholder="Text input" value={{user_id_requester}}>
+                </div>
+            </div>
+-->
+
+            <label class="label">Third Party</label>
+
+            <div class="select is-focused">
+                <select name="eabreq_tp_selector">
+                    {% for tp in tplist %}
+                    <option>[{{tp.id}}] - {{ tp.legal_entity_name }} {{tp.location}}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <label class="label">Data Store System</label>
+
+            <div class="select is-focused">
+                <select name="eabreq_dss_selector">
+                    {% for sys in syslist %}
+                    <option>{{sys.datastoresystem}} - {{ sys.data_store_system_other_specify }}</option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="field">
+                <label class="label">Data Store</label>
+                <div class="control">
+                    <input class="input" name="eabreq_datastore" type="text" placeholder="Text input">
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="label">Data owner user ID</label>
+                <div class="control">
+                    <input class="input" name="eabreq_dataowner_user_id" type="text" placeholder="Text input">
+                </div>
+            </div>
+
+
+            <div class="field">
+                <label class="label">Data store export/IP claim</label>
+                <div class="control">
+                    <input class="input" name="eabreq_datastore_exportclaim" type="text" placeholder="Text input">
+                </div>
+            </div>
+
+            <div class="field">
+                <label class="label">IPECR</label>
+                <div class="control">
+                    <input class="input" name="eabreq_ipecr" type="text" placeholder="Text input">
+                </div>
+            </div>
+
+
+            <div class="control">
+                <button class="button is-primary is-rounded">Submit</button>
+            </div>
+        </form>
     </div>
 </section>
-<script>
-    // // Get all dropdowns on the page that aren't hoverable.
-    // const dropdowns = document.querySelectorAll('.dropdown:not(.is-hoverable)');
-
-    // if (dropdowns.length > 0) {
-    //     // For each dropdown, add event handler to open on click.
-    //     dropdowns.forEach(function(el) {
-    //         el.addEventListener('click', function(e) {
-    //             // e.stopPropagation();
-    //             el.classList.toggle('is-active');
-    //         });
-    //     });
-
-    //     // If user clicks outside dropdown, close it.
-    //     document.addEventListener('click', function(e) {
-    //         sattr = el.getAttribute('select2-selection');
-    //         console.log('debug text dropbox:', sattr);
-    //         alert('click');
-    //         closeDropdowns();
-    //     });
-    // }
-
-    // /*
-    //  * Close dropdowns by removing `is-active` class.
-    //  */
-    // function closeDropdowns() {
-    //     dropdowns.forEach(function(el) {
-    //         el.classList.remove('is-active');
-    //     });
-    // }
-
-    // // Close dropdowns if ESC pressed
-    // document.addEventListener('keydown', function(event) {
-    //     let e = event || window.event;
-    //     if (e.key === 'Esc' || e.key === 'Escape') {
-    //         closeDropdowns();
-    //     }
-    // });
-</script>
 {% endblock %}
