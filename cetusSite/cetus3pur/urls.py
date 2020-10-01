@@ -30,7 +30,9 @@ urlpatterns = [
     path('rrm/', views.RRRManagersView, name='RRRManagersView'),
 
     # path('eabreq/',views.EAB_RequestCreate, name='EAB_RequestCreate'),
-    path('eabreq/',views.EAB_RequestCreate_cbv.as_view()),
+    path('eabreq/create/',views.EAB_RequestCreate_cbv.as_view()),
+    path('eabreq/edit/<int:request_id>',views.EAB_RequestEdit_cbv.as_view()),
+    path('eabreq/view/<int:request_id>',views.EAB_RequestView_cbv.as_view()),
 
 
     path('eabreq/<int:reqid>',views.EAB_RequestEdit, name='EAB_RequestCreate'),

@@ -27,7 +27,7 @@
                 {% for req in reqlist %}
 
                 <tr>
-                    <td><a class="button is-link is-small" href="/cetus3pur/eabreq/{{req.id}}">Edit Request</a></td>
+                    <td><a class="button is-link is-small" href="/cetus3pur/eabreq/edit/{{req.id}}">Edit Request</a></td>
                     <td>
                         <a class="button is-link is-small" href="/cetus3pur/eabreviewapprove/{% for approval in approvalslist %}{% if approval.request.id == req.id %}{{ approval.id}}{% endif %}{% endfor %}">
                             Approve...

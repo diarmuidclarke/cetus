@@ -248,6 +248,36 @@ class EAB_RequestCreate_cbv(CreateView):
     form_class = EAB_Request_Form
     extra_context = {}
 
+    # todo...no idea
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        print(self.kwargs)
+        return context
+
+
+# EAB request edit
+class EAB_RequestEdit_cbv(UpdateView):
+    model = EAB_Request
+    template_name = "cetus3pur/EAB_RequestCreate.html"
+    form_class = EAB_Request_Form
+
+    # todo...no idea
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        print(self.kwargs)
+        return context
+
+    def get_success_url(self):
+        # Do a lookup of the toolId
+        toolId = ToolRelease.objects.get(pk=self.kwargs['pk']).tool.pk
+        return "../{id}".format(id=toolId)
+
+
+class EAB_RequestView_cbv(DetailView):
+    model = EAB_Request
+    template_name = "cetus3pur/EAB_RequestCreate.html"
+    form_class = EAB_Request_Form
+
 
 
 # EAB Request Creation
