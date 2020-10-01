@@ -19,6 +19,7 @@ from django.contrib.auth.views import LoginView
 from datetime import date
 from pprint import pprint
 from django.views.generic import ListView, DetailView
+from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django_tables2 import SingleTableView, SingleTableMixin
 from django_filters.views import FilterView
 from .tables import EAB_RecordsTable
@@ -241,9 +242,9 @@ def RRRManagersView(request):
 
 
 # EAB Request Creation (class based view version)
-class EAB_RequestCreate_cbv(DetailView):
+class EAB_RequestCreate_cbv(CreateView):
     model = EAB_Request
-    template_name = "cetus3pur/EAB_Request.html"
+    template_name = "cetus3pur/EAB_RequestCreate.html"
     form_class = EAB_Request_Form
     extra_context = {}
 

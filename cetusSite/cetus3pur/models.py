@@ -96,24 +96,56 @@ class EAB_DataStoreSystem(models.Model):
 
 ## EAB Request
 class EAB_Request(models.Model):
-    date = models.DateField('Date of Request')
-    reqstr_userid = models.CharField('Requester User ID', max_length=10)
-    tp = models.ForeignKey(ThirdParty,  related_name='third_party', on_delete=models.CASCADE, verbose_name = 'Third Party')
+    date = models.DateField(
+        verbose_name = 'Date',
+        help_text = 'Date of request'
+    )
+
+    reqstr_userid = models.CharField(
+        verbose_name = 'Requester User ID',
+        help_text = 'User account of person making the request',
+        max_length=10,
+    )
+
+    tp = models.ForeignKey(
+        ThirdParty,
+        verbose_name = 'Third Party',
+        related_name='third_party',
+        on_delete=models.CASCADE,
+    )
 
     # e.g. integrity, artisan, nas drive
-    data_store_system = models.ForeignKey( EAB_DataStoreSystem,  related_name='data_store_system', on_delete=models.CASCADE, null=True)  # todo : check this use of related_name
+    data_store_system = models.ForeignKey(
+        EAB_DataStoreSystem,
+        related_name='data_store_system',
+        on_delete=models.CASCADE,
+        null=True
+    )  # todo : check this use of related_name
+
 
     # specify the part of the data store system being requested to share, e.g. a particular project in Artisan
-    data_store = models.CharField( 'Date Store Area to be shared', max_length=256)
+    data_store = models.CharField(
+        'Date Store Area to be shared',
+        max_length=256
+    )
 
     # owner of that part of the data store system, e.g. owner of a specific network folder
-    data_owner_userid =  models.CharField( 'Data Owner User ID', max_length=10)
+    data_owner_userid =  models.CharField(
+        'Data Owner User ID',
+        max_length=10
+    )
 
     # export claim for this part of the data store
-    data_store_export_claim = models.CharField('Export status of Data Store', max_length=512 )
+    data_store_export_claim = models.CharField(
+        'Export status of Data Store',
+        max_length=512
+    )
 
     # ipecr - if known/needed
-    ipecr = models.IntegerField('IPECR #')
+    ipecr = models.IntegerField(
+        'IPECR #'
+    )
+
 
     @classmethod
     def create(cls, ndate, nrqsteruid, ntpid, ndatastore, ndataowneruid , nclaim, nipecr):
@@ -130,6 +162,19 @@ class EAB_Request(models.Model):
     class Meta:
         verbose_name = "EAB Request"
         verbose_name_plural = "EAB Requests"
+
+
+    def clean(self, *args, **kwargs):
+        if self.data_owner_userid[0].isalpha()  and  any(char.isdigit() for char in self.data_owner_userid):
+            raise ValidationError('User name appears invalid')
+
+        super().clean(*args, **kwargs)
+
+
+    def save(self, *args, **kwargs):
+        self.full_clean()
+        super().save(*args, **kwargs)
+
 
     def __str__(self):
             return self.reqstr_userid + ' req for ' + str(self.tp) + ' access to ' + str(self.data_store_system) + ' [' + self.data_store + ']'
