@@ -19,7 +19,7 @@ from django.contrib.auth.views import LoginView
 from datetime import date
 from pprint import pprint
 from django.views.generic import ListView, DetailView
-from django.views.generic.edit import CreateView, DeleteView, UpdateView
+from django.views.generic.edit import CreateView, DeleteView, UpdateView, FormView
 from django_tables2 import SingleTableView, SingleTableMixin
 from django_filters.views import FilterView
 from .tables import EAB_RecordsTable
@@ -261,6 +261,7 @@ class EAB_RequestEdit_cbv(UpdateView):
     template_name = "cetus3pur/EAB_RequestCreate.html"
     form_class = EAB_Request_Form
 
+
     # todo...no idea
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -268,12 +269,10 @@ class EAB_RequestEdit_cbv(UpdateView):
         return context
 
     def get_success_url(self):
-        # Do a lookup of the toolId
-        toolId = ToolRelease.objects.get(pk=self.kwargs['pk']).tool.pk
-        return "../{id}".format(id=toolId)
+        return "eabreq/view/{id}".format(id=self.kwargs['pk'])
 
 
-class EAB_RequestView_cbv(DetailView):
+class EAB_RequestView_cbv(FormView):
     model = EAB_Request
     template_name = "cetus3pur/EAB_RequestCreate.html"
     form_class = EAB_Request_Form
