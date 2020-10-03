@@ -269,13 +269,20 @@ class EAB_RequestEdit_cbv(UpdateView):
         return context
 
     def get_success_url(self):
-        return "eabreq/view/{id}".format(id=self.kwargs['pk'])
+        return "../view/{id}".format(id=self.kwargs['pk'])
+
 
 
 class EAB_RequestView_cbv(FormView):
     model = EAB_Request
     template_name = "cetus3pur/EAB_RequestCreate.html"
     form_class = EAB_Request_Form
+
+    # todo...no idea
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        print(self.kwargs)
+        return context
 
 
 
