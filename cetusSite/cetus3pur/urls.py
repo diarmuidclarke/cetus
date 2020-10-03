@@ -35,7 +35,7 @@ urlpatterns = [
     path('eabreq/view/<int:pk>',views.EAB_RequestView_cbv.as_view()),
 
 
-    path('eabreq/<int:reqid>',views.EAB_RequestEdit, name='EAB_RequestCreate'),
+    # path('eabreq/<int:reqid>',views.EAB_RequestEdit, name='EAB_RequestCreate'),
 
     path('eabreq_for_approval/',views.EAB_ReviewSelect, name='EAB_ReviewSelect'),
 

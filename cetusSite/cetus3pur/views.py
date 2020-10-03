@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
 from django import forms
 from django.views.decorators.csrf import csrf_exempt
@@ -241,7 +241,9 @@ def RRRManagersView(request):
     return render(request, 'cetus3pur/rrrmanager.html', context)
 
 
-# EAB Request Creation (class based view version)
+
+
+# EAB Request - create
 class EAB_RequestCreate_cbv(CreateView):
     model = EAB_Request
     template_name = "cetus3pur/EAB_RequestCreate.html"
@@ -254,8 +256,18 @@ class EAB_RequestCreate_cbv(CreateView):
         print(self.kwargs)
         return context
 
+    def get_success_url(self):
+#        return "../view/{id}".format(id=self.kwargs['pk'])
+        return "../view/{id}".format(id=self.object.id)
 
-# EAB request edit
+    def form_valid(self, form):
+        self.object = form.save()
+        return HttpResponseRedirect(self.get_success_url())
+
+
+
+
+# EAB Request -- edit
 class EAB_RequestEdit_cbv(UpdateView):
     model = EAB_Request
     template_name = "cetus3pur/EAB_RequestCreate.html"
@@ -273,19 +285,16 @@ class EAB_RequestEdit_cbv(UpdateView):
 
 
 
-class EAB_RequestView_cbv(FormView):
+# EAB Request -- view
+class EAB_RequestView_cbv(UpdateView):
     model = EAB_Request
     template_name = "cetus3pur/EAB_RequestCreate.html"
     form_class = EAB_Request_Form
 
-    # todo...no idea
-    def get_context_data(self, **kwargs):
-        context = super().get_context_data(**kwargs)
-        print(self.kwargs)
-        return context
 
 
 
+"""
 # EAB Request Creation
 def EAB_RequestCreate(request):
     if request.method == 'POST':
@@ -330,9 +339,11 @@ def EAB_RequestCreate(request):
 
         context = { 'bulma_date_now' : bulma_friendly_date, 'user_id_requester' : request.user, 'tplist' : tplist, 'syslist':syslist}
         return render(request, 'cetus3pur/EAB_RequestCreate.html', context)
+"""
 
 
 
+"""
 # EAB Request edit
 def EAB_RequestEdit(request, reqid):
     if request.method == 'POST':
@@ -374,7 +385,7 @@ def EAB_RequestEdit(request, reqid):
         
         context = { 'bulma_date_now' : bulma_friendly_date, 'user_id_requester' : request.user, 'tplist' : tplist}
         return render(request, 'cetus3pur/EAB_RequestCreate.html', context)
-
+"""
 
 
 # select an EAB request from a list, to approve or go back into edit
