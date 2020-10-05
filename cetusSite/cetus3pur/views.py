@@ -310,7 +310,6 @@ class EAB_RequestCreate_cbv(CreateView):
         return context
 
     def get_success_url(self):
-#        return "../view/{id}".format(id=self.kwargs['pk'])
         return "../view/{id}".format(id=self.object.id)
 
     def form_valid(self, form):
@@ -347,98 +346,7 @@ class EAB_RequestView_cbv(UpdateView):
 
 
 
-"""
-# EAB Request Creation
-def EAB_RequestCreate(request):
-    if request.method == 'POST':
-        # get form data
-        datereq = request.POST.get('eabreq_date')
-        reqstr_user_id = request.POST.get('eabreq_user_id')
-        tpsel = request.POST.get('eabreq_tp_selector')
-        datastoresystem = request.POST.get('eabreq_dss_selector')
-        datastore = request.POST.get('eabreq_datastore')
-        dataowner_user_id = request.POST.get('eabreq_dataowner_user_id')
-        export_claim = request.POST.get('eabreq_datastore_exportclaim')
-        ipecr = request.POST.get('eabreq_ipecr')
 
-        # make a request
-        date_obj = parser.parse(datereq, dayfirst = True)
-        tpid =   int(re.search(r"\[([A-Za-z0-9_]+)\]", tpsel).group(1))
-        req = EAB_Request.create(date_obj, reqstr_user_id, tpid, datastore,dataowner_user_id, export_claim, ipecr)
-        req.save()
-        
-        # make a blank approval for the request
-        appr_blank = EAB_Approval.create(nreq=req.id, ndate=date_obj, napprover='todo', ndecision='NYR', necm_comment='not yet reviewed', 
-        nipm_comment='not yet reviewed', nIT_comment='not yet reviewed')
-        appr_blank.request = req
-        appr_blank.save()
-        
-
-        # context = { 'req_id' : req.id }
-        # return render(request, 'cetus3pur/EAB_RequestSubmitted.html', context)
-
-        reqlist = EAB_Request.objects.filter().values()
-        context = { 'reqlist': reqlist}
-        return render(request, 'cetus3pur/EAB_ReviewSelect.html', context)
-
-    else:
-        #date
-        datetoday = date.today()
-        bulma_friendly_date = datetoday.strftime("%Y-%m-%d") 
-
-        # third party list
-        tplist = ThirdParty.objects.filter().values()
-        syslist = EAB_DataStoreSystem.objects.filter().values()
-
-        context = { 'bulma_date_now' : bulma_friendly_date, 'user_id_requester' : request.user, 'tplist' : tplist, 'syslist':syslist}
-        return render(request, 'cetus3pur/EAB_RequestCreate.html', context)
-"""
-
-
-
-"""
-# EAB Request edit
-def EAB_RequestEdit(request, reqid):
-    if request.method == 'POST':
-        # get form data
-        datereq = request.POST.get('eabreq_date')
-        reqstr_user_id = request.POST.get('eabreq_user_id')
-        tpsel = request.POST.get('eabreq_tp_selector')
-        datastore = request.POST.get('eabreq_datastore')
-        dataowner_user_id = request.POST.get('eabreq_dataowner_user_id')
-        export_claim = request.POST.get('eabreq_datastore_exportclaim')
-        ipecr = request.POST.get('eabreq_ipecr')
-
-        date_obj = parser.parse(datereq, dayfirst = True)
-        tpid =   int(re.search(r"\[([A-Za-z0-9_]+)\]", tpsel).group(1))
-        tp = ThirdParty.objects.get(pk=tpid)
-
-        # update the request
-        req = EAB_Request.objects.get(pk=reqid)
-        req.data = date_obj
-        req.reqstr_userid = reqstr_user_id
-        req.tp = tp
-        req.datastore = datastore
-        req.data_owner_userid = dataowner_user_id
-        req.data_store_export_claim = export_claim
-        req.ipecr = ipecr        
-        req.save()
-        
-        reqlist = EAB_Request.objects.filter().values()
-        context = { 'reqlist': reqlist}
-        return render(request, 'cetus3pur/EAB_ReviewSelect.html', context)
-
-    else:
-        #date
-        datetoday = date.today()
-        bulma_friendly_date = datetoday.strftime("%Y-%m-%d") 
-
-        # third party list
-        tplist = ThirdParty.objects.filter().values()
-        
-        context = { 'bulma_date_now' : bulma_friendly_date, 'user_id_requester' : request.user, 'tplist' : tplist}
-        return render(request, 'cetus3pur/EAB_RequestCreate.html', context)
-"""
 
 
 # select an EAB request from a list, to approve or go back into edit
@@ -489,8 +397,7 @@ def EAB_ReviewApprove(request, approval_id):
         apprv.ipm_comment = ipm_comment
         apprv.IT_comment = IT_comment
         apprv.save()
-        # review = EAB_Approval.create(reqid, date_obj, aaprv_id, decision, ecm_comment, ipm_comment, IT_comment)
-        # review.save()
+
         
         
         approvals = EAB_Approval.objects.select_related('request').all()
@@ -540,10 +447,7 @@ class EAB_Records_cbv(SingleTableMixin, FilterView):
     table_class = EAB_RecordsTable
     template_name = "cetus3pur/EAB_Records_cbv.html"
     filterset_class = EAB_RecordFilter
-    #approvals = EAB_Approval.objects.select_related('request').all()
-    #requests = EAB_Request.objects.select_related('tp').all()
-    #context = { 'approvals':approvals, 'requests':requests  }
-    #return render(request, 'cetus3pur/EAB_Records_cbv.html', context)
+
 
 
 

@@ -34,6 +34,7 @@ class EAB_Approve_Form(forms.ModelForm):
 
 
 
+
 class EAB_Request_Form(forms.ModelForm):
 
     date = forms.DateField(
@@ -47,16 +48,3 @@ class EAB_Request_Form(forms.ModelForm):
         model = EAB_Request
         exclude = ()
         fields = '__all__'
-        # localized_fields = ('date',)
-
-    """
-    # If a toolId is set then set that field by default on the new form
-    def __init__(self, *args, **kwargs):
-        if 'requestID' in kwargs:
-            requestID = kwargs.pop('requestID', None)
-            initial = kwargs.get('initial', {})
-            initial['request'] = requestID
-        super(EAB_Request_Form, self).__init__(*args, **kwargs)
-        # Make the Tool field read-only
-        self.fields['request'].disabled = True
-    """

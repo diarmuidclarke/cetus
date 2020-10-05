@@ -1,4 +1,3 @@
-<!-- CBV variant -->
 {% extends "base.html" %} {% block content %}
 
 {% load bulma_tags %}
@@ -47,73 +46,6 @@
                 {{ form.data_store_export_claim | bulma }}
                 {{ form.ipecr | bulma }}                
             </div>
-
-            <!--
-            <div class="field">
-                <label class="label">Date of request</label>
-                <div class="control">
-                    <input class="input" name="eabreq_date" type="date" placeholder="Text input" value={{ bulma_date_now }}>
-                </div>
-            </div>
-            <div class="field">
-                <label class="label">Requester User ID</label>
-                <div class="control">
-                    <input class="input" name="eabreq_user_id" type="text" placeholder="Text input" value={{user_id_requester}}>
-                </div>
-            </div>
--->
-
-<!--
-            <label class="label">Third Party</label>
-
-            <div class="select is-focused">
-                <select name="eabreq_tp_selector">
-                    {% for tp in tplist %}
-                    <option>[{{tp.id}}] - {{ tp.legal_entity_name }} {{tp.location}}</option>
-                    {% endfor %}
-                </select>
-            </div>
-
-            <label class="label">Data Store System</label>
-
-            <div class="select is-focused">
-                <select name="eabreq_dss_selector">
-                    {% for sys in syslist %}
-                    <option>{{sys.datastoresystem}} - {{ sys.data_store_system_other_specify }}</option>
-                    {% endfor %}
-                </select>
-            </div>
-
-            <div class="field">
-                <label class="label">Data Store</label>
-                <div class="control">
-                    <input class="input" name="eabreq_datastore" type="text" placeholder="Text input">
-                </div>
-            </div>
-
-            <div class="field">
-                <label class="label">Data owner user ID</label>
-                <div class="control">
-                    <input class="input" name="eabreq_dataowner_user_id" type="text" placeholder="Text input">
-                </div>
-            </div>
-
-
-            <div class="field">
-                <label class="label">Data store export/IP claim</label>
-                <div class="control">
-                    <input class="input" name="eabreq_datastore_exportclaim" type="text" placeholder="Text input">
-                </div>
-            </div>
-
-            <div class="field">
-                <label class="label">IPECR</label>
-                <div class="control">
-                    <input class="input" name="eabreq_ipecr" type="text" placeholder="Text input">
-                </div>
-            </div>
-
--->
 
             <div class="control">
                 <button class="button is-primary is-rounded">Submit</button>

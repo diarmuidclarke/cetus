@@ -2,6 +2,8 @@ from django.db import models
 from django.core.exceptions import ValidationError
 
 
+
+
 # A 3rd party, e.g. belcan UK
 class ThirdParty(models.Model):
     legal_entity_name = models.CharField(max_length=50)
@@ -14,6 +16,7 @@ class ThirdParty(models.Model):
 
     def __str__(self):
             return self.legal_entity_name + ' [' + self.location + ']'
+
 
 
 

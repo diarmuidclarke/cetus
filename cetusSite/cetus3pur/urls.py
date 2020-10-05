@@ -39,7 +39,6 @@ urlpatterns = [
     path('eabappr/edit/<int:pk>',views.EAB_ApproveEdit_cbv.as_view()),
     path('eabappr/view/<int:pk>',views.EAB_ApproveView_cbv.as_view()),
 
-    # path('eabreq/<int:reqid>',views.EAB_RequestEdit, name='EAB_RequestCreate'),
 
     path('eabreq_for_approval/',views.EAB_ReviewSelect, name='EAB_ReviewSelect'),
 
@@ -49,7 +48,6 @@ urlpatterns = [
     path('eabrecords/',views.EAB_Records, name='EAB_Records'),
     
     # for debugging first Class based view  
-    #template_name='cetus3pur/EAB_Records_cbv.html'), name='EAB_Records_cbv'
     path('eabrecords_cbv/',views.EAB_Records_cbv.as_view()),
     
     path('audit/',views.Audit, name='Audit'),
