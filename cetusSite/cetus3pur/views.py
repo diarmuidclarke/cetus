@@ -262,6 +262,13 @@ class EAB_ApproveCreate_cbv(CreateView):
         self.object = form.save()
         return HttpResponseRedirect(self.get_success_url())
 
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['reqid'] = self.kwargs['reqid']
+        return kwargs
+
+
+
 
 
 # EAB Approve -- edit

@@ -20,6 +20,15 @@ class EAB_Approve_Form(forms.ModelForm):
         # localized_fields = ('date',)
 
 
+    # if creating, set request field of approval object
+    def __init__(self, *args, **kwargs):
+        if 'reqid' in kwargs:
+            reqid = kwargs.pop('reqid', None)
+            initial = kwargs.get('initial', {})
+            initial['request'] = EAB_Request.objects.get(pk = reqid)
+        super(EAB_Approve_Form, self).__init__(*args, **kwargs)
+        self.fields['request'].disabled = True
+
 
 
 class EAB_Request_Form(forms.ModelForm):

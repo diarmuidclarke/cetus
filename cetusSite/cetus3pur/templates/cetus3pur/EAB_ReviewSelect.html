@@ -37,7 +37,7 @@
                         {% if dict_req_has_apprv|hash:req.id  %}
                             <a class="button is-link is-small" href="/cetus3pur/eabappr/edit/{{dict_req2appr|hash:req.id}}">Edit Approval</a>
                         {% else %}
-                            <a class="button is-link is-small" href="/cetus3pur/eabappr/create">Create Approval</a>
+                            <a class="button is-link is-small" href="/cetus3pur/eabappr/create/{{req.id}}">Create Approval</a>
                         {% endif %}                        
                         </td>
 
