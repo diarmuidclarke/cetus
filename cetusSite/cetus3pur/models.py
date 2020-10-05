@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.exceptions import ValidationError
 
 
 # A 3rd party, e.g. belcan UK
@@ -55,43 +56,80 @@ class RRResponsibleManager(models.Model):
             return self.firstname + ' @ R-R'
 
 
+
+
+
+
 # what datastore is the requestor seeking to share
 # implications for approvals, also useful for impact analysis
 class EAB_DataStoreSystem(models.Model):
     DATASTORESYSTEM_CHOICES = [
-        ('RRCS_INTEGRITY',  'Integrity'),
-        ('RRCS_ARTISAN',    'Artisan'),
-        ('RRCS_DOORS',      'Controls DOORS'),
-        ('RRGAD_DOORS',     'R-R Winyard/Doxford DOORS'),
-        ('RRCS_NAS',        'Controls Network Folder'),
-        ('RRCS_CINCOM',     'CINCOM'),
-        ('RRCS_TFS',        'TFS'),
-        ('RRCS_OTHER',      'Other'),
+        ('RRCS_APPROVED_CHANNEL',  'Approved Channel'),
+        ('RRCS_NOT_APPROVED_CHANNEL',    'Not Approved as a Channel for Export Controlled data'),
     ]
 
+    name = models.CharField(
+        'Data Store System name',
+        max_length=100,
+        default = 'tbd',
+    )
+
+
     # to store the selection from the standard list of data store systems
-    datastoresystem = models.CharField(
-        'Data store system',
-        max_length=20,
+    datastoresystem_approved = models.CharField(
+        'Data store system channel status',
+        max_length=30,
         choices=DATASTORESYSTEM_CHOICES,
         default='RRCS_OTHER',
     )
 
-    # if datastoresystem is Other, then specify it in freetext here
-    data_store_system_other_specify = models.CharField(max_length=256, default='todo')
 
     class Meta:
         verbose_name = "Data Store System"
         verbose_name_plural = "Data Store System"
 
     def __str__(self):
-        if(str(self.datastoresystem) == 'RRCS_OTHER' and len(self.data_store_system_other_specify) > 0):
-            return ('EAB Non standard data store : ' + self.data_store_system_other_specify)
-        else:
-            return (self.datastoresystem)
+        return (self.name)
 
 
 
+
+# A sub-folder, or partition within the data store system which is intended for a particular classification of data
+class EAB_DataStoreSystemArea(models.Model):
+    name = models.CharField(
+        'Area name',
+        max_length=100,
+        default = 'tbd',
+    )
+
+    dss = models.ForeignKey(
+        EAB_DataStoreSystem, 
+        related_name='dss_areas',
+        on_delete=models.CASCADE
+    )
+
+
+    export_classification_PL9009c = models.BooleanField(
+        'Intended to contain PL9009.c',
+        default=False,
+    )
+
+    export_classification_EU_dualuse = models.BooleanField(
+        'Intended to contain EU Dual Use',
+        default=False,
+    )
+
+    export_classification_US_NLR = models.BooleanField(
+        'Intended to contain US NLR (no license required)',
+        default=False,
+    )
+
+    class Meta:
+        verbose_name = "Data storage system Area"
+        verbose_name_plural = "Data storage system Areas"
+
+    def __str__(self):
+            return str(self.dss) + ' [' + self.name + ']'
 
 
 ## EAB Request
@@ -165,8 +203,8 @@ class EAB_Request(models.Model):
 
 
     def clean(self, *args, **kwargs):
-        if self.data_owner_userid[0].isalpha()  and  any(char.isdigit() for char in self.data_owner_userid):
-            raise ValidationError('User name appears invalid')
+        if not self.data_owner_userid[0].isalpha()  or not any(char.isdigit() for char in self.data_owner_userid):
+            raise ValidationError('User name ' + self.data_owner_userid + ' appears invalid for field Data owner user ID')
 
         super().clean(*args, **kwargs)
 
