@@ -1,7 +1,7 @@
 from django import forms
 from django.forms.models import inlineformset_factory, formset_factory
 from cetusSite import settings
-from .models import EAB_Request, EAB_Approval
+from .models import EAB_Request, EAB_Approval, EAB_DataStoreSystemArea
 
 
 class EAB_Approve_Form(forms.ModelForm):
@@ -12,12 +12,15 @@ class EAB_Approve_Form(forms.ModelForm):
         help_text = 'Date of EAB approval',
     )
 
+    dssa = forms.ModelChoiceField(
+        queryset = EAB_DataStoreSystemArea.objects.all()
+    )
 
     class Meta:
         model = EAB_Approval
         exclude = ()
         fields = '__all__'
-        # localized_fields = ('date',)
+        localized_fields = ('dssa',)
 
 
     # if creating, set request field of approval object
