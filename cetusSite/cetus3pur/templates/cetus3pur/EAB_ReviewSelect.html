@@ -1,4 +1,5 @@
 {% extends "base.html" %} {% block content %}
+{% load cetus_tt %}
 
 <section>
     <div class="container">
@@ -8,6 +9,7 @@
         </div>
 
 
+        <!-- show a table of EAB requests , with option on each to change request or approve it-->
         <table class="table">
             <thead>
                 <tr>
@@ -24,29 +26,29 @@
             </thead>
             <tbody>
 
+
                 {% for req in reqlist %}
+                    <tr>
+                        <td>
+                            <a class="button is-link is-small" href="/cetus3pur/eabreq/edit/{{req.id}}">Edit Request</a>
+                        </td>
 
-                <tr>
-                    <td><a class="button is-link is-small" href="/cetus3pur/eabreq/edit/{{req.id}}">Edit Request</a></td>
-                    <td>
-                        <a class="button is-link is-small" href="/cetus3pur/eabreviewapprove/{% for approval in approvalslist %}{% if approval.request.id == req.id %}{{ approval.id}}{% endif %}{% endfor %}">
-                            Approve...
-                            <!-- 
-                        {% for approval in approvalslist %}
-                        {% if approval.request.id == req.id %}{{ approval.id}}{% endif %}
-                        {% endfor %}
-                        -->
-                        </a>
-                    </td>
-                    <td>{{ req.date }}</td>
-                    <td>{{ req.reqstr_userid }}</td>
-                    <td>{{ req.tp.legal_entity_name }} ({{req.tp.location}})</td>
-                    <td>{{ req.data_store_system }}</td>
-                    <td>{{ req.data_store }}</td>
-                    <td>{{ req.data_store_export_claim }}</td>
-                    <td>{{ req.ipecr }}</td>
-                </tr>
+                        <td>
+                        {% if dict_req_has_apprv|hash:req.id  %}
+                            <a class="button is-link is-small" href="/cetus3pur/eabappr/edit/{{dict_req2appr|hash:req.id}}">Edit Approval</a>
+                        {% else %}
+                            <a class="button is-link is-small" href="/cetus3pur/eabappr/create">Create Approval</a>
+                        {% endif %}                        
+                        </td>
 
+                        <td>{{ req.date }}</td>
+                        <td>{{ req.reqstr_userid }}</td>
+                        <td>{{ req.tp.legal_entity_name }} ({{req.tp.location}})</td>
+                        <td>{{ req.data_store_system }}</td>
+                        <td>{{ req.data_store }}</td>
+                        <td>{{ req.data_store_export_claim }}</td>
+                        <td>{{ req.ipecr }}</td>
+                    </tr>
                 {% endfor %}
 
 

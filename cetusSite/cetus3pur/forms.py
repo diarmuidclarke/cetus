@@ -1,7 +1,25 @@
 from django import forms
 from django.forms.models import inlineformset_factory, formset_factory
 from cetusSite import settings
-from .models import EAB_Request
+from .models import EAB_Request, EAB_Approval
+
+
+class EAB_Approve_Form(forms.ModelForm):
+
+    date = forms.DateField(
+        input_formats=settings.DATE_INPUT_FORMATS,
+        widget=forms.DateInput(format='%d/%m/%Y'),
+        help_text = 'Date of EAB approval',
+    )
+
+
+    class Meta:
+        model = EAB_Approval
+        exclude = ()
+        fields = '__all__'
+        # localized_fields = ('date',)
+
+
 
 
 class EAB_Request_Form(forms.ModelForm):

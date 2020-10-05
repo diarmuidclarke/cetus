@@ -24,7 +24,7 @@ from django_tables2 import SingleTableView, SingleTableMixin
 from django_filters.views import FilterView
 from .tables import EAB_RecordsTable
 from .filters import EAB_RecordFilter
-from .forms import EAB_Request_Form
+from .forms import EAB_Request_Form, EAB_Approve_Form
 
 
 
@@ -242,6 +242,52 @@ def RRRManagersView(request):
 
 
 
+# EAB Approve - create
+class EAB_ApproveCreate_cbv(CreateView):
+    model = EAB_Approval
+    template_name = "cetus3pur/EAB_ApproveCreate.html"
+    form_class = EAB_Approve_Form
+    extra_context = {}
+
+    # todo...no idea
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        print(self.kwargs)
+        return context
+
+    def get_success_url(self):
+        return "../view/{id}".format(id=self.object.id)
+
+    def form_valid(self, form):
+        self.object = form.save()
+        return HttpResponseRedirect(self.get_success_url())
+
+
+
+# EAB Approve -- edit
+class EAB_ApproveEdit_cbv(UpdateView):
+    model = EAB_Approval
+    template_name = "cetus3pur/EAB_ApproveCreate.html"
+    form_class = EAB_Approve_Form
+
+
+    # todo...no idea
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        print(self.kwargs)
+        return context
+
+    def get_success_url(self):
+        return "../view/{id}".format(id=self.kwargs['pk'])
+
+
+# EAB Approve -- view
+class EAB_ApproveView_cbv(UpdateView):
+    model = EAB_Approval
+    template_name = "cetus3pur/EAB_ApproveCreate.html"
+    form_class = EAB_Approve_Form
+
+
 
 # EAB Request - create
 class EAB_RequestCreate_cbv(CreateView):
@@ -394,10 +440,21 @@ def EAB_ReviewSelect(request):
     reqlist = EAB_Request.objects.select_related('tp').all()
     approvalslist = EAB_Approval.objects.all()
 
-    # for req in reqlist:
-    #     pprint(req.tq.select_related('tq'))
+    # dictionary that maps request IDs to approval IDs
+    # e.g. dict[req_id] = appr_id
+    dict_req2appr = { }
+    for appr in approvalslist:
+        dict_req2appr[appr.request.id] = appr.id
 
-    context = { 'reqlist': reqlist, 'approvalslist': approvalslist}
+    dict_req_has_apprv = {}
+    for req in reqlist:
+        if(req.id in dict_req2appr):
+            dict_req_has_apprv[req.id] = True
+        else:
+            dict_req_has_apprv[req.id] = False
+
+
+    context = { 'reqlist': reqlist, 'approvalslist': approvalslist, 'dict_req2appr' : dict_req2appr, 'dict_req_has_apprv' : dict_req_has_apprv}
 
     return render(request, 'cetus3pur/EAB_ReviewSelect.html', context)
 

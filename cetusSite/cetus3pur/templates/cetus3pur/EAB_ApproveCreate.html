@@ -1,0 +1,57 @@
+<!-- CBV variant -->
+{% extends "base.html" %} {% block content %}
+
+{% load bulma_tags %}
+
+
+<section>
+    <div class="container">
+        <div class="content">
+            <br>
+            <h1>Prepare an EAB Approval cbv</h1>
+        </div>
+    </div>
+</section>
+
+
+
+<section>
+    <div class="container">
+        <form action="" method="post">
+
+          {% if form.errors %}
+                {% for field in form %}
+                    {% for error in field.errors %}
+                        <div class="notification is-danger">
+                            <strong>{{ error|escape }}</strong>
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+                {% for error in form.non_field_errors %}
+                    <div class="notification is-warning">
+                        <strong>{{ error|escape }}</strong>
+                    </div>
+                {% endfor %}
+            {% endif %}
+
+  
+
+
+            <div class="box">
+                {{ form.date | bulma }}
+                {{ form.request | bulma }}
+                {{ form.approver_userid | bulma }}
+                {{ form.decision | bulma }}
+                {{ form.ecm_comment | bulma }}
+                {{ form.ipm_comment | bulma }}
+                {{ form.IT_comment | bulma }}
+            </div>
+
+
+            <div class="control">
+                <button class="button is-primary is-rounded">Submit</button>
+            </div>
+        </form>
+    </div>
+</section>
+{% endblock %}
