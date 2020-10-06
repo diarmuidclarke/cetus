@@ -47,13 +47,14 @@
 
             </tbody>
         </table>
-
+        
+        
         <form action="/cetus3pur/addusers/{{ thirdparty_id }}">
             <div class="control">
-                <button class="button is-primary is-rounded">Add new users</button>
+                <button class="button is-primary is-rounded" {% if not perms.cetus3pur.add_thirdpartyuser %}disabled{%endif%}>Add new users</button>
             </div>
         </form>
-
+        
     </div>
 </section>
 

@@ -33,11 +33,12 @@
                             <a class="button is-link is-small" href="/cetus3pur/eabreq/edit/{{req.id}}">Edit Request</a>
                         </td>
 
+                        
                         <td>
                         {% if dict_req_has_apprv|hash:req.id  %}
-                            <a class="button is-link is-small" href="/cetus3pur/eabappr/edit/{{dict_req2appr|hash:req.id}}">Edit Approval</a>
+                            <a class="button is-link is-small" href="/cetus3pur/eabappr/edit/{{dict_req2appr|hash:req.id}}" {% if perms.cetus3pur.add_eab_approval %}disabled{% endif %}>Edit Approval</a>
                         {% else %}
-                            <a class="button is-link is-small" href="/cetus3pur/eabappr/create/{{req.id}}">Create Approval</a>
+                            <a class="button is-link is-small" href="/cetus3pur/eabappr/create/{{req.id}} {{btn_state}}" {% if perms.cetus3pur.add_eab_approval %}disabled{% endif %}>Create Approval</a>
                         {% endif %}                        
                         </td>
 

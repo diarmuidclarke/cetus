@@ -9,6 +9,22 @@
 
 <div class="section">
     <div class="container">
+        <h3 class="title">Your Roles are:</h3>
+            {{ user.groups.all.0 }}
+            <br>
+            <u>With associated permissions:</u>
+            <!-- debug todo -->
+            {% if cetus3pur.add_eab_approval in user.groups.perms %} EAB add approval {%endif%}
+    </div>
+</div>
+
+
+
+
+
+
+<div class="section">
+    <div class="container">
         <h3 class="title">Your Permissions are:</h3>
         {% if perms.cextus3pur %} CETUS 3rd party User app {%endif%}
         <br> {% if perms.cetus3pur.add_thirdpartyuser %} ADD 3p user {%endif%}
