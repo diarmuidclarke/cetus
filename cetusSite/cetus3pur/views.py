@@ -5,10 +5,10 @@ from django import forms
 from django.views.decorators.csrf import csrf_exempt
 from .models import ThirdPartyUser
 from .models import ThirdParty
-from .models import RRResponsibleManager
 from .models import EAB_Request
 from .models import EAB_DataStoreSystem
 from .models import EAB_Approval
+from django.contrib.auth.models import User as authUser
 import datetime
 import dateutil.parser as parser
 import re
@@ -248,9 +248,12 @@ def ThirdPartyUsersAdd(request, thirdparty_id):
 
 # RR  managers
 def RRRManagersView(request):
-    rrm = RRResponsibleManager.objects.values()
-    context = {'rrm': rrm }
+    rrm = authUser.objects.filter(groups__name='GROUP_RR_RESP_MGR')
+    rrukm = authUser.objects.filter(groups__name='GROUP_RR_UK_MGR')
+    
+    context = {'rrm': rrm , 'rrukm' : rrukm }
     return render(request, 'cetus3pur/rrrmanager.html', context)
+
 
 
 

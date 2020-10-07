@@ -44,20 +44,6 @@ class ThirdPartyUser(models.Model):
 
 
 
-# R=R Responsible Manager
-class RRResponsibleManager(models.Model):
-    firstname = models.CharField(max_length=50)
-    familyname = models.CharField(max_length=50)
-    employee_id = models.CharField(max_length=20)
-    user_ac =  models.CharField('User account', max_length=10, default='<null>')
-    
-    class Meta:
-        verbose_name = "R-R Responsible Manager"
-        verbose_name_plural = "R-R Responsible Managers"
-
-    def __str__(self):
-            return self.firstname + ' @ R-R'
-
 
 
 

@@ -2,33 +2,69 @@
 
 <section>
     <div class="container">
-        {% if rrm %}
         <div class="content">
-            <br>
-            <h1>Rolls-Royce Managers</h1>
+            <div class="box">
+
+                <h1>Rolls-Royce Responsible Managers</h1>
+        
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <!--
+                            <th>CETUS User ref</th>
+                            <th>Employee ID</th>
+                            -->
+                            <th>User a/c</th>
+                            <th>1st Name</th>
+                            <th>Family Name</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <!--
+                        {% for user in rrm %}
+                        <tr>{% for key, value in user.items %}
+                            <td> {{value}} </td>{% endfor %}</tr> {% endfor %}
+                        -->
+                        {% if rrm %}
+                            {% for user in rrm %}
+                                <tr>
+                                    <td> {{user}}</td>
+                                    <td> {{user.first_name}}</td>
+                                    <td> {{user.last_name}}</td>
+                                </tr>
+                            {% endfor%}
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
+
+
+            <div class="box">
+
+                <h1>Rolls-Royce UK Managers</h1>
+        
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>User a/c</th>
+                            <th>1st Name</th>
+                            <th>Family Name</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% if rrukm %}
+                            {% for user in rrukm %}
+                                <tr>
+                                    <td> {{user}}</td>
+                                    <td> {{user.first_name}}</td>
+                                    <td> {{user.last_name}}</td>
+                                </tr>
+                            {% endfor%}
+                        {% endif %}
+                    </tbody>
+                </table>
+            </div>
         </div>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>CETUS User ref</th>
-                    <th>1st Name</th>
-                    <th>Family Name</th>
-                    <th>Employee ID</th>
-                    <th>User a/c</th>
-                </tr>
-            </thead>
-            <tbody>
-
-                {% for user in rrm %}
-                <tr>{% for key, value in user.items %}
-                    <td> {{value}} </td>{% endfor %}</tr> {% endfor %}
-
-            </tbody>
-        </table>
-
-        {% else %}
-        <p>No R-R managers found in the CETUS Database.</p>
-        {% endif %}
     </div>
 </section>
 {% endblock %}
