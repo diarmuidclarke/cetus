@@ -36,9 +36,9 @@
                         
                         <td>
                         {% if dict_req_has_apprv|hash:req.id  %}
-                            <a class="button is-link is-small" href="/cetus3pur/eabappr/edit/{{dict_req2appr|hash:req.id}}" {% if not perms.cetus3pur.add_eab_approval %}disabled{% endif %}>Edit Approval</a>
+                            <a class="button is-link is-small" {% if  perms.cetus3pur.add_eab_approval %}href="/cetus3pur/eabappr/edit/{{dict_req2appr|hash:req.id}}"{% else %}disabled{% endif %}>Edit Approval</a>
                         {% else %}
-                            <a class="button is-link is-small" href="/cetus3pur/eabappr/create/{{req.id}} {{btn_state}}" {% if not perms.cetus3pur.add_eab_approval %}disabled{% endif %}>Create Approval</a>
+                            <a class="button is-link is-small" {% if perms.cetus3pur.add_eab_approval %}href="/cetus3pur/eabappr/create/{{req.id}}"{% else %} disabled{% endif %}>Create Approval</a>
                         {% endif %}                        
                         </td>
 
