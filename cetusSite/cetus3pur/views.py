@@ -25,7 +25,8 @@ from django_filters.views import FilterView
 from .tables import EAB_RecordsTable
 from .filters import EAB_RecordFilter
 from .forms import EAB_Request_Form, EAB_Approve_Form
-
+from django.contrib.auth.models import Permission
+from collections import OrderedDict
 
 
 # front page - third parties by default
@@ -37,25 +38,41 @@ def index(request):
 
 # let user see details about their CETUS user account
 def userprofile(request):
+    
+    ####################################################
+    # get a sorted list of all possible permissions
     permissions = set()
     tmp_superuser = get_user_model()(
       is_active=True,
       is_superuser=True
     )
 
-    # We go over each AUTHENTICATION_BACKEND and try to fetch
-    # a list of permissions
+        # We go over each AUTHENTICATION_BACKEND and try to fetch a list of permissions
     for backend in auth.get_backends():
       if hasattr(backend, "get_all_permissions"):
         permissions.update(backend.get_all_permissions(tmp_superuser))
 
-    # Make an unique list of permissions sorted by permission name.
+        # Make an unique list of permissions sorted by permission name.
     sorted_list_of_permissions = sorted(list(permissions))
-    perm_as_str = ""
-    for perm in sorted_list_of_permissions:
-        perm_as_str += (perm + "<br>")
 
-    return render(request, 'cetus3pur/CetusUser_Profile.html', { 'permies' : sorted_list_of_permissions} )
+    ####################################################
+    # get a sorted list of __curremt__ user permissions
+    user = request.user
+    userpermies = set()
+    userpermies = user.user_permissions.all() | Permission.objects.filter(group__user=user)
+
+    list_uperms = []
+    for uperm in userpermies:
+        list_uperms.append(str(uperm))
+        
+        # sorted, no duplicates
+    sorted_list_uperms = list(OrderedDict.fromkeys(list_uperms))
+
+
+
+    context = {  'permies' : sorted_list_of_permissions,  'userpermies' : sorted_list_uperms }
+    
+    return render(request, 'cetus3pur/CetusUser_Profile.html', context)
 
 
 

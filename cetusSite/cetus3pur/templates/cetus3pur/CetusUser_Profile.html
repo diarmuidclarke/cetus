@@ -1,16 +1,22 @@
 {% extends "base.html" %} {% block content %}
 <div class="section">
     <div class="container">
-        <h3 class="title">User Details:</h3>
-        username : {{ user.username}}
-        <br>email : {{ user.email}}
+        <div class="box">
+            <h3 class="title">User Details:</h3>
+            username : {{ user.username}}
+            <br>email : {{ user.email}}
+        </div>
     </div>
 </div>
 
 <div class="section">
     <div class="container">
-        <h3 class="title">Your Roles are:</h3>
-            {{ user.groups.all.0 }}
+        <div class="box">
+            <h3 class="title">Your Roles are:</h3>
+            {% for grp in user.groups.all %}
+                {{grp}}<br>
+            {%endfor%}
+        </div>
     </div>
 </div>
 
@@ -18,31 +24,29 @@
 
 
 
-
 <div class="section">
     <div class="container">
-        <h3 class="title">Your Permissions are:</h3>
-        {% if perms.cetus3pur %} CETUS 3rd party User app {%endif%}
-        {% if perms.cetus3pur.add_thirdpartyuser %}<br>ADD 3p user {%endif%}
-        {% if perms.cetus3pur.change_thirdpartyuser %}<br>CHANGE 3p user {%endif%}
-        {% if perms.cetus3pur.delete_thirdpartyuser %}<br>DELETE 3p user {%endif%}
-        {% if perms.cetus3pur.add_thirdparty %}<br>ADD 3p business {%endif%}
-        {% if perms.cetus3pur.change_thirdparty %}<br>CHANGE 3p business {%endif%}
-        {% if perms.cetus3pur.delete_thirdparty %}<br>DELETE 3p business {%endif%}
-        {% if perms.cetus3pur.add_rrresponsiblemanager %}<br>ADD R-R Manager {%endif%}
-        {% if perms.cetus3pur.change_rrresponsiblemanager %}<br>CHANGE R-R Manager {%endif%}
-        {% if perms.cetus3pur.delete_rrresponsiblemanager %}<br>DELETE R-R Manager {%endif%}
-        {% if perms.cetus3pur.add_eab_approval %}<br>ADD EAB approval {%endif%}
-        {% if perms.cetus3pur.change_eab_approval %}<br>CHANGE EAB approval {%endif%}
-        {% if perms.cetus3pur.delete_eab_approval %}<br>DELETE EAB approval {%endif%}
+        <div class="box">
+            <h3 class="title">Your Permissions are :</h3>
+            {% for p in userpermies%}
+                {{p}}<br>
+            {% endfor %}
+        </div>
     </div>
 </div>
 
+
+
+
 <div class="section">
     <div class="container">
-        <h3 class="title">Available CETUS Permissions:</h3>
-        <div class="content">
-            {% for perm in permies%} {{perm}} <br> {% endfor %}
+        <div class="box">
+            <h3 class="title">All Available CETUS Permissions:</h3>
+            <div class="content">
+                {% for perm in permies%}
+                    {{perm}} <br>
+                {% endfor %}
+            </div>
         </div>
     </div>
 </div>

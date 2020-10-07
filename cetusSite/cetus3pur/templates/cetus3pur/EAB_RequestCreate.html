@@ -16,41 +16,47 @@
 
 <section>
     <div class="container">
-        <form action="" method="post">
+        <div class="box">
+            <form action="" method="post">
 
-          {% if form.errors %}
-                {% for field in form %}
-                    {% for error in field.errors %}
-                        <div class="notification is-danger">
+            {% if form.errors %}
+                    {% for field in form %}
+                        {% for error in field.errors %}
+                            <div class="notification is-danger">
+                                <strong>{{ error|escape }}</strong>
+                            </div>
+                        {% endfor %}
+                    {% endfor %}
+                    {% for error in form.non_field_errors %}
+                        <div class="notification is-warning">
                             <strong>{{ error|escape }}</strong>
                         </div>
                     {% endfor %}
-                {% endfor %}
-                {% for error in form.non_field_errors %}
-                    <div class="notification is-warning">
-                        <strong>{{ error|escape }}</strong>
-                    </div>
-                {% endfor %}
-            {% endif %}
+                {% endif %}
 
-  
+    
 
 
-            <div class="box">
-                {{ form.date | bulma }}
-                {{ form.reqstr_userid | bulma }}
-                {{ form.tp | bulma }}
-                {{ form.data_store_system | bulma }}
-                {{ form.data_store | bulma }}
-                {{ form.data_owner_userid | bulma }}
-                {{ form.data_store_export_claim | bulma }}
-                {{ form.ipecr | bulma }}                
-            </div>
+                <div class="box">
+                    {{ form.date | bulma }}
+                    {{ form.reqstr_userid | bulma }}
+                    {{ form.tp | bulma }}
+                    {{ form.data_store_system | bulma }}
+                    {{ form.data_store | bulma }}
+                    {{ form.data_owner_userid | bulma }}
+                    {{ form.data_store_export_claim | bulma }}
+                    {{ form.ipecr | bulma }}                
+                </div>
 
-            <div class="control">
-                <button class="button is-primary is-rounded">Submit</button>
-            </div>
-        </form>
+                <div class="control">
+                    {% if perms.cetus3pur.add_eab_request %}
+                        <button class="button is-primary is-rounded">Submit</button>
+                    {%else%}
+                        <button class="button is-primary is-rounded" disabled>Submit</button>
+                    {% endif %}
+                </div>
+            </form>
+        </div>
     </div>
 </section>
 {% endblock %}
