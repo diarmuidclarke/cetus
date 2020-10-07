@@ -89,11 +89,6 @@ class CETUSUserLogin(LoginView):
 def CETUSUser_Logout(request):
     if request.method == 'GET':
         logout(request) 
-        if request.user.is_authenticated:
-            print('+++++++still logged in')
-        else:
-            print('+++++now logged out')
-
 
         return render(request, 'cetus3pur/CETUSUser_Logout.html', )
     else:
@@ -266,10 +261,9 @@ class EAB_ApproveCreate_cbv(CreateView):
     form_class = EAB_Approve_Form
     extra_context = {}
 
-    # todo...no idea
+    
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        print(self.kwargs)
         return context
 
     def get_success_url(self):
@@ -295,10 +289,8 @@ class EAB_ApproveEdit_cbv(UpdateView):
     form_class = EAB_Approve_Form
 
 
-    # todo...no idea
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        print(self.kwargs)
         return context
 
     def get_success_url(self):
@@ -320,10 +312,8 @@ class EAB_RequestCreate_cbv(CreateView):
     form_class = EAB_Request_Form
     extra_context = {}
 
-    # todo...no idea
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        print(self.kwargs)
         return context
 
     def get_success_url(self):
@@ -343,10 +333,8 @@ class EAB_RequestEdit_cbv(UpdateView):
     form_class = EAB_Request_Form
 
 
-    # todo...no idea
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        print(self.kwargs)
         return context
 
     def get_success_url(self):
