@@ -19,8 +19,7 @@
                     <th>Requestor</th>
                     <th>3rd Party</th>
                     <th>Data Store System</th>
-                    <th>Data Store</th>
-                    <th>Export Claim</th>
+                    <th>Data Store System Area</th>
                     <th>IPECR</th>
                 </tr>
             </thead>
@@ -46,8 +45,7 @@
                         <td>{{ req.reqstr_userid }}</td>
                         <td>{{ req.tp.legal_entity_name }} ({{req.tp.location}})</td>
                         <td>{{ req.data_store_system }}</td>
-                        <td>{{ req.data_store }}</td>
-                        <td>{{ req.data_store_export_claim }}</td>
+                        <td>{{ req.data_store_system_area }}</td>
                         <td>{{ req.ipecr }}</td>
                     </tr>
                 {% endfor %}

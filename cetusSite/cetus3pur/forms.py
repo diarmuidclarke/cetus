@@ -12,15 +12,12 @@ class EAB_Approve_Form(forms.ModelForm):
         help_text = 'Date of EAB approval',
     )
 
-    dssa = forms.ModelChoiceField(
-        queryset = EAB_DataStoreSystemArea.objects.all()
-    )
 
     class Meta:
         model = EAB_Approval
         exclude = ()
         fields = '__all__'
-        localized_fields = ('dssa',)
+        # localized_fields = ('dssa',)
 
 
     # if creating, set request field of approval object
@@ -44,7 +41,12 @@ class EAB_Request_Form(forms.ModelForm):
     )
 
 
+    # dssa = forms.ModelChoiceField(
+    #     queryset = EAB_DataStoreSystemArea.objects.all()
+    # )
+
     class Meta:
         model = EAB_Request
         exclude = ()
         fields = '__all__'
+

@@ -121,6 +121,8 @@ class EAB_DataStoreSystemArea(models.Model):
             return str(self.dss) + ' [' + self.name + ']'
 
 
+
+
 ## EAB Request
 class EAB_Request(models.Model):
     date = models.DateField(
@@ -150,11 +152,22 @@ class EAB_Request(models.Model):
     )  # todo : check this use of related_name
 
 
-    # specify the part of the data store system being requested to share, e.g. a particular project in Artisan
-    data_store = models.CharField(
-        'Date Store Area to be shared',
-        max_length=256
+
+    # e.g. T7000 project in Integrity
+    data_store_system_area = models.ForeignKey(
+        EAB_DataStoreSystemArea,
+        related_name='data_store_system_area',
+        on_delete=models.CASCADE,
+        null=True
     )
+
+
+
+    # specify the part of the data store system being requested to share, e.g. a particular project in Artisan
+    # data_store = models.CharField(
+    #     'Date Store Area to be shared',
+    #     max_length=256
+    # )
 
     # owner of that part of the data store system, e.g. owner of a specific network folder
     data_owner_userid =  models.CharField(
@@ -163,10 +176,10 @@ class EAB_Request(models.Model):
     )
 
     # export claim for this part of the data store
-    data_store_export_claim = models.CharField(
-        'Export status of Data Store',
-        max_length=512
-    )
+    # data_store_export_claim = models.CharField(
+    #     'Export status of Data Store',
+    #     max_length=512
+    # )
 
     # ipecr - if known/needed
     ipecr = models.IntegerField(
@@ -174,15 +187,18 @@ class EAB_Request(models.Model):
     )
 
 
+#    def create(cls, ndate, nrqsteruid, ntpid, ndatastore, ndataowneruid , nclaim, nipecr):
     @classmethod
-    def create(cls, ndate, nrqsteruid, ntpid, ndatastore, ndataowneruid , nclaim, nipecr):
+    def create(cls, ndate, nrqsteruid, ntpid, ndatastore_system, ndatastore_system_area, ndataowneruid , nipecr):
         er = cls(
                     date=ndate,
                     reqstr_userid = nrqsteruid,
                     tp =  ThirdParty.objects.get(pk = ntpid),
-                    data_store =ndatastore,
+                    data_store_system = ndatastore_system,
+                    data_store_system_area = ndatastore_system_area,
+                    # data_store =ndatastore,
                     data_owner_userid = ndataowneruid,
-                    data_store_export_claim =  nclaim,
+                    # data_store_export_claim =  nclaim,
                     ipecr = nipecr)
         return er
     
@@ -204,7 +220,9 @@ class EAB_Request(models.Model):
 
 
     def __str__(self):
-            return self.reqstr_userid + ' req for ' + str(self.tp) + ' access to ' + str(self.data_store_system) + ' [' + self.data_store + ']'
+        temp_str = self.reqstr_userid + ' req for ' + str(self.tp) + ' access to ' + str(self.data_store_system)
+        temp_str += ' [' + str(self.data_store_system_area) + ']'
+        return temp_str
 
 
 
