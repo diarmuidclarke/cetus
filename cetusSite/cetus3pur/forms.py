@@ -40,6 +40,9 @@ class EAB_Request_Form(forms.ModelForm):
         help_text = 'Date of EAB request',
     )
 
+    data_store_system = forms.ModelChoiceField(
+        queryset = EAB_DataStoreSystem.objects.all()
+    )
     
     # dssa = forms.ModelChoiceField(
     #     queryset = EAB_DataStoreSystemArea.objects.all()
@@ -47,7 +50,7 @@ class EAB_Request_Form(forms.ModelForm):
 
     class Meta:
         model = EAB_Request
-        widgets = { 'data_store_system':ModelChoiceField(attrs={'cols':80}) }
+        # widgets = { 'data_store_system':ModelChoiceField(attrs={'cols':80}) }
         exclude = ()
         fields = '__all__'
 
