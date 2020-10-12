@@ -20,6 +20,7 @@ class ThirdParty(models.Model):
 
 
 
+
 # A 3rd party employee
 class ThirdPartyUser(models.Model):
     firstname = models.CharField('First name', max_length=50)

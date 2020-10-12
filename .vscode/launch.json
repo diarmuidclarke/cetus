@@ -8,7 +8,7 @@
             "name": "Python: Django",
             "type": "python",
             "request": "launch",
-            "program": "${workspaceFolder}\\cetusSite\\manage.py",
+            "program": "/workspace/cetus/cetusSite/manage.py",
             "args": [
                 "runserver",
                 "--noreload"
