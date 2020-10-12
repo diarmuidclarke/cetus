@@ -2,7 +2,7 @@ from django import forms
 from django.forms.models import inlineformset_factory, formset_factory
 from cetusSite import settings
 from .models import EAB_Request, EAB_Approval, EAB_DataStoreSystemArea
-
+from django.forms import ModelChoiceField
 
 class EAB_Approve_Form(forms.ModelForm):
 
