@@ -1,14 +1,15 @@
 from django import forms
 from django.forms.models import inlineformset_factory, formset_factory
+from django.forms import ModelChoiceField
 from cetusSite import settings
 from pprint import pprint
+from rest_framework.mixins import UpdateModelMixin
 from .models import (
     EAB_Request,
     EAB_Approval,
     EAB_DataStoreSystem,
     EAB_DataStoreSystemArea,
 )
-from django.forms import ModelChoiceField
 
 
 class EAB_Approve_Form(forms.ModelForm):
@@ -23,7 +24,6 @@ class EAB_Approve_Form(forms.ModelForm):
         model = EAB_Approval
         exclude = ()
         fields = "__all__"
-        # localized_fields = ('dssa',)
 
     # if creating, set request field of approval object
     def __init__(self, *args, **kwargs):
@@ -35,7 +35,8 @@ class EAB_Approve_Form(forms.ModelForm):
         self.fields["request"].disabled = True
 
 
-class EAB_Request_Form(forms.ModelForm):
+
+class EAB_Request_Form(UpdateModelMixin, forms.ModelForm):
 
     date = forms.DateField(
         input_formats=settings.DATE_INPUT_FORMATS,
@@ -45,25 +46,25 @@ class EAB_Request_Form(forms.ModelForm):
 
     data_store_system = forms.ModelChoiceField(
         queryset=EAB_DataStoreSystem.objects.all(),
-        # attributes = { 'cols':80 }
-        widget=forms.Select(attrs={"onchange": "this.form.submit()"}),
+        widget=forms.Select(attrs={"onchange": "this.form.submit()"}),        
     )
 
-    # dssa = forms.ModelChoiceField(
-    #     queryset = EAB_DataStoreSystemArea.objects.all()
-    # )
 
     class Meta:
         model = EAB_Request
-        # widgets = { 'data_store_system':ModelChoiceField(attrs={'cols':80}) }
         exclude = ()
         fields = "__all__"
 
+
     def __init__(self, *args, **kwargs):
         pprint(kwargs)
+        super(EAB_Request_Form, self).__init__(*args,**kwargs)
         databit = kwargs.pop('data', None)
         if databit:
             dss_pk = databit['data_store_system']
             pprint('DSS PK:' + str(dss_pk))
-            super(EAB_Request_Form, self).__init__(*args,**kwargs)
             self.fields['data_store_system_area'].queryset = EAB_DataStoreSystemArea.objects.filter(dss__pk = dss_pk)
+
+
+    def partial_update(*args, **kwargs):
+        pprint(kwargs)

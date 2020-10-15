@@ -209,7 +209,9 @@ class EAB_Request(models.Model):
 
 
     def clean(self, *args, **kwargs):
-        if not self.data_owner_userid[0].isalpha()  or not any(char.isdigit() for char in self.data_owner_userid):
+        if(len(self.data_owner_userid) < 1):
+            raise ValidationError('User name ' + self.data_owner_userid + ' appears invalid for field Data owner user ID')
+        elif not self.data_owner_userid[0].isalpha()  or not any(char.isdigit() for char in self.data_owner_userid):
             raise ValidationError('User name ' + self.data_owner_userid + ' appears invalid for field Data owner user ID')
 
         super().clean(*args, **kwargs)
