@@ -37,6 +37,7 @@ class EAB_Approve_Form(forms.ModelForm):
 
 
 
+
 class EAB_Request_Form(UpdateModelMixin, forms.ModelForm):
 
     date = forms.DateField(
@@ -50,7 +51,7 @@ class EAB_Request_Form(UpdateModelMixin, forms.ModelForm):
         widget=ModelSelect2Widget(
             model=EAB_DataStoreSystem,
             search_fields=['name__icontains'],
-            attrs={'data-width': '10em'},
+            attrs={'data-width': '20em'},
         ),        
     )
 
@@ -59,7 +60,7 @@ class EAB_Request_Form(UpdateModelMixin, forms.ModelForm):
         widget=ModelSelect2Widget(
             model=EAB_DataStoreSystemArea,
             search_fields=['name__icontains'],
-            attrs={'data-width': '10em'},
+            attrs={'data-width': '20em'},
             dependent_fields={'data_store_system' : 'dss'},
         ),        
     )
