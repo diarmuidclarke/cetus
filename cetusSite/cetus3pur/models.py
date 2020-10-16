@@ -206,6 +206,8 @@ class EAB_Request(models.Model):
     class Meta:
         verbose_name = "EAB Request"
         verbose_name_plural = "EAB Requests"
+        unique_together = [['tp', 'data_store_system','data_store_system_area' ]]
+
 
 
     def clean(self, *args, **kwargs):
