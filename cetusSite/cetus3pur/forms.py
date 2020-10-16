@@ -4,6 +4,7 @@ from django.forms import ModelChoiceField
 from cetusSite import settings
 from pprint import pprint
 from rest_framework.mixins import UpdateModelMixin
+from django_select2.forms import ModelSelect2Widget
 from .models import (
     EAB_Request,
     EAB_Approval,
@@ -46,33 +47,25 @@ class EAB_Request_Form(UpdateModelMixin, forms.ModelForm):
 
     data_store_system = forms.ModelChoiceField(
         queryset=EAB_DataStoreSystem.objects.all(),
-        widget=forms.Select(attrs={"onchange": "document.getElementById('data_store_system_changed').value = 'Yes';this.form.submit()"}),        
+        widget=ModelSelect2Widget(
+            model=EAB_DataStoreSystem,
+            search_fields=['name__icontains'],
+            attrs={'data-width': '10em'},
+        ),        
     )
 
-    Data_Store_Changed = None
-
+    data_store_system_area = forms.ModelChoiceField(
+        queryset=EAB_DataStoreSystemArea.objects.all(),
+        widget=ModelSelect2Widget(
+            model=EAB_DataStoreSystemArea,
+            search_fields=['name__icontains'],
+            attrs={'data-width': '10em'},
+            dependent_fields={'data_store_system' : 'dss'},
+        ),        
+    )
 
     class Meta:
         model = EAB_Request
         exclude = ()
         fields = "__all__"
-
-
-    def __init__(self, *args, **kwargs):
-        super(EAB_Request_Form, self).__init__(*args,**kwargs)
-        form_data = kwargs.pop('data', None)
-        if form_data:
-            if form_data['data_store_system_changed'] == "Yes":
-                self.Data_Store_Changed = True
-                dss_pk = form_data['data_store_system']
-                self.fields['data_store_system_area'].queryset = EAB_DataStoreSystemArea.objects.filter(dss__pk = dss_pk)
-    
-    def clean(self):
-        cleaned_data = super(EAB_Request_Form, self).clean()
-        # If this change was trigged by the drop down being selected then hide errors and warnings
-        if self.Data_Store_Changed:
-            for error in self.errors:
-                self.errors[error] = []
-        return cleaned_data
-
 

@@ -29,6 +29,7 @@ urlpatterns = [
     path('cetus3pur/', include('cetus3pur.urls')),
     path('', include('cetus3pur.urls')),
     path('admin/', admin.site.urls),
+    path("select2/", include("django_select2.urls")),
 ]
 
 if settings.DEBUG:

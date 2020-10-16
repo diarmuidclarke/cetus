@@ -18,7 +18,7 @@
     <div class="container">
         <div class="box">
             <form action="" method="post">
-
+                {{ form.media.css }}
             {% if form.errors %}
                     {% for field in form %}
                         {% for error in field.errors %}
@@ -42,8 +42,14 @@
                     {{ form.date | bulma }}
                     {{ form.reqstr_userid | bulma }}
                     {{ form.tp | bulma }}
-                    {{ form.data_store_system | bulma }}
-                    {{ form.data_store_system_area | bulma }}
+                    <div class="field">
+                        <label class="label">Data Store System</label>
+                        {{ form.data_store_system }}
+                    </div>
+                    <div class="field">
+                        <label class="label">Data Store System Area</label>
+                        {{ form.data_store_system_area }}
+                    </div>
                     {{ form.data_owner_userid | bulma }}
                     {{ form.ipecr | bulma }}                
                 </div>
@@ -59,6 +65,8 @@
                         <button class="button is-primary is-rounded" disabled>Submit</button>
                     {% endif %}
                 </div>
+
+                {{ form.media.js }}
             </form>
         </div>
     </div>

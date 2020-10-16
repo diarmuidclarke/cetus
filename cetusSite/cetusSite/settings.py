@@ -60,6 +60,7 @@ INSTALLED_APPS = [
     'django_tables2',
     'bulma',
     'django_filters',
+    'django_select2',
 ]
 
 MIDDLEWARE = [
