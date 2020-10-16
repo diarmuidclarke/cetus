@@ -48,6 +48,10 @@
                     {{ form.ipecr | bulma }}                
                 </div>
 
+                <!-- Hidden field used to track whether an edit is due to submit pressed
+                or user changing data_store_system input -->
+                <input type="hidden" name="data_store_system_changed" id="data_store_system_changed" value="No">
+
                 <div class="control">
                     {% if perms.cetus3pur.add_eab_request %}
                         <button class="button is-primary is-rounded">Submit</button>

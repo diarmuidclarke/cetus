@@ -46,8 +46,10 @@ class EAB_Request_Form(UpdateModelMixin, forms.ModelForm):
 
     data_store_system = forms.ModelChoiceField(
         queryset=EAB_DataStoreSystem.objects.all(),
-        widget=forms.Select(attrs={"onchange": "this.form.submit()"}),        
+        widget=forms.Select(attrs={"onchange": "document.getElementById('data_store_system_changed').value = 'Yes';this.form.submit()"}),        
     )
+
+    Data_Store_Changed = None
 
 
     class Meta:
@@ -57,14 +59,20 @@ class EAB_Request_Form(UpdateModelMixin, forms.ModelForm):
 
 
     def __init__(self, *args, **kwargs):
-        pprint(kwargs)
         super(EAB_Request_Form, self).__init__(*args,**kwargs)
-        databit = kwargs.pop('data', None)
-        if databit:
-            dss_pk = databit['data_store_system']
-            pprint('DSS PK:' + str(dss_pk))
-            self.fields['data_store_system_area'].queryset = EAB_DataStoreSystemArea.objects.filter(dss__pk = dss_pk)
+        form_data = kwargs.pop('data', None)
+        if form_data:
+            if form_data['data_store_system_changed'] == "Yes":
+                self.Data_Store_Changed = True
+                dss_pk = form_data['data_store_system']
+                self.fields['data_store_system_area'].queryset = EAB_DataStoreSystemArea.objects.filter(dss__pk = dss_pk)
+    
+    def clean(self):
+        cleaned_data = super(EAB_Request_Form, self).clean()
+        # If this change was trigged by the drop down being selected then hide errors and warnings
+        if self.Data_Store_Changed:
+            for error in self.errors:
+                self.errors[error] = []
+        return cleaned_data
 
 
-    def partial_update(*args, **kwargs):
-        pprint(kwargs)
