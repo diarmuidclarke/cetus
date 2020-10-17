@@ -62,8 +62,8 @@ class EAB_Request_Form(forms.ModelForm):
     def __init__(self, *args, **kwargs):
         pprint(kwargs)
         databit = kwargs.pop('data', None)
+        super(EAB_Request_Form, self).__init__(*args,**kwargs)
         if databit:
             dss_pk = databit['data_store_system']
             pprint('DSS PK:' + str(dss_pk))
-            super(EAB_Request_Form, self).__init__(*args,**kwargs)
             self.fields['data_store_system_area'].queryset = EAB_DataStoreSystemArea.objects.filter(dss__pk = dss_pk)

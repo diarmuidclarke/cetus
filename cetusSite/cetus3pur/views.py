@@ -369,15 +369,18 @@ def EAB_ReviewSelect(request):
     for appr in approvalslist:
         dict_req2appr[appr.request.id] = appr.id
 
+    list_reqs_with_no_approvals = []
     dict_req_has_apprv = {}
     for req in reqlist:
         if(req.id in dict_req2appr):
             dict_req_has_apprv[req.id] = True
         else:
             dict_req_has_apprv[req.id] = False
+            list_reqs_with_no_approvals.append(req)
 
 
-    context = { 'reqlist': reqlist, 'approvalslist': approvalslist, 'dict_req2appr' : dict_req2appr, 'dict_req_has_apprv' : dict_req_has_apprv}
+    # context = { 'reqlist': reqlist, 'approvalslist': approvalslist, 'dict_req2appr' : dict_req2appr, 'dict_req_has_apprv' : dict_req_has_apprv}
+    context = { 'reqlist': list_reqs_with_no_approvals, 'approvalslist': approvalslist, 'dict_req2appr' : dict_req2appr, 'dict_req_has_apprv' : dict_req_has_apprv}
 
     return render(request, 'cetus3pur/EAB_ReviewSelect.html', context)
 
