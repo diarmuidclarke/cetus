@@ -4,7 +4,7 @@ from django.forms import ModelChoiceField
 from cetusSite import settings
 from pprint import pprint
 from rest_framework.mixins import UpdateModelMixin
-from django_select2.forms import ModelSelect2Widget
+from django_select2.forms import ModelSelect2Widget, Select2Widget
 from .models import (
     EAB_Request,
     EAB_Approval,
@@ -47,21 +47,24 @@ class EAB_Request_Form(UpdateModelMixin, forms.ModelForm):
 
     data_store_system = forms.ModelChoiceField(
         queryset=EAB_DataStoreSystem.objects.all(),
-        widget=ModelSelect2Widget(
-            model=EAB_DataStoreSystem,
-            search_fields=['name__icontains'],
-            attrs={'data-width': '10em'},
-        ),        
+        widget=Select2Widget(
+            attrs={
+                "data-width": "10em",
+            }
+        )
     )
 
     data_store_system_area = forms.ModelChoiceField(
         queryset=EAB_DataStoreSystemArea.objects.all(),
         widget=ModelSelect2Widget(
             model=EAB_DataStoreSystemArea,
-            search_fields=['name__icontains'],
-            attrs={'data-width': '10em'},
-            dependent_fields={'data_store_system' : 'dss'},
-        ),        
+            search_fields=["name__icontains"],
+            attrs={
+                "data-width": "10em",
+                'data-minimum-input-length': 0,
+            },
+            dependent_fields={"data_store_system": "dss"},
+        ),
     )
 
     class Meta:
