@@ -1,6 +1,6 @@
 from django.db import models
 from django.core.exceptions import ValidationError
-
+from .validators import validateUserName
 
 
 
@@ -119,7 +119,7 @@ class EAB_DataStoreSystemArea(models.Model):
         verbose_name_plural = "Data storage system Areas"
 
     def __str__(self):
-            return str(self.dss) + ' [' + self.name + ']'
+            return ' [area:' + self.name + ']'
 
 
 
@@ -147,6 +147,7 @@ class EAB_Request(models.Model):
     # e.g. integrity, artisan, nas drive
     data_store_system = models.ForeignKey(
         EAB_DataStoreSystem,
+        help_text='The IT System that holds the data',
         related_name='data_store_system',
         on_delete=models.CASCADE,
         null=True
@@ -157,6 +158,7 @@ class EAB_Request(models.Model):
     # e.g. T7000 project in Integrity
     data_store_system_area = models.ForeignKey(
         EAB_DataStoreSystemArea,
+        help_text='A reposotory, subfolder, or other part of the IT System, which is to be exported (shared with a 3rd party)',
         related_name='data_store_system_area',
         on_delete=models.CASCADE,
         null=True
@@ -176,15 +178,13 @@ class EAB_Request(models.Model):
         max_length=10
     )
 
-    # export claim for this part of the data store
-    # data_store_export_claim = models.CharField(
-    #     'Export status of Data Store',
-    #     max_length=512
-    # )
+
 
     # ipecr - if known/needed
     ipecr = models.IntegerField(
-        'IPECR #'
+        'IPECR #',
+        blank = True,
+        default=0,
     )
 
 
@@ -206,14 +206,15 @@ class EAB_Request(models.Model):
     class Meta:
         verbose_name = "EAB Request"
         verbose_name_plural = "EAB Requests"
+        unique_together = [['tp', 'data_store_system','data_store_system_area' ]]
+
 
 
     def clean(self, *args, **kwargs):
-        if(len(self.data_owner_userid) < 1):
+        if(not validateUserName(self.reqstr_userid)):
+            raise ValidationError('User name ' + self.reqstr_userid + ' appears invalid for field requestor user ID')
+        if(not validateUserName(self.data_owner_userid)):
             raise ValidationError('User name ' + self.data_owner_userid + ' appears invalid for field Data owner user ID')
-        elif not self.data_owner_userid[0].isalpha()  or not any(char.isdigit() for char in self.data_owner_userid):
-            raise ValidationError('User name ' + self.data_owner_userid + ' appears invalid for field Data owner user ID')
-
         super().clean(*args, **kwargs)
 
 
