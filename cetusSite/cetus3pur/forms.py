@@ -1,14 +1,16 @@
 from django import forms
 from django.forms.models import inlineformset_factory, formset_factory
+from django.forms import ModelChoiceField
 from cetusSite import settings
 from pprint import pprint
+from rest_framework.mixins import UpdateModelMixin
+from django_select2.forms import ModelSelect2Widget, Select2Widget
 from .models import (
     EAB_Request,
     EAB_Approval,
     EAB_DataStoreSystem,
     EAB_DataStoreSystemArea,
 )
-from django.forms import ModelChoiceField
 
 
 class EAB_Approve_Form(forms.ModelForm):
@@ -23,7 +25,6 @@ class EAB_Approve_Form(forms.ModelForm):
         model = EAB_Approval
         exclude = ()
         fields = "__all__"
-        # localized_fields = ('dssa',)
 
     # if creating, set request field of approval object
     def __init__(self, *args, **kwargs):
@@ -35,7 +36,9 @@ class EAB_Approve_Form(forms.ModelForm):
         self.fields["request"].disabled = True
 
 
-class EAB_Request_Form(forms.ModelForm):
+
+
+class EAB_Request_Form(UpdateModelMixin, forms.ModelForm):
 
     date = forms.DateField(
         input_formats=settings.DATE_INPUT_FORMATS,
@@ -45,17 +48,28 @@ class EAB_Request_Form(forms.ModelForm):
 
     data_store_system = forms.ModelChoiceField(
         queryset=EAB_DataStoreSystem.objects.all(),
-        # attributes = { 'cols':80 }
-        widget=forms.Select(attrs={"onchange": "this.form.submit()"}),
+        widget=Select2Widget(
+            attrs={
+                "data-width": "10em",
+            }
+        )
     )
 
-    # dssa = forms.ModelChoiceField(
-    #     queryset = EAB_DataStoreSystemArea.objects.all()
-    # )
+    data_store_system_area = forms.ModelChoiceField(
+        queryset=EAB_DataStoreSystemArea.objects.all(),
+        widget=ModelSelect2Widget(
+            model=EAB_DataStoreSystemArea,
+            search_fields=["name__icontains"],
+            attrs={
+                "data-width": "10em",
+                'data-minimum-input-length': 0,
+            },
+            dependent_fields={"data_store_system": "dss"},
+        ),
+    )
 
     class Meta:
         model = EAB_Request
-        # widgets = { 'data_store_system':ModelChoiceField(attrs={'cols':80}) }
         exclude = ()
         fields = "__all__"
 
