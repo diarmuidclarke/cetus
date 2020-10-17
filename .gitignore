@@ -1,5 +1,5 @@
 venv_cetus
 venv/
-
+*.pyc
 test_venv
 */__pycache__/
