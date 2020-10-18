@@ -185,12 +185,7 @@ class EAB_Request(models.Model):
     )
 
 
-    # used to ensure we only approve a submitted (therefore locked) request
-    request_locked = models.BooleanField(
-        'Request Locked',
-        help_text = 'programmtic field used to indicate ready for review, can not be changed',
-        default = False
-    )
+
 
 
     @classmethod
@@ -215,8 +210,11 @@ class EAB_Request(models.Model):
 
 
     def clean(self, *args, **kwargs):
-        if(self.request_locked == True):
-            raise ValidationError('This EAB request is locked - ask an Export Control Manager to revoke the related EAB Approval first.')
+        # check if there's a linked approval in an Approved state
+        if(EAB_Approval.objects.filter(request__id=self.id).exists()):
+            approval = EAB_Approval.objects.get(request__id=self.id)
+            if(approval.decision == 'APP'):
+                raise ValidationError('This EAB request is locked - ask an Export Control Manager to revoke the related EAB Approval first.')
 
         if(not validateUserName(self.reqstr_userid)):
             raise ValidationError('User name ' + self.reqstr_userid + ' appears invalid for field requestor user ID')
@@ -229,8 +227,6 @@ class EAB_Request(models.Model):
 
     def save(self, *args, **kwargs):
         self.full_clean()
-        # setting this flag prevents future edits of the request
-        self.request_locked = True  
         super().save(*args, **kwargs)
 
 
