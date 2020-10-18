@@ -128,17 +128,18 @@ class EAB_DataStoreSystemArea(models.Model):
 class EAB_Request(models.Model):
     date = models.DateField(
         verbose_name = 'Date',
-        help_text = 'Date of request'
+        help_text = 'Date of this EAB request'
     )
 
     reqstr_userid = models.CharField(
         verbose_name = 'Requester User ID',
-        help_text = 'User account of person making the request',
+        help_text = 'User ID of person making the request',
         max_length=10,
     )
 
     tp = models.ForeignKey(
         ThirdParty,
+        help_text = 'Name and location must be correct',
         verbose_name = 'Third Party',
         related_name='third_party',
         on_delete=models.CASCADE,
@@ -175,6 +176,7 @@ class EAB_Request(models.Model):
     # owner of that part of the data store system, e.g. owner of a specific network folder
     data_owner_userid =  models.CharField(
         'Data Owner User ID',
+        help_text = 'User ID of the person who owns this data store',
         max_length=10
     )
 
@@ -183,6 +185,7 @@ class EAB_Request(models.Model):
     # ipecr - if known/needed
     ipecr = models.IntegerField(
         'IPECR #',
+        help_text = 'A six digit number, or use 0 if unsure',
         blank = True,
         default=0,
     )

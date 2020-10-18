@@ -20,6 +20,7 @@
                     <th>3rd Party</th>
                     <th>Data Store System</th>
                     <th>Data Store System Area</th>
+                    <th>Data Store Owner</th>
                     <th>IPECR</th>
                 </tr>
             </thead>
@@ -46,6 +47,7 @@
                         <td>{{ req.tp.legal_entity_name }} ({{req.tp.location}})</td>
                         <td>{{ req.data_store_system }}</td>
                         <td>{{ req.data_store_system_area }}</td>
+                        <td>{{ req.data_owner_userid }}</td>
                         <td>{{ req.ipecr }}</td>
                     </tr>
                 {% endfor %}
