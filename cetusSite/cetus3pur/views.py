@@ -264,7 +264,7 @@ class EAB_ApproveCreate_cbv(CreateView):
     form_class = EAB_Approve_Form
     extra_context = {}
 
-    
+
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         return context
@@ -275,6 +275,7 @@ class EAB_ApproveCreate_cbv(CreateView):
     def form_valid(self, form):
         self.object = form.save()
         return HttpResponseRedirect(self.get_success_url())
+
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
@@ -300,11 +301,14 @@ class EAB_ApproveEdit_cbv(UpdateView):
         return "../view/{id}".format(id=self.kwargs['pk'])
 
 
+
+
 # EAB Approve -- view
 class EAB_ApproveView_cbv(UpdateView):
     model = EAB_Approval
     template_name = "cetus3pur/EAB_ApproveCreate.html"
     form_class = EAB_Approve_Form
+
 
 
 
@@ -354,9 +358,6 @@ class EAB_RequestView_cbv(UpdateView):
 
 
 
-
-
-
 # select an EAB request from a list, to approve or go back into edit
 def EAB_ReviewSelect(request):
 
@@ -386,6 +387,8 @@ def EAB_ReviewSelect(request):
 
 
 
+
+"""
 # EAB Approvals - do an approval
 def EAB_ReviewApprove(request, approval_id):
 
@@ -435,12 +438,12 @@ def EAB_ReviewApprove(request, approval_id):
                 }
 
         return render(request, 'cetus3pur/EAB_ReviewApprove.html', context)
+"""
 
 
 
 
-
-
+"""
 # EAB Records - show all past approval decisions
 def EAB_Records(request):
     approvals = EAB_Approval.objects.select_related('request').all()
@@ -448,7 +451,7 @@ def EAB_Records(request):
 
     context = { 'approvals':approvals, 'requests':requests  }
     return render(request, 'cetus3pur/EAB_Records.html', context)
-
+"""
 
     
     

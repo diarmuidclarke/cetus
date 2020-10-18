@@ -42,10 +42,10 @@ urlpatterns = [
 
     path('eabreq_for_approval/',views.EAB_ReviewSelect, name='EAB_ReviewSelect'),
 
-    path('eabreviewapprove/<int:approval_id>',views.EAB_ReviewApprove, name='EAB_ReviewApprove'),
-    path('eabreviewapprove/',views.EAB_ReviewApprove, name='EAB_ReviewApprove'),
+    ##18 -- path('eabreviewapprove/<int:approval_id>',views.EAB_ReviewApprove, name='EAB_ReviewApprove'),
+    ##18 -- path('eabreviewapprove/',views.EAB_ReviewApprove, name='EAB_ReviewApprove'),
 
-    path('eabrecords/',views.EAB_Records, name='EAB_Records'),
+    ##18 -- path('eabrecords/',views.EAB_Records, name='EAB_Records'),
     
     # for debugging first Class based view  
     path('eabrecords_cbv/',views.EAB_Records_cbv.as_view()),

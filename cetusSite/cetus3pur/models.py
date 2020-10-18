@@ -167,12 +167,6 @@ class EAB_Request(models.Model):
 
 
 
-    # specify the part of the data store system being requested to share, e.g. a particular project in Artisan
-    # data_store = models.CharField(
-    #     'Date Store Area to be shared',
-    #     max_length=256
-    # )
-
     # owner of that part of the data store system, e.g. owner of a specific network folder
     data_owner_userid =  models.CharField(
         'Data Owner User ID',
@@ -191,7 +185,14 @@ class EAB_Request(models.Model):
     )
 
 
-#    def create(cls, ndate, nrqsteruid, ntpid, ndatastore, ndataowneruid , nclaim, nipecr):
+    # used to ensure we only approve a submitted (therefore locked) request
+    request_locked = models.BooleanField(
+        'Request Locked',
+        help_text = 'programmtic field used to indicate ready for review, can not be changed',
+        default = False
+    )
+
+
     @classmethod
     def create(cls, ndate, nrqsteruid, ntpid, ndatastore_system, ndatastore_system_area, ndataowneruid , nipecr):
         er = cls(
@@ -206,23 +207,30 @@ class EAB_Request(models.Model):
                     ipecr = nipecr)
         return er
     
+
     class Meta:
         verbose_name = "EAB Request"
         verbose_name_plural = "EAB Requests"
         unique_together = [['tp', 'data_store_system','data_store_system_area' ]]
 
 
-
     def clean(self, *args, **kwargs):
+        if(self.request_locked == True):
+            raise ValidationError('This EAB request is locked - ask an Export Control Manager to revoke the related EAB Approval first.')
+
         if(not validateUserName(self.reqstr_userid)):
             raise ValidationError('User name ' + self.reqstr_userid + ' appears invalid for field requestor user ID')
+
         if(not validateUserName(self.data_owner_userid)):
             raise ValidationError('User name ' + self.data_owner_userid + ' appears invalid for field Data owner user ID')
+
         super().clean(*args, **kwargs)
 
 
     def save(self, *args, **kwargs):
         self.full_clean()
+        # setting this flag prevents future edits of the request
+        self.request_locked = True  
         super().save(*args, **kwargs)
 
 
@@ -230,7 +238,6 @@ class EAB_Request(models.Model):
         temp_str = self.reqstr_userid + ' req for ' + str(self.tp) + ' access to ' + str(self.data_store_system)
         temp_str += ' [' + str(self.data_store_system_area) + ']'
         return temp_str
-
 
 
 
@@ -244,6 +251,7 @@ class EAB_Approval(models.Model):
     ecm_comment = models.CharField('ECM comment' , max_length=512) # Export Control Manager
     ipm_comment = models.CharField('IP Manager comment', max_length=512) # IP manager
     IT_comment = models.CharField('IT Comment', max_length=512) # IT comment
+
 
     @classmethod
     def create(cls, nreq, ndate, napprover, ndecision, necm_comment , nipm_comment, nIT_comment):
@@ -262,6 +270,14 @@ class EAB_Approval(models.Model):
     class Meta:
         verbose_name = "EAB Approval"
         verbose_name_plural = "EAB Approvals"
+
+
+    # debug setting flag here
+    def save(self, *args, **kwargs):
+        self.full_clean()
+        super().save(*args, **kwargs)
+
+
 
     def __str__(self):
             return self.approver_userid + ' reviewed as ' + self.decision + ' on ' + str(self.date)
