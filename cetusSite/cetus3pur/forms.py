@@ -53,7 +53,7 @@ class EAB_Request_Form(UpdateModelMixin, forms.ModelForm):
         queryset=EAB_DataStoreSystem.objects.all(),
         widget=Select2Widget(
             attrs={
-                "data-width": "10em",
+                "data-width": "20em",
             }
         )
     )
@@ -64,7 +64,7 @@ class EAB_Request_Form(UpdateModelMixin, forms.ModelForm):
             model=EAB_DataStoreSystemArea,
             search_fields=["name__icontains"],
             attrs={
-                "data-width": "10em",
+                "data-width": "20em",
                 'data-minimum-input-length': 0,
             },
             dependent_fields={"data_store_system": "dss"},

@@ -7,6 +7,7 @@ from .models import ThirdPartyUser
 from .models import ThirdParty
 from .models import EAB_Request
 from .models import EAB_DataStoreSystem
+from .models import EAB_DataStoreSystemArea
 from .models import EAB_Approval
 from django.contrib.auth.models import User as authUser
 import datetime
@@ -244,6 +245,29 @@ def ThirdPartyUsersAdd(request, thirdparty_id):
         return render(request, 'cetus3pur/AddNewUsers.html', {'thirdparty_id': thirdparty_id, 'employer': user_employer, 'error_text' : error_text} )
 
 
+def datastoresystems_cbv(request):
+    
+    report = []
+    for dss in EAB_DataStoreSystem.objects.all():
+        report.append(dss.name + ' -- ' + dss.datastoresystem_approved)
+
+        dssa_list = EAB_DataStoreSystemArea.objects.filter(dss__id=dss.id)
+        if(len(dssa_list) == 0):
+            report.append('')
+
+        for dssa in dssa_list:
+            report.append('    > ' + dssa.name)
+            report.append('        classifications' )
+            if(dssa.export_classification_PL9009c):
+                report.append('        PL9009.c')
+            if(dssa.export_classification_EU_dualuse):
+                report.append('        EU dual use')
+            if(dssa.export_classification_US_NLR):
+                report.append('        US NLR.c')
+            report.append('')
+
+    context = { 'report' : report }
+    return render(request, 'cetus3pur/datastoresystems.html', context)
 
 
 # RR  managers

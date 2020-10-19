@@ -39,6 +39,7 @@ urlpatterns = [
     path('eabappr/edit/<int:pk>',views.EAB_ApproveEdit_cbv.as_view()),
     path('eabappr/view/<int:pk>',views.EAB_ApproveView_cbv.as_view()),
 
+    path('datastoresystems_cbv/',views.datastoresystems_cbv, name='datastoresystems_cbv'),
 
     path('eabreq_for_approval/',views.EAB_ReviewSelect, name='EAB_ReviewSelect'),
 

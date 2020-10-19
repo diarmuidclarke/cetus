@@ -1,0 +1,17 @@
+{% extends "base.html" %} {% block content %}
+
+<section>
+    <div class="container">
+        <div class="content">
+            <div class="box">
+
+                <h1>Databases and Folders</h1>
+                <div class="content">
+                {% for line in report %}
+                    {{line}} <br>
+                {% endfor %}
+                </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
