@@ -159,6 +159,9 @@ INTERNAL_IPS = [
     # ...
 ]
 
+if not DEBUG:
+    STATIC_ROOT = "static/"
+
 
 DATE_INPUT_FORMATS = ('%d-%m-%Y', '%d/%m/%Y', '%d-%m-%y', '%d-%m-%y')
 SHORT_DATE_FORMAT = 'd-m-Y'

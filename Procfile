@@ -1,1 +1,1 @@
-web: gunicorn --chdir cetusSite cetusSite.wsgi --log-file -
+web: python cetusSite/manage.py collectstatic --noinput; gunicorn --chdir cetusSite cetusSite.wsgi --log-file -
