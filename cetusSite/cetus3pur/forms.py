@@ -3,6 +3,7 @@ from django.forms.models import inlineformset_factory, formset_factory
 from django.forms import ModelChoiceField
 from cetusSite import settings
 from pprint import pprint
+import datetime
 from rest_framework.mixins import UpdateModelMixin
 from django_select2.forms import ModelSelect2Widget, Select2Widget
 from .models import (
@@ -32,9 +33,18 @@ class EAB_Approve_Form(forms.ModelForm):
             reqid = kwargs.pop("reqid", None)
             initial = kwargs.get("initial", {})
             initial["request"] = EAB_Request.objects.get(pk=reqid)
-        super(EAB_Approve_Form, self).__init__(*args, **kwargs)
-        self.fields["request"].disabled = True
 
+
+
+        initial['approver_userid'] =  kwargs.pop("user", None)
+        dt = datetime.datetime.now()
+        dts = dt.strftime('%d/%m/%Y')
+        initial['date'] = dts
+        super(EAB_Approve_Form, self).__init__(*args, **kwargs)
+        
+        self.fields['date'].disabled = True
+        self.fields['request'].disabled = True
+        self.fields['approver_userid'].disabled = True
 
 
 

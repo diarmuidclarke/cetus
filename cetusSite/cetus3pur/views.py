@@ -303,6 +303,7 @@ class EAB_ApproveCreate_cbv(CreateView):
 
     def get_form_kwargs(self):
         kwargs = super().get_form_kwargs()
+        kwargs['user'] = self.request.user
         kwargs['reqid'] = self.kwargs['reqid']
         return kwargs
 
