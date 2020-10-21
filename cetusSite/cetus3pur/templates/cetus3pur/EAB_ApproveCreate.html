@@ -39,6 +39,29 @@
             <div class="box">
                 {{ form.date | bulma }}
                 {{ form.request | bulma }}
+                <div class="box">
+                    <div class="columns">
+                        <div class="column">
+                            <label class="checkbox">
+                                <input type="checkbox" {% if form.request.initial.data_store_system_area.export_classification_PL9009c %}checked{% endif%} disabled>
+                                PL9009c
+                            </label>
+                            
+                        </div>
+                        <div class="column">
+                            <label class="checkbox">
+                                <input type="checkbox" {% if form.request.initial.data_store_system_area.export_classification_EU_dualuse %}checked{% endif%} disabled>
+                                EU Dual Use
+                            </label>
+                        </div>
+                        <div class="column">
+                            <label class="checkbox">
+                                <input type="checkbox" {% if form.request.initial.data_store_system_area.export_classification_US_NLR %}checked{% endif%} disabled>
+                                US NLR
+                            </label>
+                        </div>
+                    </div>
+                </div>
                 {{ form.approver_userid | bulma }}
                 {{ form.decision | bulma }}
                 {{ form.ecm_comment | bulma }}
