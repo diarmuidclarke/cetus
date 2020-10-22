@@ -29,12 +29,10 @@ class EAB_Approve_Form(forms.ModelForm):
 
     # if creating, set request field of approval object
     def __init__(self, *args, **kwargs):
+        initial = kwargs.get("initial", {})
         if "reqid" in kwargs:
             reqid = kwargs.pop("reqid", None)
-            initial = kwargs.get("initial", {})
             initial["request"] = EAB_Request.objects.get(pk=reqid)
-
-
 
         initial['approver_userid'] =  kwargs.pop("user", None)
         dt = datetime.datetime.now()
@@ -87,3 +85,13 @@ class EAB_Request_Form(UpdateModelMixin, forms.ModelForm):
         fields = "__all__"
 
 
+    def __init__(self, *args, **kwargs):
+        initial = kwargs.get("initial", {})
+        initial['reqstr_userid'] =  kwargs.pop("user", None)
+        dt = datetime.datetime.now()
+        dts = dt.strftime('%d/%m/%Y')
+        initial['date'] = dts
+        super(EAB_Request_Form, self).__init__(*args, **kwargs)
+        
+        self.fields['date'].disabled = True
+        self.fields['reqstr_userid'].disabled = True
