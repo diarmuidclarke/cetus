@@ -11,6 +11,7 @@ from .models import (
     EAB_Approval,
     EAB_DataStoreSystem,
     EAB_DataStoreSystemArea,
+    EAB_IT_Action,
 )
 
 
@@ -95,3 +96,43 @@ class EAB_Request_Form(UpdateModelMixin, forms.ModelForm):
         
         self.fields['date'].disabled = True
         self.fields['reqstr_userid'].disabled = True
+
+
+
+
+class EAB_IT_Action_Form(forms.ModelForm):
+
+    date_assigned = forms.DateField(
+        input_formats=settings.DATE_INPUT_FORMATS,
+        widget=forms.DateInput(format="%d/%m/%Y"),
+        help_text="when action assigned",
+    )
+
+
+    date_completed = forms.DateField(
+        input_formats=settings.DATE_INPUT_FORMATS,
+        widget=forms.DateInput(format="%d/%m/%Y"),
+        help_text="when action completed",
+    )
+
+
+    class Meta:
+        model = EAB_IT_Action
+        exclude = ()
+        fields = "__all__"
+
+
+    # if creating, set request field of approval object
+    def __init__(self, *args, **kwargs):
+        initial = kwargs.get("initial", {})
+        if "appr_id" in kwargs:
+            appr_id = kwargs.pop("appr_id", None)
+            initial["approval"] = EAB_Request.objects.get(pk=reqid)
+
+        initial['IT_executor_userid'] =  kwargs.pop("user", None)
+        super(EAB_Approve_Form, self).__init__(*args, **kwargs)
+        
+        self.fields['date_assigned'].disabled = True
+        self.fields['date_completed'].disabled = True
+        self.fields['approval'].disabled = True
+        self.fields['approver_userid'].disabled = True

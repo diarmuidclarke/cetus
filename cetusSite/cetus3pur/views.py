@@ -9,6 +9,7 @@ from .models import EAB_Request
 from .models import EAB_DataStoreSystem
 from .models import EAB_DataStoreSystemArea
 from .models import EAB_Approval
+from .models import EAB_IT_Action
 from django.contrib.auth.models import User as authUser
 import datetime
 import dateutil.parser as parser
@@ -23,9 +24,9 @@ from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView, FormView
 from django_tables2 import SingleTableView, SingleTableMixin
 from django_filters.views import FilterView
-from .tables import EAB_RecordsTable
-from .filters import EAB_RecordFilter
-from .forms import EAB_Request_Form, EAB_Approve_Form
+from .tables import EAB_RecordsTable, EAB__IT_Actions_Table
+from .filters import EAB_RecordFilter, EAB_IT_Actions_Filter
+from .forms import EAB_Request_Form, EAB_Approve_Form, EAB_IT_Action_Form
 from django.contrib.auth.models import Permission
 from collections import OrderedDict
 
@@ -337,6 +338,17 @@ class EAB_ApproveView_cbv(UpdateView):
 
 
 
+    
+# EAB Records - show all past approval decisions
+class EAB_Records_cbv(SingleTableMixin, FilterView):
+    model = EAB_Approval
+    table_class = EAB_RecordsTable
+    template_name = "cetus3pur/EAB_Records_cbv.html"
+    filterset_class = EAB_RecordFilter
+
+
+
+
 # EAB Request - create
 class EAB_RequestCreate_cbv(CreateView):
     model = EAB_Request
@@ -417,92 +429,73 @@ def EAB_ReviewSelect(request):
 
 
 
-"""
-# EAB Approvals - do an approval
-def EAB_ReviewApprove(request, approval_id):
 
-    if request.method == 'POST':
-        # get form data
-        date_approval = request.POST.get('eabrev_date')
-        aaprv_id = request.POST.get('eabrev_approver_user_id')
-        decision = request.POST.get('eabreview_decision_selector')
-        ecm_comment = request.POST.get('eabrev_ecm_comment')
-        ipm_comment = request.POST.get('eabrev_IPM_comment')
-        IT_comment = request.POST.get('eabrev_IT_comment')
-
-        date_obj = parser.parse(date_approval, dayfirst = True)
-
-        apprv = EAB_Approval.objects.get(pk=approval_id)
-        apprv.date = date_obj
-        apprv.approver_userid = aaprv_id
-        apprv.decision =  decision
-        apprv.ecm_comment = ecm_comment
-        apprv.ipm_comment = ipm_comment
-        apprv.IT_comment = IT_comment
-        apprv.save()
-
-        
-        
-        approvals = EAB_Approval.objects.select_related('request').all()
-        requests = EAB_Request.objects.select_related('tp').all()
-        context = { 'approvals':approvals, 'requests':requests  }
-    
-        return render(request, 'cetus3pur/EAB_Records.html', context)
-
-    else:
-        # find any approvals in progress from previous review of a request
-        approval = EAB_Approval.objects.get(pk = approval_id)
-
-        # find the request we're trying to approve
-        req = approval.request
+class EAB_IT_Action_Create_cbv(CreateView):
+    model = EAB_IT_Action
+    template_name = "cetus3pur/EAB_IT_Action_Create.html"
+    form_class = EAB_Approve_Form
+    extra_context = {}
 
 
-        # datetoday = date.today()
-        bulma_friendly_date = approval.date.strftime("%Y-%m-%d") 
-        context = { 'reqid' : req.id,
-                    'req':req,
-                    'approval':approval,
-                    'bulma_date':bulma_friendly_date, 
-                    'user':request.user
-                }
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
 
-        return render(request, 'cetus3pur/EAB_ReviewApprove.html', context)
-"""
+    def get_success_url(self):
+        return "../view/{id}".format(id=self.object.id)
+
+    def form_valid(self, form):
+        self.object = form.save()
+        return HttpResponseRedirect(self.get_success_url())
+
+
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['user'] = self.request.user
+        kwargs['appr_id'] = self.kwargs['appr_id']
+        return kwargs
 
 
 
 
-"""
-# EAB Records - show all past approval decisions
-def EAB_Records(request):
-    approvals = EAB_Approval.objects.select_related('request').all()
-    requests = EAB_Request.objects.select_related('tp').all()
 
-    context = { 'approvals':approvals, 'requests':requests  }
-    return render(request, 'cetus3pur/EAB_Records.html', context)
-"""
+class EAB_IT_Action_Edit_cbv(UpdateView):
+    model = EAB_IT_Action
+    template_name = "cetus3pur/EAB_IT_Action_Create.html"
+    form_class = EAB_IT_Action_Form
 
-    
-    
-# EAB Records - show all past approval decisions
-class EAB_Records_cbv(SingleTableMixin, FilterView):
-    model = EAB_Approval
-    table_class = EAB_RecordsTable
-    template_name = "cetus3pur/EAB_Records_cbv.html"
-    filterset_class = EAB_RecordFilter
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        return context
+
+    def get_success_url(self):
+        return "../view/{id}".format(id=self.kwargs['pk'])
 
 
 
 
-    
-# IT Action Log
-def IT_ActionLog(request):
-	context = {}
-	return render(request, 'cetus3pur/IT_actionlog.html',context)
+# EAB Approve -- view
+class EAB_IT_Action_View_cbv(UpdateView):
+    model = EAB_IT_Action
+    template_name = "cetus3pur/EAB_IT_Action_Create.html"
+    form_class = EAB_IT_Action_Form
+
+
+class EAB_IT_Action_List(SingleTableMixin, FilterView):
+    model = EAB_IT_Action
+    table_class = EAB__IT_Actions_Table
+    filterset_class = EAB_IT_Actions_Filter
+    template_name = "cetus3pur/EAB_IT_Actions_List.html"
+
+
 
 
 # Audit
 def Audit(request):
     context = { }
     return render(request, 'cetus3pur/Audit.html', context)
+
+
+
 

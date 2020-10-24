@@ -1,6 +1,6 @@
 import django_filters
 
-from .models import EAB_Approval, EAB_Request
+from .models import EAB_Approval, EAB_Request, EAB_IT_Action
 
 
 class EAB_RecordFilter(django_filters.FilterSet):
@@ -17,3 +17,15 @@ class EAB_RecordFilter(django_filters.FilterSet):
             'ecm_comment',
         ]
 
+
+
+class EAB_IT_Actions_Filter(django_filters.FilterSet):
+    class Meta:
+        model = EAB_IT_Action
+        fields = [
+            'date_assigned',
+            'date_completed',
+            'approval',
+            'IT_executor_userid',
+            'completed',
+        ]

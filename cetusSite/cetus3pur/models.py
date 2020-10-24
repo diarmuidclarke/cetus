@@ -165,6 +165,13 @@ class EAB_Request(models.Model):
         null=True
     )
 
+    rw_or_ro =  models.CharField(
+        'Write Permissions',
+        max_length=2,
+        choices = [ ('RW','Read/Write'), ('RO','Read Only') ],
+        default = 'RO',
+    )
+
 
 
     # owner of that part of the data store system, e.g. owner of a specific network folder
@@ -274,6 +281,57 @@ class EAB_Approval(models.Model):
         super().save(*args, **kwargs)
 
 
+    def __str__(self):
+        return self.approver_userid + ' reviewed as ' + self.decision + ' on ' + str(self.date) + ' for request ' + str(self.request)
+
+
+
+
+class EAB_IT_Action(models.Model):
+    approval = models.ForeignKey(
+        EAB_Approval,
+        on_delete=models.CASCADE,
+        default = None
+    )
+
+    date_assigned = models.DateField('Date action assigned')
+
+    date_completed = models.DateField(
+        'Date action completed',
+        blank = True,
+        null = True,
+    )
+
+    IT_executor_userid = models.CharField(
+        'IT executor user ID',
+        max_length=10,
+        blank = True,
+        null = True,
+    )
+
+    completed = models.BooleanField(
+        'Action completed',
+        default = False,        
+    )
+
+
+    class Meta:
+        verbose_name = "EAB IT Action"
+        verbose_name_plural = "EAB IT Actions"
+
+
+
+    def clean(self, *args, **kwargs):
+        # check if there's a linked approval in an Approved state
+        if(not self.approval.decision == 'APP'):
+            raise ValidationError('The EAB request for this IT action is not in the approved state (is currently ' + str(decision) + ')')
+
+
+    # debug setting flag here
+    def save(self, *args, **kwargs):
+        self.full_clean()
+        super().save(*args, **kwargs)
+
 
     def __str__(self):
-            return self.approver_userid + ' reviewed as ' + self.decision + ' on ' + str(self.date)
+        return 'IT Action for ' + str(self.approval) + ' for request ' + str(self.approval.request)
