@@ -480,6 +480,8 @@ class EAB_IT_Action_Edit_cbv(UpdateView):
         return kwargs
 
 
+
+
 # EAB Approve -- view
 class EAB_IT_Action_View_cbv(UpdateView):
     model = EAB_IT_Action
