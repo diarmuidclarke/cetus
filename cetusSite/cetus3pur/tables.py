@@ -50,7 +50,8 @@ class EAB__IT_Actions_Table(tables.Table):
 
     # render the ID column as links to the edit for that IT action
     def render_id(self, value):
-        return format_html(
-            "<a class=\"button is-link is-small\" href=\"/cetus3pur/eab_it_action/edit/{0}\">Mark Complete</a>",
-            value
-        )
+
+        if self.request.user.has_perm('cetus3pur.change_eab_it_action'):
+            return format_html("{0} <a class=\"button is-link is-small\" href=\"/cetus3pur/eab_it_action/edit/{0}\">Mark Complete</a>", value)
+        else:
+            return format_html("{0}", value)
