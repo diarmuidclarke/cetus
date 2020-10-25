@@ -463,7 +463,7 @@ class EAB_IT_Action_Edit_cbv(UpdateView):
     model = EAB_IT_Action
     template_name = "cetus3pur/EAB_IT_Action_Create.html"
     form_class = EAB_IT_Action_Form
-
+    pk_url_kwarg='appr_id'
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
@@ -473,6 +473,11 @@ class EAB_IT_Action_Edit_cbv(UpdateView):
         return "../view/{id}".format(id=self.kwargs['pk'])
 
 
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['user'] = self.request.user
+        # kwargs['appr_id'] = self.kwargs['appr_id']
+        return kwargs
 
 
 # EAB Approve -- view
@@ -480,6 +485,8 @@ class EAB_IT_Action_View_cbv(UpdateView):
     model = EAB_IT_Action
     template_name = "cetus3pur/EAB_IT_Action_Create.html"
     form_class = EAB_IT_Action_Form
+
+
 
 
 class EAB_IT_Action_List(SingleTableMixin, FilterView):

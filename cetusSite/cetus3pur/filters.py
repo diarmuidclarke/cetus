@@ -23,9 +23,7 @@ class EAB_IT_Actions_Filter(django_filters.FilterSet):
     class Meta:
         model = EAB_IT_Action
         fields = [
-            'date_assigned',
             'date_completed',
-            'approval',
             'IT_executor_userid',
             'completed',
         ]

@@ -288,6 +288,7 @@ class EAB_Approval(models.Model):
 
 
 class EAB_IT_Action(models.Model):
+
     approval = models.ForeignKey(
         EAB_Approval,
         on_delete=models.CASCADE,
@@ -313,6 +314,7 @@ class EAB_IT_Action(models.Model):
         'Action completed',
         default = False,        
     )
+
 
 
     class Meta:

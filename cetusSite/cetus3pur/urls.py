@@ -46,7 +46,7 @@ urlpatterns = [
 
     # IT Actions
     path('eab_it_action/create/',views.EAB_IT_Action_Create_cbv.as_view()),  
-    path('eab_it_action/edit/<int:pk>',views.EAB_IT_Action_Edit_cbv.as_view()),
+    path('eab_it_action/edit/<int:appr_id>',views.EAB_IT_Action_Edit_cbv.as_view()),
     path('eab_it_action/view/<int:pk>',views.EAB_IT_Action_View_cbv.as_view()),
     path('eab_it_action/list', views.EAB_IT_Action_List.as_view()),
     # path('IT_actionlog/',views.IT_ActionLog, name='IT_actionlog'),

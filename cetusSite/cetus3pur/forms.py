@@ -108,7 +108,6 @@ class EAB_IT_Action_Form(forms.ModelForm):
         help_text="when action assigned",
     )
 
-
     date_completed = forms.DateField(
         input_formats=settings.DATE_INPUT_FORMATS,
         widget=forms.DateInput(format="%d/%m/%Y"),
@@ -127,12 +126,19 @@ class EAB_IT_Action_Form(forms.ModelForm):
         initial = kwargs.get("initial", {})
         if "appr_id" in kwargs:
             appr_id = kwargs.pop("appr_id", None)
-            initial["approval"] = EAB_Request.objects.get(pk=reqid)
+            initial["approval"] = EAB_Approval.objects.get(pk=appr_id)
 
         initial['IT_executor_userid'] =  kwargs.pop("user", None)
-        super(EAB_Approve_Form, self).__init__(*args, **kwargs)
+
+        dt = datetime.datetime.now()
+        dts = dt.strftime('%d/%m/%Y')
+        initial['date_completed'] = dts
+
+        super(EAB_IT_Action_Form, self).__init__(*args, **kwargs)
         
+
+
         self.fields['date_assigned'].disabled = True
         self.fields['date_completed'].disabled = True
         self.fields['approval'].disabled = True
-        self.fields['approver_userid'].disabled = True
+        self.fields['IT_executor_userid'].disabled = True
