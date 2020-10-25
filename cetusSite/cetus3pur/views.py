@@ -299,6 +299,12 @@ class EAB_ApproveCreate_cbv(CreateView):
 
     def form_valid(self, form):
         self.object = form.save()
+
+        # create the IT Action object
+        dt = datetime.datetime.now()
+        ita = EAB_IT_Action.create(nappr=self.object.id, ndate_assigned = dt, ndate_completed = None , nuser = self.request.user, ncompleted= False)
+        ita.save()
+
         return HttpResponseRedirect(self.get_success_url())
 
 
@@ -470,7 +476,7 @@ class EAB_IT_Action_Edit_cbv(UpdateView):
         return context
 
     def get_success_url(self):
-        return "../view/{id}".format(id=self.kwargs['pk'])
+        return "../view/{id}".format(id=self.kwargs['appr_id'])
 
 
     def get_form_kwargs(self):
@@ -487,6 +493,7 @@ class EAB_IT_Action_View_cbv(UpdateView):
     model = EAB_IT_Action
     template_name = "cetus3pur/EAB_IT_Action_Create.html"
     form_class = EAB_IT_Action_Form
+    pk_url_kwarg='appr_id'
 
 
 

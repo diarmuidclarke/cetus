@@ -32,7 +32,14 @@ class ThirdPartyUser(models.Model):
 
     @classmethod
     def create(cls, nfirstname, nfamilyname, nemployee_id, nuserac, nuseracexp , nemployer_id):
-        tpu = cls(firstname=nfirstname, familyname = nfamilyname, employee_id = nemployee_id, userac_name = nuserac, userac_expirydate = nuseracexp, employer =  ThirdParty.objects.get(pk = nemployer_id))
+        tpu = cls(
+            firstname=nfirstname,
+            familyname = nfamilyname,
+            employee_id = nemployee_id,
+            userac_name = nuserac,
+            userac_expirydate = nuseracexp,
+            employer = ThirdParty.objects.get(pk = nemployer_id)
+        )
         return tpu
 
     class Meta:
@@ -312,7 +319,7 @@ class EAB_IT_Action(models.Model):
 
     completed = models.BooleanField(
         'Action completed',
-        default = False,        
+        default = False,
     )
 
 
@@ -327,6 +334,20 @@ class EAB_IT_Action(models.Model):
         # check if there's a linked approval in an Approved state
         if(not self.approval.decision == 'APP'):
             raise ValidationError('The EAB request for this IT action is not in the approved state (is currently ' + str(decision) + ')')
+
+
+
+    @classmethod
+    def create(cls, nappr, ndate_assigned, ndate_completed, nuser, ncompleted):
+        IT_action = cls(
+                    approval = EAB_Approval.objects.get(pk = nappr),
+                    date_assigned = ndate_assigned,
+                    date_completed = ndate_completed,
+                    IT_executor_userid = nuser,
+                    completed = ncompleted,
+            )
+        return IT_action
+
 
 
     # debug setting flag here
