@@ -24,12 +24,12 @@ from django.conf import settings
 
 
 urlpatterns = [
-    url(r'^login/$', auth_views.LoginView.as_view(), name='login'),
-    url(r'^logout/$', auth_views.LogoutView.as_view(), {'next_page': '/'}, name='logout'),
+    url(r'^cetus/login/$', auth_views.LoginView.as_view(), name='login'),
+    url(r'^cetus/logout/$', auth_views.LogoutView.as_view(), {'next_page': '/'}, name='logout'),
     path('cetus/cetus3pur/', include('cetus3pur.urls')),
-    path('', include('cetus3pur.urls')),
-    path('admin/', admin.site.urls),
-    path("select2/", include("django_select2.urls")),
+    path('cetus/', include('cetus3pur.urls')),
+    path('cetus/admin/', admin.site.urls),
+    path("cetus/select2/", include("django_select2.urls")),
 ]
 
 if settings.DEBUG:
