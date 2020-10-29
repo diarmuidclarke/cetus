@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Rolls-Royce Control Systems - CETUS</title>
     <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.8.0/css/bulma.min.css"> -->
-    <link rel="stylesheet" href="/static/bulma/css/style.css">
+    <link rel="stylesheet" href="{% static 'bulma/css/style.min.css' %}">
     <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 </head>
@@ -33,39 +33,39 @@
 
             <!--  the important views -->
             <div class="navbar-start">
-                <a class="navbar-item" href="/cetus3pur/">
+                <a class="navbar-item" href="{% url 'index' %}">
                   Home
                 </a>
 
-                <a class="navbar-item" href="/cetus3pur/tpv/">
+                <a class="navbar-item" href="{% url 'ThirdPartiesView' %}">
                   3rd Parties
                 </a>
 
-                <a class="navbar-item" href="/cetus3pur/rrm/">
+                <a class="navbar-item" href="{% url 'RRRManagersView' %}">
                     R-R Managers
                 </a>
 
-                <a class="navbar-item" href="/cetus3pur/eabreq/create/">
+                <a class="navbar-item" href="{% url 'EABReqCreate' %}">
                     EAB Request
                 </a>
 
-                <a class="navbar-item" href="/cetus3pur/eabreq_for_approval/">
+                <a class="navbar-item" href="{% url 'EAB_ReviewSelect' %}">
                     EAB Approve
                 </a>
 
-                <a class="navbar-item" href="/cetus3pur/datastoresystems_cbv/">
+                <a class="navbar-item" href="{% url 'DataStoreSystem' %}">
                     Databases and Folders
                 </a>
 
-                <a class="navbar-item" href="/cetus3pur/eabrecords_cbv/">
+                <a class="navbar-item" href="{% url 'EABRecords' %}">
                     EAB Records
                 </a>
 
-                <a class="navbar-item" href="/cetus3pur/eab_it_action/list">
+                <a class="navbar-item" href="{% url 'EAB_IT_ActionList' %}">
                     IT Action Log
                 </a>
 
-                <a class="navbar-item" href="/cetus3pur/audit/">
+                <a class="navbar-item" href="{% url 'Audit' %}">
                     Audit
                 </a>
 				

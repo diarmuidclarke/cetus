@@ -27,7 +27,7 @@ urlpatterns = [
 
 
     # EAB Requests
-    path('eabreq/create/',views.EAB_RequestCreate_cbv.as_view()),
+    path('eabreq/create/',views.EAB_RequestCreate_cbv.as_view() , name='EABReqCreate' ),
     path('eabreq/edit/<int:pk>',views.EAB_RequestEdit_cbv.as_view()),
     path('eabreq/view/<int:pk>',views.EAB_RequestView_cbv.as_view()),
 
@@ -41,19 +41,19 @@ urlpatterns = [
 
 
     # EAB "minutes" / records
-    path('eabrecords_cbv/',views.EAB_Records_cbv.as_view()),
+    path('eabrecords_cbv/',views.EAB_Records_cbv.as_view(), name='EABRecords'),
 
 
     # IT Actions
     path('eab_it_action/create/',views.EAB_IT_Action_Create_cbv.as_view()),  
     path('eab_it_action/edit/<int:appr_id>',views.EAB_IT_Action_Edit_cbv.as_view()),
     path('eab_it_action/view/<int:appr_id>',views.EAB_IT_Action_View_cbv.as_view()),
-    path('eab_it_action/list', views.EAB_IT_Action_List.as_view()),
+    path('eab_it_action/list', views.EAB_IT_Action_List.as_view(), name='EAB_IT_ActionList'),
     # path('IT_actionlog/',views.IT_ActionLog, name='IT_actionlog'),
 
 
     # Data systems
-    path('datastoresystems_cbv/',views.datastoresystems_cbv, name='datastoresystems_cbv'),
+    path('datastoresystems_cbv/',views.datastoresystems_cbv, name='DataStoreSystem'),
 
 
     # Audits    

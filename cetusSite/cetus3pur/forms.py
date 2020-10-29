@@ -4,7 +4,6 @@ from django.forms import ModelChoiceField
 from cetusSite import settings
 from pprint import pprint
 import datetime
-from rest_framework.mixins import UpdateModelMixin
 from django_select2.forms import ModelSelect2Widget, Select2Widget
 from .models import (
     EAB_Request,
@@ -50,7 +49,7 @@ class EAB_Approve_Form(forms.ModelForm):
 
 
 
-class EAB_Request_Form(UpdateModelMixin, forms.ModelForm):
+class EAB_Request_Form(forms.ModelForm):
 
     date = forms.DateField(
         input_formats=settings.DATE_INPUT_FORMATS,

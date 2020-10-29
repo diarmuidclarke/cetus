@@ -26,7 +26,7 @@ from django.conf import settings
 urlpatterns = [
     url(r'^login/$', auth_views.LoginView.as_view(), name='login'),
     url(r'^logout/$', auth_views.LogoutView.as_view(), {'next_page': '/'}, name='logout'),
-    path('cetus3pur/', include('cetus3pur.urls')),
+    path('cetus/cetus3pur/', include('cetus3pur.urls')),
     path('', include('cetus3pur.urls')),
     path('admin/', admin.site.urls),
     path("select2/", include("django_select2.urls")),
