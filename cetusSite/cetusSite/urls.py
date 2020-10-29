@@ -24,8 +24,8 @@ from django.conf import settings
 
 
 urlpatterns = [
-    url(r'^cetus/login/$', auth_views.LoginView.as_view(), name='login'),
-    url(r'^cetus/logout/$', auth_views.LogoutView.as_view(), {'next_page': '/'}, name='logout'),
+    url(r'cetus/^login/$', auth_views.LoginView.as_view(), name='login'),
+    url(r'cetus/^logout/$', auth_views.LogoutView.as_view(), {'next_page': '/'}, name='logout'),
     path('cetus/cetus3pur/', include('cetus3pur.urls')),
     path('cetus/', include('cetus3pur.urls')),
     path('cetus/admin/', admin.site.urls),
